@@ -1,0 +1,430 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#10151b">
+  <meta name="description" content="자석을 움직여 빛의 신호를 맞추는 30초 전자기 유도 게임. 터치로 플레이하고 오늘의 기록에 도전하세요.">
+  <title>빛의 신호 · 30초 발전 챌린지</title>
+  <style>
+:root{color-scheme:dark;--bg:#10151b;--panel:#181f27;--line:#303a43;--text:#f0f3ec;--muted:#9aa8b5;--lime:#cefa76;--mint:#81d8c1;--yellow:#f3d894;--mono:Consolas,'Courier New',monospace;font-family:Arial,'Malgun Gothic',sans-serif}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-size:14px}button,a{-webkit-tap-highlight-color:transparent}button{font:inherit;cursor:pointer;color:inherit}button:disabled{cursor:default;opacity:.46}button:focus-visible,a:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--lime);outline-offset:4px}button{border:0}a{color:inherit;text-decoration:none}.shell{max-width:1360px;padding:0 48px;margin:auto}.topbar{height:85px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line)}.brand{display:flex;gap:12px;align-items:center;font-size:14px;font-weight:800;letter-spacing:1px}.brand-icon{display:grid;place-items:center;width:33px;height:33px;background:var(--lime);color:#18251c;border-radius:50%;font-size:29px}.brand-divider{font-weight:400;color:#53616b;margin:0 15px}.brand-sub{font-size:10px;letter-spacing:1.8px;font-weight:500;color:var(--muted)}.top-actions{display:flex;align-items:center;gap:24px}.local-tag{color:var(--muted);font-size:11px}.local-tag i,.stage-label i{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--lime);margin-right:7px}.icon-button{padding:9px 12px;border:1px solid var(--line);border-radius:8px;background:transparent;font-size:18px}.icon-button span{font-size:11px;margin-left:5px}.intro{display:flex;justify-content:space-between;align-items:center;padding:32px 0 30px}.eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--lime);margin:0 0 12px}.eyebrow span{color:var(--muted);letter-spacing:.5px;margin-left:13px}h1{font-size:49px;letter-spacing:-3px;margin:0;line-height:1.15;font-weight:800}h1 em{font-style:normal;color:var(--lime)}.title-star{display:inline-block;font-size:41px;color:var(--lime);margin-left:18px;vertical-align:4px}.subtitle{font-size:13px;color:var(--muted);margin:14px 0 0;line-height:1.65}.challenge-tag{display:flex;align-items:center;gap:13px;border-left:1px solid var(--line);padding-left:25px}.challenge-tag>span{font:56px var(--mono);color:var(--lime);letter-spacing:-4px}.challenge-tag>div{font:10px/1.9 var(--mono);letter-spacing:2px;color:var(--muted)}.challenge-tag strong{font:11px Arial,'Malgun Gothic',sans-serif;letter-spacing:0;color:#c4cec9}.layout{display:grid;grid-template-columns:minmax(0,1fr) 298px;gap:24px;align-items:start}.game-card{border:1px solid var(--line);border-radius:17px;overflow:hidden;background:var(--panel)}.stage-top{padding:18px 23px 0;display:flex;justify-content:space-between;align-items:center;gap:8px}.stage-label{font:10px var(--mono);letter-spacing:1px;display:flex;align-items:center}.badge{border:1px solid #3c4938;background:#252e28;font:10px Arial,'Malgun Gothic',sans-serif;letter-spacing:0;color:#cbd9b7;border-radius:4px;padding:5px 8px;margin-left:12px}.round-label{font:10px var(--mono);color:var(--muted);white-space:nowrap}.scoreboard{display:flex;padding:24px 25px 19px;gap:45px}.metric-label{font:9px var(--mono);letter-spacing:1.8px;color:var(--muted);display:block;margin-bottom:7px}.scoreboard strong{font:36px var(--mono);letter-spacing:-1px;line-height:1}.scoreboard #score{color:var(--lime)}.scoreboard strong span{font-size:18px;color:var(--muted);margin-left:4px}.time-metric{margin-left:auto;text-align:right}.time-track{height:3px;background:#283039}.time-track div{width:100%;height:100%;background:var(--lime);transition:width .08s linear}.track-header{display:flex;justify-content:space-between;align-items:center;font-size:10px;color:#b5c2c9;padding:16px 23px 5px}.legend-line{display:inline-block;width:15px;height:3px;background:var(--mint);vertical-align:middle;margin-right:5px}.muted{color:var(--muted)}.track-header .muted{font-size:9px;margin-left:8px}.cursor-legend{color:var(--lime)}.track-wrap{position:relative;height:218px;background:linear-gradient(180deg,#161e26,#131c24);overflow:hidden}#track{display:block;width:100%;height:100%}.track-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;background:linear-gradient(90deg,#151e26ad,#151e26eb 50%,#151e26b8);text-align:center;pointer-events:none}.overlay-kicker{font-size:10px;color:var(--lime);letter-spacing:2px;margin-bottom:11px}.track-overlay strong{font-size:25px;letter-spacing:-1px}.track-overlay p{font-size:12px;line-height:1.8;color:var(--muted);margin:10px 0}.overlay-symbol{font-size:30px;line-height:1;color:var(--mint)}.judge-badge{position:absolute;top:12px;left:23%;font:italic bold 16px var(--mono);color:var(--lime);text-shadow:0 0 18px #cefa7650;pointer-events:none}.judge-badge[data-grade=good]{color:var(--mint)}.judge-badge[data-grade=miss]{color:#ff989b}.instruction-bar{display:flex;align-items:center;gap:12px;padding:13px 22px;background:#222c31;border-top:1px solid #344048;border-bottom:1px solid #344048;min-height:66px}.instruction-bar>span:first-child{color:var(--lime);font-size:24px;width:32px;text-align:center}.instruction-bar strong{display:block;font-size:13px}.instruction-bar div>span{display:block;font-size:10px;color:var(--muted);margin-top:4px}.instruction-bar #level-readout{margin-left:auto;font:10px var(--mono);letter-spacing:1px;color:var(--mint);white-space:nowrap}.experiment{display:grid;grid-template-columns:minmax(0,1fr) 185px;padding:19px 22px 15px;gap:20px}.apparatus-top{display:flex;justify-content:space-between;gap:10px;color:#687f8c;font:9px var(--mono)}.apparatus-top strong{font:11px Arial,'Malgun Gothic',sans-serif;color:#cbd5d9;margin-left:4px}.apparatus-top #current-label{color:var(--mint);font:9px Arial,'Malgun Gothic',sans-serif}.magnet-area{touch-action:none;user-select:none;cursor:grab;min-width:0}.magnet-area:active{cursor:grabbing}#apparatus{display:block;width:100%;height:126px}.pole-letter{font:bold 19px Arial;fill:white}.drag-track{position:relative;height:4px;background:#2e3c47;border-radius:5px;margin:0 13%}.drag-track span{position:absolute;top:-3px;left:50%;width:34px;height:10px;margin-left:-17px;background:var(--mint);border-radius:8px}.touch-caption{display:block;font-size:9px;text-align:center;color:#8ba0ae;margin-top:10px}.touch-caption span{margin-left:8px;color:var(--mint)}.bulbs-area{border-left:1px solid var(--line);padding-left:18px}.bulb-pair{display:flex;justify-content:space-around;gap:12px;margin-top:11px;text-align:center}.bulb-pair>div{width:68px}.bulb{--light:0;color:#d4d795;height:80px;filter:drop-shadow(0 0 calc(var(--light)*17px) #e5f599);transition:filter .07s}.bulb svg{height:80px;width:68px}.bulb .glass{fill:rgba(222,248,137,calc(.06 + var(--light)*.8));stroke:rgba(217,239,160,calc(.28 + var(--light)*.7));stroke-width:2}.target-bulb{color:#74bdae}.target-bulb .glass{fill:rgba(120,220,193,calc(.03 + var(--light)*.7));stroke:#689f94}.bulb-pair span{font-size:10px;color:var(--muted);display:block;margin-top:3px}.bulb-pair strong{font:13px var(--mono);display:block;margin-top:5px}.play-controls{display:flex;gap:10px;padding:2px 22px 0}.primary-button,.secondary-button{min-height:48px;padding:12px 18px;border-radius:8px;font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center;gap:18px}.primary-button{background:var(--lime);color:#1d2b12;flex:1}.primary-button:hover{background:#ddffa1}.primary-button span{font-size:20px}.secondary-button{border:1px solid #42505b;background:#202a34;color:#d7e1e6;flex:.7}.secondary-button:hover{background:#2c3943}.status{font-size:10px;line-height:1.6;text-align:center;margin:10px 12px 14px;color:var(--muted);min-height:16px}.sidebar{display:flex;flex-direction:column;gap:17px}.side-card{background:#181f26;border:1px solid var(--line);border-radius:13px;padding:21px 19px}.section-heading{display:flex;justify-content:space-between;align-items:center;gap:6px;margin-bottom:17px}.section-heading h2{font-size:13px;margin:0;letter-spacing:-.3px}.section-heading>span{font:9px var(--mono);color:var(--muted);letter-spacing:1px}.difficulty-list{display:flex;flex-direction:column;gap:9px}.difficulty{display:flex;align-items:center;gap:10px;padding:13px 12px;border:1px solid #37414b;background:transparent;border-radius:8px;text-align:left;width:100%;min-height:66px}.difficulty.active{border-color:#a9d85e;background:#273225}.difficulty-icon{width:25px;font:18px var(--mono);color:#a5b1bc}.active .difficulty-icon{color:var(--lime)}.difficulty strong{display:block;font-size:14px}.difficulty small{font-size:11px;font-weight:500;color:#c9d3d7;margin-left:6px}.difficulty em{display:block;font-size:9px;line-height:1.4;color:var(--muted);font-style:normal;margin-top:5px}.selection-dot{margin-left:auto;flex-shrink:0;width:11px;height:11px;border:1px solid #617080;border-radius:50%}.active .selection-dot{border:3px solid #273225;background:var(--lime);outline:1px solid var(--lime)}.best-label{display:flex;justify-content:space-between;color:var(--lime);font-size:10px}.best-label>span:last-child{font:9px var(--mono);letter-spacing:1px;color:var(--muted)}.best-label b{font-weight:400}.best-score{display:flex;gap:7px;align-items:baseline;margin:10px 0 18px}.best-score strong{font:38px var(--mono);letter-spacing:-1px}.best-score>span{color:var(--muted);font-size:11px}.record-stats{display:flex;justify-content:space-between;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:12px 0;font-size:10px;color:var(--muted)}.record-stats b{font-family:var(--mono);color:#e0e8e6;margin-left:5px;font-weight:400}.recent-heading{display:flex;justify-content:space-between;font-size:10px;margin-top:16px}.recent-heading span{font-size:9px;color:var(--muted)}#recent-records{list-style:none;padding:0;margin:10px 0;max-height:140px;overflow:auto}#recent-records li{display:flex;justify-content:space-between;gap:8px;padding:8px 0;font:11px var(--mono);border-bottom:1px solid #2b353e}#recent-records li span{color:var(--muted);font-size:10px}#recent-records li.empty-record{display:block;text-align:center;font:11px/1.8 Arial,'Malgun Gothic',sans-serif;color:#8799a6;padding:19px 0;border:0}.record-note{color:#8999a5;font-size:9px;line-height:1.8;border-top:1px dashed #39434a;padding-top:12px;margin-bottom:0}.science-note{display:flex;gap:12px;padding:4px 5px}.note-icon{font-size:26px;color:var(--mint)}.science-note h2{font-size:12px;margin:4px 0 9px}.science-note p{font-size:10px;line-height:1.9;color:var(--muted);margin:0}.text-button{background:transparent;color:var(--lime);font-size:11px;padding:10px 0;display:inline-flex;gap:12px;align-items:center;min-height:42px}.text-button:hover{text-decoration:underline}footer{display:flex;justify-content:space-between;gap:15px;color:#778b99;font-size:9px;padding:25px 0 28px}footer i{font-style:normal;margin:0 8px;color:var(--lime)}.hidden{display:none!important}dialog{background:#1b252e;border:1px solid #46524d;border-radius:20px;color:var(--text);max-width:520px;width:calc(100% - 36px);padding:32px;text-align:center;box-shadow:0 24px 100px #0008}dialog::backdrop{background:#091017c9;backdrop-filter:blur(7px)}dialog h2{font-size:25px;letter-spacing:-1px;margin:12px 0}dialog .eyebrow{margin-top:10px}.result-decoration{font-size:42px;color:var(--lime)}.result-score{font:66px var(--mono);letter-spacing:-4px;color:var(--lime);margin-top:22px}.result-outof{font-size:11px;color:var(--muted)}.new-best{color:var(--lime);font-size:12px;min-height:18px}.result-stats{display:flex;justify-content:space-around;background:#131d25;border:1px solid #36434b;border-radius:10px;padding:18px 8px}.result-stats span{display:block;color:var(--muted);font-size:10px;margin-bottom:8px}.result-stats strong{font:21px var(--mono)}.result-tip{font-size:12px;color:var(--muted);line-height:1.8;margin:22px 0}dialog .primary-button{width:100%}dialog .text-button{margin-top:9px}.lesson-row{display:flex;gap:16px;text-align:left;margin:18px 0}.lesson-row b{color:var(--lime);font:22px var(--mono);margin-top:4px}.lesson-row p{margin:0;font-size:12px;line-height:1.9;color:var(--muted)}.lesson-row strong{display:block;color:var(--text);font-size:13px;margin-bottom:3px}.model-note{text-align:left;font-size:11px;line-height:1.85;color:var(--muted);padding:16px;background:#131c25;border-radius:8px;margin:20px 0}body.playing .difficulty{opacity:.45}body.playing .intro{padding-top:22px;padding-bottom:22px}body.playing .local-tag i{box-shadow:0 0 12px var(--lime)}
+@media(min-width:1450px){.shell{padding:0 30px}.track-wrap{height:250px}.experiment{padding-top:22px;padding-bottom:22px}#apparatus{height:140px}}
+@media(max-width:1100px){.shell{padding:0 24px}.layout{grid-template-columns:minmax(0,1fr) 260px;gap:17px}.side-card{padding:18px 15px}.experiment{grid-template-columns:minmax(0,1fr) 152px;gap:10px;padding-left:16px;padding-right:16px}.bulbs-area{padding-left:10px}.bulb-pair{gap:3px}.apparatus-top #current-label{font-size:8px}.stage-top{padding:16px 17px 0}.round-label{display:none}.scoreboard{padding:22px 18px 18px;gap:30px}.track-wrap{height:215px}.instruction-bar{padding-left:16px;padding-right:16px}.instruction-bar strong{font-size:12px}.instruction-bar #level-readout{font-size:9px}.difficulty{padding:12px 8px;gap:7px}.difficulty small{font-size:10px}}
+@media(max-width:850px){.shell{padding:0 22px}.topbar{height:70px}.brand-sub,.brand-divider{display:none}.intro{padding:25px 0}.layout{grid-template-columns:1fr}.sidebar{display:grid;grid-template-columns:1fr 1fr;gap:16px}.science-note{grid-column:1/-1;padding:8px 5px}.track-wrap{height:220px}.experiment{grid-template-columns:minmax(0,1fr) 195px}.stage-top{padding:18px 22px 0}.scoreboard{padding:22px 24px 20px}.bulbs-area{padding-left:20px}.difficulty-list{gap:9px}.difficulty{padding:13px 12px}.difficulty small{font-size:11px}.round-label{display:block}h1{font-size:44px}.challenge-tag>span{font-size:47px}.record-note{font-size:10px}.science-note p{font-size:11px}.play-controls .primary-button{min-height:54px}}
+@media(max-width:520px){.shell{padding:0 12px}.topbar{height:62px}.local-tag{display:none}.brand{font-size:12px}.top-actions{gap:8px}.intro{padding:24px 4px}.challenge-tag{display:none}h1{font-size:40px}.subtitle{font-size:11px}.eyebrow{font-size:9px}.sidebar{grid-template-columns:1fr}.science-note{grid-column:auto}.stage-top{padding:16px 14px 0}.badge{font-size:9px;margin-left:8px}.round-label{display:none}.scoreboard{padding:20px 15px;gap:24px}.scoreboard strong{font-size:29px}.metric-label{font-size:8px}.track-header{padding:14px 13px 6px;font-size:9px}.track-header .muted{display:none}.track-wrap{height:210px}.track-overlay strong{font-size:23px}.experiment{grid-template-columns:minmax(0,1fr) 117px;padding:15px 12px;gap:8px}.bulbs-area{padding-left:8px}.bulb-pair>div{width:44px}.bulb svg{width:44px;height:66px}.bulb{height:70px}.apparatus-top #current-label{display:none}.apparatus-top strong{font-size:10px}.apparatus-top{font-size:8px}#apparatus{height:117px}.bulb-pair{gap:3px;margin-top:13px}.bulb-pair span{font-size:9px}.touch-caption{font-size:8px}.instruction-bar{gap:6px;padding:12px 10px}.instruction-bar strong{font-size:11px}.instruction-bar div>span{font-size:9px}.instruction-bar #level-readout{display:none}.play-controls{padding:0 12px;gap:8px}.primary-button,.secondary-button{font-size:12px;padding:12px;gap:10px}.status{font-size:9px}.sidebar{gap:14px}.side-card{padding:20px}footer{font-size:8px;line-height:1.6}.result-score{font-size:56px}.result-stats strong{font-size:18px}dialog{padding:24px}.lesson-row{gap:10px}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+/* Keep the rhythm lane and touch control together while a round is active. */
+body.focused-game .topbar,body.focused-game .intro,body.focused-game .sidebar,body.focused-game footer{display:none}
+body.focused-game .shell{padding-top:12px;padding-bottom:12px}
+body.focused-game .layout{display:block;max-width:1000px;margin:0 auto}
+body.focused-game .scoreboard{padding-top:16px;padding-bottom:14px}
+body.focused-game .track-wrap{height:clamp(140px,27vh,245px)}
+body.focused-game .experiment{padding-top:14px;padding-bottom:13px}
+body.focused-game .game-card{scroll-margin-top:12px}
+@media(max-height:720px){body.focused-game .stage-top{padding-top:12px}body.focused-game .scoreboard{padding-top:10px;padding-bottom:10px}body.focused-game .scoreboard strong{font-size:28px}body.focused-game .track-wrap{height:150px}body.focused-game #apparatus{height:105px}body.focused-game .instruction-bar{min-height:53px;padding-top:9px;padding-bottom:9px}body.focused-game .status{margin:6px 10px 9px}body.focused-game .experiment{padding-top:10px;padding-bottom:10px}}
+.game-sound{display:none;background:#26343b;border:1px solid #475b60;border-radius:7px;padding:10px 12px;min-height:42px;font:11px var(--mono);color:var(--mint);white-space:nowrap}.focused-game .game-sound{display:block}.focused-game .round-label{margin-left:auto;margin-right:8px}@media(max-width:600px){.focused-game .round-label{display:none}.focused-game .stage-label{font-size:8px;letter-spacing:.3px}.focused-game .badge{font-size:8px;margin-left:6px}.focused-game .game-sound{padding:8px}}
+/* Performance layout: touch instrument at left, tall score at right. */
+.performance-grid{display:grid;grid-template-columns:minmax(235px,.8fr) minmax(0,1.4fr);gap:0;align-items:stretch}.instrument-panel{background:#1d2830;border-right:1px solid #3b4b56;min-width:0;display:flex;flex-direction:column;justify-content:center}.score-panel{min-width:0;background:#131c24}.song-heading{padding:18px 22px 12px;display:flex;flex-direction:column;gap:6px}.song-heading>span{font-size:10px;letter-spacing:2px;color:var(--mint)}.song-heading strong{font-size:22px}.song-heading small{font-size:11px;color:var(--muted)}.performance-grid .experiment{display:flex;flex-direction:column;padding:20px;gap:24px}.performance-grid .magnet-area{min-height:180px;display:flex;flex-direction:column;justify-content:center;border:1px dashed #576c77;border-radius:12px;padding:16px 6px;background:#16232c}.performance-grid #apparatus{height:150px}.performance-grid .bulbs-area{border:0;padding:0}.performance-grid .bulb-pair{justify-content:center;gap:28px}.performance-grid .bulb{height:85px}.performance-grid .bulb svg{height:85px}.performance-grid .instruction-bar{padding:14px 12px;min-height:80px}.performance-grid #level-readout{display:none}.note-readout{text-align:center;padding:14px;display:flex;gap:9px;align-items:center;justify-content:center;flex-wrap:wrap}.note-readout span,.note-readout small{font-size:10px;color:var(--muted)}.note-readout strong{font-size:26px;color:var(--lime)}.note-readout small{flex-basis:100%}.performance-grid .track-wrap,body.focused-game .performance-grid .track-wrap{height:clamp(390px,57vh,640px)}.performance-grid .track-header{font-size:10px;padding:8px 12px}.performance-grid .track-header .muted{display:none}.performance-grid .track-overlay strong{font-size:20px}.performance-grid .track-overlay p{font-size:11px}.performance-grid .track-overlay{background:#131c24b0}.play-controls{padding-top:16px}.unlit{filter:none!important;color:#59656c!important;transition:none!important}.unlit .glass{fill:transparent!important;stroke:#59656c!important}.focused-game .layout{max-width:1280px}.focused-game .performance-grid{grid-template-columns:minmax(240px,.7fr) minmax(0,1.5fr)}.focused-game .song-heading{padding-top:12px}.focused-game .performance-grid .experiment{padding:12px 16px;gap:12px}.focused-game .performance-grid .track-wrap{height:clamp(350px,calc(100dvh - 335px),670px)}.focused-game .performance-grid #apparatus{height:120px}.focused-game .performance-grid .magnet-area{min-height:150px}.focused-game .performance-grid .instruction-bar{min-height:62px}.focused-game .note-readout{padding:8px}.focused-game .performance-grid .bulb,.focused-game .performance-grid .bulb svg{height:65px}.performance-grid .apparatus-top #current-label{display:none}@media(max-width:600px){.performance-grid,.focused-game .performance-grid{grid-template-columns:minmax(145px,.8fr) minmax(0,1.2fr)}.performance-grid .experiment,.focused-game .performance-grid .experiment{padding:10px 5px;gap:12px}.performance-grid #apparatus,.focused-game .performance-grid #apparatus{height:95px}.performance-grid .magnet-area{padding:10px 2px}.performance-grid .bulb-pair{gap:9px}.performance-grid .instruction-bar{padding:10px 5px}.performance-grid .instruction-bar>span:first-child{display:none}.performance-grid .track-header{font-size:8px;gap:4px;flex-wrap:wrap}.song-heading{padding:14px 10px}.song-heading strong{font-size:18px}.song-heading small{font-size:10px}.performance-grid .track-overlay strong{font-size:15px}.performance-grid .track-overlay p{font-size:10px}.performance-grid .overlay-kicker{font-size:8px;letter-spacing:0}.performance-grid .judge-badge{font-size:12px}.performance-grid .note-readout small{font-size:9px}}
+body.focused-game .layout{max-width:1280px}body.focused-game .performance-grid .track-wrap{height:clamp(300px,calc(100dvh - 395px),670px)}
+.judge-badge[data-grade=penalty]{color:#ff989b}.judge-badge[data-grade=rest]{color:var(--mint)}.judge-badge[data-grade=grace]{color:var(--muted)}
+
+</style>
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar">
+      <a class="brand" href="./light-rhythm.html" aria-label="빛의 신호 처음으로"><span class="brand-icon">ϟ</span><span>LIGHT LAB<span class="brand-divider">/</span><span class="brand-sub">PLAY & DISCOVER</span></span></a>
+      <div class="top-actions"><span class="local-tag"><i></i> 나의 기기에만 저장</span></div>
+    </header>
+
+    <main>
+      <section class="intro">
+        <div><p class="eyebrow">SCIENCE ARCADE <span>01 — 전자기 유도</span></p><h1>빛의 <em>신호</em><span class="title-star">✳</span></h1><p class="subtitle">흔들고, 멈추고. 짧고 긴 빛으로 보내는 나만의 신호.</p></div>
+        <div class="challenge-tag"><span>30</span><div>SECONDS<br><strong>오늘의 발전 챌린지</strong></div></div>
+      </section>
+
+      <div class="layout">
+        <section class="game-card" aria-label="전자기 유도 빛 신호 게임">
+          <div class="stage-top"><div class="stage-label"><i></i> <span id="stage-label">READY TO GLOW</span><span id="mode-badge" class="badge">하 · 첫 번째 신호</span></div><span class="round-label">30초 / 10,000점</span></div>
+          <div class="scoreboard">
+            <div><span class="metric-label">SCORE</span><strong id="score">00000</strong></div>
+            <div class="combo-metric"><span class="metric-label">COMBO</span><strong id="combo">0<span>×</span></strong></div>
+            <div class="time-metric"><span class="metric-label">TIME LEFT</span><strong id="time">30.0<span>s</span></strong></div>
+          </div>
+          <div class="time-track"><div id="time-fill"></div></div>
+
+          <div class="performance-grid"><section class="instrument-panel">          <div class="experiment">
+            <div class="magnet-area" id="touch-zone" role="slider" tabindex="0" aria-label="자석 위치. 손가락으로 좌우 왕복하거나 좌우 방향키를 누르세요." aria-valuemin="8" aria-valuemax="92" aria-valuenow="50">
+              <div class="apparatus-top"><span>01 <strong>자석을 움직이기</strong></span><span id="current-label">전류 없음</span></div>
+              <svg id="apparatus" viewBox="0 0 500 155" aria-hidden="true">
+                <defs><linearGradient id="pole-blue" x2="0" y2="1"><stop stop-color="#6599ed"/><stop offset="1" stop-color="#3b67ae"/></linearGradient><linearGradient id="pole-red" x2="0" y2="1"><stop stop-color="#ff7f7f"/><stop offset="1" stop-color="#d45365"/></linearGradient><linearGradient id="copper" x2="1" y2="0"><stop stop-color="#926c42"/><stop offset=".45" stop-color="#e9c18c"/><stop offset="1" stop-color="#ad7850"/></linearGradient></defs>
+                <path d="M310 113 V137 H440 V102" fill="none" stroke="#536877" stroke-width="3"/>
+                <rect x="270" y="39" width="106" height="78" rx="18" fill="#17232c" stroke="#53616a"/>
+                <g id="magnet" transform="translate(165 0)"><rect x="0" y="56" width="160" height="44" rx="8" fill="url(#pole-red)"/><path d="M8 56 H80 V100 H8 Q0 100 0 92 V64 Q0 56 8 56" fill="url(#pole-blue)"/><path d="M10 60 H150" stroke="#fff" opacity=".22"/><text x="35" y="85" class="pole-letter">S</text><text x="116" y="85" class="pole-letter">N</text><path d="M58 111 H102 M65 117 H95" stroke="#8b9daa" stroke-width="2" stroke-linecap="round"/></g>
+                <g id="coil-wires" fill="none" stroke="url(#copper)" stroke-width="5" stroke-linecap="round"><path d="M280 44 C304 43 304 115 280 112 M292 44 C316 43 316 115 292 112 M304 44 C328 43 328 115 304 112 M316 44 C340 43 340 115 316 112 M328 44 C352 43 352 115 328 112 M340 44 C364 43 364 115 340 112 M352 44 C376 43 376 115 352 112"/></g>
+                <text x="321" y="24" text-anchor="middle" fill="#a3b1bd" font-size="12">코일</text><path d="M321 28 V35" stroke="#526571"/>
+                <path d="M40 78 H88 M40 78 L48 70 M40 78 L48 86 M425 78 H473 M473 78 L465 70 M473 78 L465 86" stroke="#7c909f" stroke-width="2" fill="none"/>
+                <circle cx="440" cy="87" r="17" fill="#18252c" stroke="#526571"/><path id="needle" d="M440 87 L440 74" stroke="#c8f86b" stroke-width="2" stroke-linecap="round"/>
+                <text x="438" y="123" fill="#a3b1bd" font-size="10" text-anchor="middle">전류계</text>
+              </svg>
+              <div class="drag-track"><span id="drag-thumb"></span></div><span class="touch-caption">이 영역에서 좌우로 드래그 <span>↔</span></span>
+            </div>
+            <div class="bulbs-area"><div class="apparatus-top"><span>02 <strong>빛 켜고 끄기</strong></span></div><div class="bulb-pair"><div><div class="bulb target-bulb" id="target-bulb"><svg viewBox="0 0 80 95" aria-hidden="true"><path class="glass" d="M40 8 C4 8 7 43 22 57 L26 69 H54 L58 57 C73 43 76 8 40 8Z"/><path d="M29 68 L25 36 L40 44 L55 36 L51 68 M27 75 H53 M29 81 H51 M34 87 H46" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></div><span>목표 신호</span><strong id="target-percent">0%</strong></div><div><div class="bulb" id="actual-bulb"><svg viewBox="0 0 80 95" aria-hidden="true"><path class="glass" d="M40 8 C4 8 7 43 22 57 L26 69 H54 L58 57 C73 43 76 8 40 8Z"/><path d="M29 68 L25 36 L40 44 L55 36 L51 68 M27 75 H53 M29 81 H51 M34 87 H46" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></div><span>내 전구</span><strong id="actual-percent">0%</strong></div></div></div>
+          </div>
+          <div class="instruction-bar"><span id="motion-icon">↔</span><div><strong id="motion-label">손가락으로 자석을 좌우로 움직여 보세요</strong><span id="motion-detail">막대에서는 흔들기, 빈 구간에서는 멈추기!</span></div><span id="level-readout">READY</span></div>
+
+<div class="note-readout"><span>내 신호</span><strong id="played-note">OFF</strong><small>밝기를 정확하게 맞출 필요 없어요</small></div></section><section class="score-panel"><div class="song-heading"><span>오늘의 신호</span><strong id="song-title">첫 번째 신호</strong><small id="song-description">긴 신호와 넉넉한 쉼</small></div>          <div class="track-header"><span><i class="legend-line"></i> 빛 신호 <span class="muted">← 이쪽으로 흘러와요</span></span><span class="cursor-legend">● 내 전구</span></div>
+          <div class="track-wrap" id="track-wrap">
+            <canvas id="track" aria-label="한 줄의 신호 막대가 판정선으로 흐릅니다. 막대에서는 흔들고 빈 구간에서는 멈추세요."></canvas>
+            <div id="track-overlay" class="track-overlay"><span class="overlay-kicker">움직임이 빛이 되는 순간</span><strong id="overlay-title">빛으로 신호를 보내요.</strong><p id="overlay-text">왼쪽 자석을 좌우로 움직여<br>막대가 오면 흔들고, 없으면 멈춰요.</p><span class="overlay-symbol">↔</span></div>
+            <span class="judge-badge" id="judge" aria-hidden="true"></span>
+          </div>
+
+</section></div>
+          <div class="play-controls"><button id="practice" class="secondary-button">먼저 연습하기 <span>↗</span></button><button id="start" class="primary-button">30초 도전 시작 <span>→</span></button><button id="stop" class="secondary-button hidden">그만하기</button></div>
+          <p id="status" class="status" role="status" aria-live="polite">막대에서는 흔들기, 빈 구간에서는 멈추기!</p>
+        </section>
+
+        <aside class="sidebar">
+          <section class="side-card difficulty-card"><div class="section-heading"><h2>난이도 선택</h2><span>LEVEL</span></div><div class="difficulty-list" role="group" aria-label="난이도"><button class="difficulty active" data-mode="easy" aria-pressed="true"><span class="difficulty-icon">Ⅰ</span><span><strong>하 <small>첫 번째 신호</small></strong><em>● ━ 긴 신호 · 넉넉한 쉼</em></span><span class="selection-dot"></span></button><button class="difficulty" data-mode="medium" aria-pressed="false"><span class="difficulty-icon">Ⅱ</span><span><strong>중 <small>빛의 메시지</small></strong><em>● ━ 짧고 긴 신호</em></span><span class="selection-dot"></span></button><button class="difficulty" data-mode="hard" aria-pressed="false"><span class="difficulty-icon">Ⅲ</span><span><strong>상 <small>신호 마스터</small></strong><em>3단계 고속 전환 · 감점 2배</em></span><span class="selection-dot"></span></button></div></section>
+
+          <section class="side-card records-card"><div class="section-heading"><h2>오늘의 나의 기록</h2><span id="today-date"></span></div><div class="best-label"><span>✦ 오늘 최고 · <b id="record-mode">하</b></span><span>BEST</span></div><div class="best-score"><strong id="best-score">—</strong><span>점</span></div><div class="record-stats"><span>도전 횟수 <b id="attempts">0회</b></span><span>최고 콤보 <b id="best-combo">—</b></span></div><div class="recent-heading">최근 도전 <span>점수 / 정확도</span></div><ol id="recent-records"><li class="empty-record">첫 번째 신호를 만들어 보세요.<br>오늘의 도전이 여기에 쌓여요.</li></ol><p class="record-note" id="storage-note">오늘 기록은 이 브라우저에만 남아요.<br>친구와 같은 난이도의 점수를 비교해 보세요.</p></section>
+
+          <section class="science-note"><span class="note-icon">✧</span><div><h2>왜 전구가 밝아질까요?</h2><p>자석이 움직이면 코일을 통과하는 자기장이 변해 전류가 생겨요. 같은 구간에서 더 빠르게 움직이면 더 밝은 빛을 만들 수 있어요.</p><button id="learn" class="text-button">원리 더 알아보기 <span>↗</span></button></div></section>
+        </aside>
+      </div>
+      <footer><span>움직이는 자석, 전기가 되는 에너지.</span><span>LIGHT LAB <i>·</i> 전자기 유도 체험</span></footer>
+    </main>
+  </div>
+
+  <dialog id="result-dialog" aria-labelledby="result-title"><div class="result-decoration">✳</div><p class="eyebrow">CHALLENGE COMPLETE</p><h2 id="result-title">오늘의 빛을 만들었어요!</h2><p id="result-mode" class="muted"></p><div class="result-score" id="result-score">0</div><span class="result-outof">/ 10,000점</span><p id="new-best" class="new-best"></p><div class="result-stats"><div><span>정확도</span><strong id="result-accuracy"></strong></div><div><span>최대 콤보</span><strong id="result-combo"></strong></div><div><span>오늘 최고</span><strong id="result-best"></strong></div></div><p class="result-tip">막대에서는 흔들고, 빈 구간에서는 멈추기.<br>불필요한 빛을 줄이는 것이 높은 점수의 비결이에요.</p><button id="retry" class="primary-button">한 번 더 도전 <span>↻</span></button><button id="close-result" class="text-button">기록 보고 돌아가기</button></dialog>
+  <dialog id="learn-dialog" aria-labelledby="learn-title"><p class="eyebrow">A LITTLE SCIENCE</p><h2 id="learn-title">움직임이 전기가 되는 원리</h2><div class="lesson-row"><b>01</b><p><strong>움직일 때 전류가 생겨요.</strong>코일을 통과하는 자기장이 변하면 유도 전류가 생겨요. 자석을 넣어 두기만 하면 전류가 계속 흐르지 않아요.</p></div><div class="lesson-row"><b>02</b><p><strong>속도를 바꾸면 밝기도 달라져요.</strong>같은 장치, 같은 구간에서 빠르게 움직일수록 자기장이 빠르게 변해 더 큰 전류를 만들 수 있어요.</p></div><div class="lesson-row"><b>03</b><p><strong>방향을 바꾸면 전류 방향도 바뀌어요.</strong>전류계 바늘을 살펴보세요. 전류 방향이 달라도 전구는 켜질 수 있어요.</p></div><p class="model-note">이 게임은 자석이 코일에 부분적으로 들어가는 구간을 단순화한 학습 모형이에요. 실제 밝기는 위치·코일·자석·회로에 따라 달라져요. 발전소도 물이나 바람 등의 에너지로 발전기를 돌려 전기를 만들어요. 표시되는 밝기와 점수는 실제 측정 단위가 아니에요. 짧고 긴 빛 신호로 전자기 유도의 켜짐과 꺼짐을 체험해요.</p><button id="close-learn" class="primary-button">이제 빛을 만들어 볼까요? <span>→</span></button></dialog>
+<script>
+(function(root){
+'use strict';
+const DURATION=30, DT=1/120, MAX_SPEED=4;
+const DIFFICULTIES={
+ easy:{label:'하',title:'첫 번째 신호',grace:.22,preview:6,penalty:1},
+ medium:{label:'중',title:'빛의 메시지',grace:.16,preview:6,penalty:1},
+ hard:{label:'상',title:'신호 마스터',grace:.10,preview:2.8,penalty:2}
+};
+const SIGNALS={
+ easy:{title:'첫 번째 신호',description:'긴 빛, 넉넉한 쉼',sequence:[2,2,1,2,1,2,2],gap:1.5},
+ medium:{title:'빛의 메시지',description:'짧은 빛과 긴 빛을 번갈아',sequence:[1,2,1,1,2,1,2,1,1,2],gap:.9},
+ hard:{title:'신호 마스터',description:'3단계 가속 도전 · 2.8초 미리 보기 · 감점 2배',phases:[
+  {start:1.5,end:10,pairs:[[.8,.5],[1.2,.4],[.6,.6],[1,.4],[.7,.5],[.9,.9]]},
+  {start:10,end:20,pairs:[[.3,.3],[.3,.3],[.3,.5],[.4,.3],[.3,.3],[.3,.3],[.4,.6],[.3,.3],[.3,.3],[.3,.3],[.3,.5],[.8,.4]]},
+  {start:20,end:30,pairs:[[1.2,.3],[.3,.3],[.4,.3],[1.1,.4],[.3,.3],[.3,.3],[.4,.3],[1.2,.3],[.3,.3],[.5,.9]]}
+ ]}
+};
+const charts={};
+for(const [mode,p] of Object.entries(SIGNALS)){
+ if(p.phases){
+  const rows=[{start:0,end:1.5,on:false}];
+  for(const phase of p.phases){
+   const scale=(phase.end-phase.start)/phase.pairs.flat().reduce((a,b)=>a+b,0);let t=phase.start;
+   for(const [on,off] of phase.pairs){rows.push({start:t,end:t+on*scale,on:true});t+=on*scale;rows.push({start:t,end:t+off*scale,on:false});t+=off*scale;}
+   rows.at(-1).end=phase.end;
+  }
+  charts[mode]=rows;continue;
+ }
+ const total=p.sequence.reduce((a,b)=>a+b,0)+p.sequence.length*p.gap;
+ const unit=27/total;let t=1.5;const rows=[{start:0,end:t,on:false}];
+ for(const length of p.sequence){rows.push({start:t,end:t+length*unit,on:true});t+=length*unit;rows.push({start:t,end:t+p.gap*unit,on:false});t+=p.gap*unit;}
+ rows.at(-1).end=30;charts[mode]=rows;
+}
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+function segmentAt(mode,t){const list=charts[mode]||charts.easy;return list.find(s=>t<s.end-1e-8)||list.at(-1);}
+function targetAt(mode,t){return segmentAt(mode,t).on?1:0;}
+// Boundary grace never awards free signal points; it only forgives a mismatch.
+function judge(mode,t,lit){
+ const list=charts[mode],s=segmentAt(mode,t),on=!!lit,grace=DIFFICULTIES[mode].grace;
+ if(s.on===on)return s.on?'hit':'rest';
+ const index=list.indexOf(s);
+ const nearStart=index>0&&t-s.start<grace;
+ const nearEnd=index<list.length-1&&s.end-t<grace;
+ if(nearStart||nearEnd)return 'grace';
+ return s.on?'miss':'penalty';
+}
+class Engine{
+ constructor(mode='easy',practice=false){
+ this.mode=DIFFICULTIES[mode]?mode:'easy';this.practice=practice;
+ this.x=.5;this.current=0;this.brightness=0;this.lit=false;this.time=0;this.ticks=0;this.accumulator=0;this.done=false;
+ this.motionWindow=Array(12).fill(0);this.motionIndex=0;this.motionSum=0;this.lastPowered=-100;
+ this.judgments=0;this.hits=0;this.evaluated=0;this.points=0;this.combo=0;this.maxCombo=0;this.lastJudge='';this.penalties=0;
+ this.maxHits=0;for(let i=1;i<=300;i++)if(targetAt(this.mode,i/10-.001))this.maxHits++;
+ }
+ get score(){return Math.round(clamp(this.points/this.maxHits*10000,0,10000));}
+ get accuracy(){return this.evaluated?Math.round(this.hits/this.evaluated*100):0;}
+ stopMotion(){this.current=0;this.brightness=0;this.lit=false;this.motionWindow.fill(0);this.motionSum=0;}
+ step(seconds,targetX){
+ if(this.done||!Number.isFinite(seconds)||seconds<=0)return;
+ this.accumulator+=Math.min(seconds,.25);const aim=Number.isFinite(targetX)?clamp(targetX,.08,.92):this.x;
+ while(this.accumulator+1e-10>=DT&&!this.done){
+ this.accumulator-=DT;const old=this.x;this.x+=clamp(aim-this.x,-MAX_SPEED*DT,MAX_SPEED*DT);this.current=(this.x-old)/DT;
+ const distance=Math.abs(this.x-old);this.motionSum+=distance-this.motionWindow[this.motionIndex];this.motionWindow[this.motionIndex]=distance;this.motionIndex=(this.motionIndex+1)%12;
+ const speed=Math.max(0,this.motionSum)/.1;
+ // A stable on/off threshold; excessive speed never earns extra points.
+ this.lit=speed>=(this.lit?.18:.28);this.brightness=this.lit?.85:0;
+ if(this.lit)this.lastPowered=this.time;
+ this.ticks++;this.time=this.ticks*DT;
+ if(!this.practice&&this.ticks%12===0){
+ const t=this.time-.001;const held=targetAt(this.mode,t)&&this.time-this.lastPowered<=.12;
+ this.lastJudge=judge(this.mode,t,this.lit||held);this.judgments++;
+ if(this.lastJudge!=='grace'){
+ this.evaluated++;
+ if(this.lastJudge==='hit'){this.points++;this.hits++;this.combo++;}
+ else if(this.lastJudge==='rest'){this.hits++;}
+ else {this.combo=0;if(this.lastJudge==='penalty'){this.points=Math.max(0,this.points-DIFFICULTIES[this.mode].penalty);this.penalties++;}}
+ this.maxCombo=Math.max(this.maxCombo,this.combo);
+ }
+ }
+ if(!this.practice&&this.ticks>=3600){this.done=true;this.time=30;}
+ }
+ }
+ result(){return {score:this.score,accuracy:this.accuracy,combo:this.maxCombo};}
+}
+const api={Engine,DIFFICULTIES,SIGNALS,DURATION,MAX_SPEED,charts,targetAt,segmentAt,judge,clamp};
+if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.LightRhythm=api;
+})(typeof globalThis!=='undefined'?globalThis:this);
+
+</script>
+<script>
+(function(root){
+  'use strict';
+  const KEY = 'light-signal-today-v2';
+  const LEGACY_KEY = 'light-signal-today-v1';
+  const MODES = ['easy','medium','hard'];
+  function localDate(d) { return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; }
+  function blank(date) { return {version:1,date,modes:Object.fromEntries(MODES.map(k=>[k,{count:0,best:0,bestCombo:0,recent:[]}]))}; }
+  const integer = (n,max) => Number.isInteger(n) && n>=0 && n<=max;
+  function validRecord(r) { return r && integer(r.score,10000) && integer(r.accuracy,100) && integer(r.combo,300); }
+  function validData(d,date) {
+    return d && d.version===1 && d.date===date && d.modes && MODES.every(k=> {
+      const m=d.modes[k];
+      return m && integer(m.count,Number.MAX_SAFE_INTEGER) && integer(m.best,10000) && integer(m.bestCombo,300) && Array.isArray(m.recent) && m.recent.length<=10 && m.recent.length<=m.count && m.recent.every(r=>validRecord(r)&&typeof r.time==='string'&&Number.isFinite(Date.parse(r.time))&&r.score<=m.best&&r.combo<=m.bestCombo);
+    });
+  }
+  function createStore(storage, now=()=>new Date()) {
+    let available = true, data;
+    function persist() { try { storage.setItem(KEY,JSON.stringify(data)); } catch { available=false; } }
+    function refresh() {
+      const date=localDate(now());
+      if (available) {
+        try {
+          const saved=storage.getItem(KEY),raw=JSON.parse(saved);
+          if(validData(raw,date))data=raw;
+          else {
+            data=blank(date);
+            if(saved===null){
+              const old=JSON.parse(storage.getItem(LEGACY_KEY));
+              if(validData(old,date)){data.modes.easy=old.modes.easy;data.modes.medium=old.modes.medium;}
+            }
+            persist();
+          }
+        }
+        catch(error) { if(!(error instanceof SyntaxError))available=false; data=data&&data.date===date?data:blank(date);persist(); }
+      } else if(!data||data.date!==date){data=blank(date);}
+    }
+    return {
+      get available(){return available;},
+      read(){refresh();return JSON.parse(JSON.stringify(data));},
+      add(mode,record){
+        if(!MODES.includes(mode)||!validRecord(record))throw new TypeError('Invalid result');
+        refresh();const m=data.modes[mode];m.count++;m.best=Math.max(m.best,record.score);m.bestCombo=Math.max(m.bestCombo,record.combo);
+        m.recent.unshift({...record,time:now().toISOString()});m.recent=m.recent.slice(0,10);persist();
+        return this.read();
+      }
+    };
+  }
+  const api={createStore,localDate,KEY};
+  if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.LightRecords=api;
+})(typeof globalThis!=='undefined'?globalThis:this);
+
+</script>
+<script>
+(function(){
+  'use strict';
+  const $=id=>document.getElementById(id);
+  const {Engine,DIFFICULTIES,targetAt,clamp,MAX_SPEED,SIGNALS}=window.LightRhythm;
+  let storage;try{storage=window.localStorage;}catch{storage=null;}
+  const store=window.LightRecords.createStore(storage);
+  let mode='easy', engine=new Engine(mode,true), state='ready';
+  let aim=engine.x, pointer=null, anchorX=0, anchorAim=0, keyboard=0, keyboardSpeed=.8;
+  let previousFrame=performance.now(), countdownAt=0, lastBeat=-1, lastJudgment=0;
+  const canvas=$('track'), ctx=canvas.getContext('2d');
+  let cw=600,ch=218;
+  const format=n=>n.toLocaleString('ko-KR');
+  const difficultyButtons=[...document.querySelectorAll('.difficulty')];
+
+  function resize(){
+    const r=canvas.getBoundingClientRect(),dpr=Math.min(devicePixelRatio||1,2);
+    cw=r.width;ch=r.height;canvas.width=Math.round(cw*dpr);canvas.height=Math.round(ch*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);
+  }
+  new ResizeObserver(resize).observe(canvas);
+
+  function updateRecords(){
+    const data=store.read(),m=data.modes[mode];
+    $('today-date').textContent=data.date.slice(5).replace('-','.');$('record-mode').textContent=DIFFICULTIES[mode].label;
+    $('best-score').textContent=m.count?format(m.best):'—';$('attempts').textContent=`${m.count}회`;
+    $('best-combo').textContent=m.count?`${m.bestCombo}×`:'—';
+    const list=$('recent-records');list.replaceChildren();
+    if(!m.count){const li=document.createElement('li');li.className='empty-record';li.append('첫 번째 빛을 만들어 보세요.',document.createElement('br'),'오늘의 도전이 여기에 쌓여요.');list.append(li);}
+    for(const r of m.recent){
+      const li=document.createElement('li'),time=document.createElement('span'),points=document.createElement('b'),acc=document.createElement('span');
+      time.textContent=new Date(r.time).toLocaleTimeString('ko-KR',{hour:'2-digit',minute:'2-digit',hour12:false});points.textContent=format(r.score);acc.textContent=`${r.accuracy}%`;
+      li.append(time,points,acc);list.append(li);
+    }
+    $('storage-note').textContent=store.available?'오늘 기록은 이 브라우저에만 남아요. 친구와 같은 난이도의 점수를 비교해 보세요.':'이 브라우저에서는 기록을 저장할 수 없어요. 현재 화면에서만 기록이 유지돼요.';
+  }
+  function setControls(){
+    const busy=state==='playing'||state==='countdown';
+    document.body.classList.toggle('playing',busy);
+    document.body.classList.toggle('focused-game',busy||state==='practice');
+    difficultyButtons.forEach(b=>b.disabled=busy);
+    $('practice').classList.toggle('hidden',busy||state==='practice');
+    $('start').classList.toggle('hidden',busy);
+    $('stop').classList.toggle('hidden',!busy&&state!=='practice');
+    $('learn').disabled=busy;
+    $('stage-label').textContent=state==='playing'?'LIVE · FEEL THE RHYTHM':state==='practice'?'PRACTICE · 자유롭게 움직여요':state==='countdown'?'GET READY':'READY TO GLOW';
+  }
+  function releaseInput(){pointer=null;keyboard=0;aim=engine.x;engine.stopMotion();}
+  function ready(message='막대에서는 흔들기, 빈 구간에서는 멈추기!'){
+    state='ready';engine=new Engine(mode,true);releaseInput();
+    $('track-overlay').classList.remove('hidden');$('overlay-title').textContent='빛으로 신호를 보내요.';
+    $('overlay-text').innerHTML='왼쪽 자석을 좌우로 움직여<br>막대가 오면 흔들고, 빈 곳에서는 멈춰요.';
+    $('song-title').textContent=SIGNALS[mode].title;$('song-description').textContent=SIGNALS[mode].description;
+    $('track-overlay').querySelector('.overlay-kicker').textContent='움직임이 빛이 되는 순간';
+    $('judge').textContent='';$('status').textContent=message;setControls();updateRecords();
+  }
+  function practice(){
+    state='practice';engine=new Engine(mode,true);releaseInput();lastBeat=-1;
+    $('track-overlay').classList.add('hidden');$('judge').textContent='';
+    $('status').textContent='연습은 감점과 기록이 없어요. 신호 막대에 맞춰 흔들고 멈춰 보세요.';setControls();document.querySelector('.game-card').scrollIntoView({block:'start'});
+  }
+  function start(){
+    updateRecords();state='countdown';engine=new Engine(mode);releaseInput();countdownAt=performance.now();lastBeat=-1;lastJudgment=0;
+    $('track-overlay').classList.remove('hidden');$('track-overlay').querySelector('.overlay-kicker').textContent='손가락을 자석 위에 준비하세요';
+    $('overlay-title').textContent='3';$('overlay-text').textContent='처음에는 멈춤. 다음 빛을 미리 살펴보세요.';
+    $('judge').textContent='';$('status').textContent='막대에서는 빛을 내면 가점, 빈 구간에서 빛을 내면 감점이에요.';
+    setControls();document.querySelector('.game-card').scrollIntoView({block:'start'});
+  }
+  function finish(){
+    if(state!=='playing')return;
+    state='result';releaseInput();
+    const result=engine.result(),old=store.read().modes[mode],isBest=old.count===0||result.score>old.best;
+    const data=store.add(mode,result);updateRecords();setControls();
+    $('result-mode').textContent=`난이도 ${DIFFICULTIES[mode].label} · ${DIFFICULTIES[mode].title}`;
+    $('result-score').textContent=format(result.score);$('result-accuracy').textContent=`${result.accuracy}%`;
+    $('result-combo').textContent=`${result.combo}×`;$('result-best').textContent=format(data.modes[mode].best);
+    $('new-best').textContent=isBest?'✦ 오늘의 새로운 최고 기록!':'한 번 더, 나만의 리듬을 찾아볼까요?';
+    $('status').textContent=store.available?'도전 완료! 오늘의 기록을 저장했어요.':'도전 완료! 저장이 차단되어 현재 화면에만 기록했어요.';
+    $('result-dialog').showModal();
+  }
+  $('practice').addEventListener('click',practice);$('start').addEventListener('click',start);
+  $('stop').addEventListener('click',()=>ready('도전을 중단했어요. 완료하지 않은 도전은 저장하지 않아요.'));
+  $('retry').addEventListener('click',()=>{$('result-dialog').close();start();});
+  $('close-result').addEventListener('click',()=>{$('result-dialog').close();ready();});
+  $('result-dialog').addEventListener('cancel',()=>ready());
+  $('learn').addEventListener('click',()=>{$('learn-dialog').showModal();releaseInput();});
+  $('close-learn').addEventListener('click',()=>$('learn-dialog').close());
+  difficultyButtons.forEach(button=>button.addEventListener('click',()=>{
+    mode=button.dataset.mode;
+    difficultyButtons.forEach(b=>{const active=b===button;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active));});
+    $('mode-badge').textContent=`${DIFFICULTIES[mode].label} · ${DIFFICULTIES[mode].title}`;ready();
+  }));
+  const zone=$('touch-zone');
+  zone.addEventListener('pointerdown',e=>{
+    if(pointer!==null||state==='result'||(e.pointerType==='mouse'&&e.button!==0))return;
+    if(state==='ready')practice();
+    pointer=e.pointerId;anchorX=e.clientX;anchorAim=engine.x;aim=engine.x;zone.setPointerCapture(pointer);zone.focus({preventScroll:true});e.preventDefault();
+  });
+  zone.addEventListener('pointermove',e=>{
+    if(e.pointerId!==pointer)return;
+    if(state==='countdown'){anchorX=e.clientX;anchorAim=engine.x;return;}
+    const width=zone.getBoundingClientRect().width;
+    // The short virtual rail lets a comfortable finger stroke cover the full insertion range.
+    const proposed=anchorAim+(e.clientX-anchorX)/width*1.6;
+    aim=clamp(proposed,.08,.92);
+    if(aim!==proposed){anchorX=e.clientX;anchorAim=aim;}
+  });
+  function endPointer(e){if(e.pointerId===pointer)releaseInput();}
+  zone.addEventListener('pointerup',endPointer);zone.addEventListener('pointercancel',endPointer);zone.addEventListener('lostpointercapture',endPointer);
+  zone.addEventListener('keydown',e=>{
+    if(!['ArrowLeft','ArrowRight'].includes(e.key)||state==='countdown'||state==='result')return;
+    e.preventDefault();if(state==='ready')practice();keyboard=e.key==='ArrowRight'?1:-1;
+    keyboardSpeed=.8;
+  });
+  zone.addEventListener('keyup',e=>{if(['ArrowLeft','ArrowRight'].includes(e.key)){keyboard=0;aim=engine.x;}});
+  zone.addEventListener('blur',releaseInput);window.addEventListener('blur',()=>{releaseInput();});
+  document.addEventListener('visibilitychange',()=>{
+    if(document.hidden){
+      if(['playing','countdown','practice'].includes(state))ready('화면을 벗어나 도전이 중단됐어요. 다시 시작해 주세요.');
+
+    }else{previousFrame=performance.now();updateRecords();}
+  });
+  window.addEventListener('storage',e=>{if(e.key===window.LightRecords.KEY)updateRecords();});
+  setInterval(()=>{if(!document.hidden)updateRecords();},15000);
+
+  function targetTime(){return state==='practice'?engine.time%30:engine.time;}
+  function motionText(on){return on?['⇆','지금 흔들기','막대가 끝날 때까지 좌우로 왕복해요.','ON']:['Ⅱ','지금 멈추기','빈 구간에서 빛을 내면 감점이에요.','OFF'];}
+  function renderValues(){
+    const active=state==='playing'||state==='result';
+    $('score').textContent=String(active?engine.score:0).padStart(5,'0');$('combo').innerHTML=`${active?engine.combo:0}<span>×</span>`;
+    const left=active?Math.max(0,30-engine.time):30;$('time').innerHTML=`${left.toFixed(1)}<span>s</span>`;
+    $('time-fill').style.width=`${left/30*100}%`;
+    const target=state==='ready'||state==='countdown'?0:targetAt(mode,targetTime());
+    $('target-bulb').style.setProperty('--light',target);$('actual-bulb').style.setProperty('--light',engine.brightness);
+    $('actual-bulb').classList.toggle('unlit',engine.brightness===0);
+    $('target-percent').textContent=target?'켜기':'끄기';$('actual-percent').textContent=engine.lit?'켜짐':'꺼짐';$('played-note').textContent=engine.lit?'ON':'OFF';
+    $('magnet').setAttribute('transform',`translate(${90+engine.x*150} 0)`);$('drag-thumb').style.left=`${engine.x*100}%`;
+    zone.setAttribute('aria-valuenow',String(Math.round(engine.x*100)));
+    $('needle').setAttribute('transform',`rotate(${clamp(engine.current/MAX_SPEED,-1,1)*65} 440 87)`);
+    $('current-label').textContent=Math.abs(engine.current)<.01?'전류 없음':engine.current>0?'유도 전류 →':'← 유도 전류';
+    if(state==='ready'){
+      $('motion-icon').textContent='↔';$('motion-label').textContent='손가락으로 자석을 좌우로 움직여 보세요';$('motion-detail').textContent='막대가 있으면 흔들고, 없으면 멈춰요!';$('level-readout').textContent='READY';
+    }else{
+      const [icon,label,detail,readout]=motionText(target);$('motion-icon').textContent=icon;$('motion-label').textContent=label;$('motion-detail').textContent=detail;$('level-readout').textContent=state==='practice'?'PRACTICE':readout;
+    }
+  }
+  function drawTrack(){
+    ctx.clearRect(0,0,cw,ch);
+    const lineX=cw*.19,pps=(cw-lineX)/DIFFICULTIES[mode].preview,y=ch*.48,t=targetTime();
+    ctx.fillStyle='#1b2a33';ctx.fillRect(0,y-44,cw,88);
+    ctx.strokeStyle='#405562';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(cw,y);ctx.stroke();
+    for(const s of window.LightRhythm.charts[mode]){
+      if(!s.on)continue;
+      const x=lineX+(s.start-t)*pps,end=lineX+(s.end-t)*pps;
+      if(end<0||x>cw)continue;
+      ctx.fillStyle=end<lineX?'#4b6b5d':'#cefa76';ctx.fillRect(x,y-25,Math.max(4,end-x-2),50);
+      if(x>lineX+8){ctx.fillStyle='#d1dfda';ctx.font='12px Arial';ctx.fillText(s.end-s.start<1.1?'짧게':'계속 흔들기',x,y-40);}
+    }
+    ctx.fillStyle=engine.lit?'#cefa7630':'#8ea8bb16';ctx.fillRect(lineX-14,20,28,ch-40);
+    ctx.strokeStyle=engine.lit?'#cefa76':'#9dafbb';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(lineX,20);ctx.lineTo(lineX,ch-20);ctx.stroke();
+    ctx.beginPath();ctx.arc(lineX,y,12,0,Math.PI*2);ctx.fillStyle=engine.lit?'#ffef98':'#253846';ctx.fill();ctx.stroke();
+    ctx.font='13px Arial';ctx.fillStyle='#d0ddd8';ctx.fillText('판정선',lineX-18,ch-25);
+    ctx.font='14px Arial';ctx.fillStyle='#a5b6bf';ctx.fillText('막대 = 흔들기',20,ch-86);ctx.fillText('빈 구간 = 멈추기',20,ch-62);
+  }
+  function frame(now){
+    const dt=Math.min((now-previousFrame)/1000,.25);previousFrame=now;
+    if(state==='countdown'){
+      const elapsed=(now-countdownAt)/1000,beat=Math.floor(elapsed);
+      if(beat!==lastBeat){lastBeat=beat;}
+      if(elapsed>=3){state='playing';engine=new Engine(mode);aim=engine.x;anchorAim=engine.x;keyboard=0;$('track-overlay').classList.add('hidden');lastBeat=-1;setControls();}
+      else $('overlay-title').textContent=String(3-Math.floor(elapsed));
+    }else if(state==='playing'||state==='practice'){
+      if(keyboard)aim=clamp(engine.x+keyboard*dt*keyboardSpeed,.08,.92);
+      engine.step(dt,aim);
+      if(state==='playing'){
+        if(engine.judgments!==lastJudgment){lastJudgment=engine.judgments;$('judge').textContent=({hit:'빛 전달 성공!',rest:'멈춤 성공',grace:'전환 준비',miss:'흔들어 주세요',penalty:'불필요한 빛 − 감점'})[engine.lastJudge];$('judge').dataset.grade=engine.lastJudge;}
+        if(engine.done)finish();
+      }
+    }
+    renderValues();drawTrack();requestAnimationFrame(frame);
+  }
+  ready();resize();requestAnimationFrame(frame);
+})();
+
+</script>
+</body>
+</html>
