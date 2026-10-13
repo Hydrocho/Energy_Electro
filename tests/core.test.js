@@ -34,16 +34,16 @@ test('today max combo survives truncation and another open store reads fresh rec
   other.add('easy',record);assert.equal(s.read().modes.easy.count,14);
 });
 
-test('three binary charts fit 30 seconds and get progressively denser',()=>{
- let prior=0;for(const mode of Object.keys(E.DIFFICULTIES)){const chart=E.charts[mode];assert.equal(chart[0].start,0);assert.equal(chart.at(-1).end,30);assert.equal(E.targetAt(mode,0),0);const count=chart.filter(s=>s.on).length;assert.ok(count>prior);prior=count;for(let i=0;i<chart.length;i++){assert.ok(chart[i].end>chart[i].start);if(i)assert.ok(Math.abs(chart[i].start-chart[i-1].end)<1e-8);}}
+test('five binary charts fit 60 seconds and get progressively denser',()=>{
+ let prior=0;for(const mode of Object.keys(E.DIFFICULTIES)){const chart=E.charts[mode];assert.equal(chart[0].start,0);assert.equal(chart.at(-1).end,60);assert.equal(E.targetAt(mode,0),0);const count=chart.filter(s=>s.on).length;assert.ok(count>prior);prior=count;for(let i=0;i<chart.length;i++){assert.ok(chart[i].end>chart[i].start);if(i)assert.ok(Math.abs(chart[i].start-chart[i-1].end)<1e-8);}}
 });
 test('signal hit, dark rest, missing light, extra light and boundary forgiveness are distinct',()=>{
  for(const mode of Object.keys(E.DIFFICULTIES)){const signal=E.charts[mode].find(s=>s.on);const gap=E.charts[mode][2];const on=(signal.start+signal.end)/2,off=(gap.start+gap.end)/2;
  assert.equal(E.judge(mode,on,true),'hit');assert.equal(E.judge(mode,on,false),'miss');assert.equal(E.judge(mode,off,false),'rest');assert.equal(E.judge(mode,off,true),'penalty');assert.equal(E.judge(mode,signal.start+.01,false),'grace');}
 });
-function play(mode,policy,speed=.8){const e=new E.Engine(mode);let x=.5,dir=1;for(let i=0;i<3600;i++){if(policy(e.time)){x+=dir*speed/120;if(x>.90){x=.90;dir=-1;}if(x<.1){x=.1;dir=1;}}e.step(1/120,x);}return e;}
+function play(mode,policy,speed=.8){const e=new E.Engine(mode);let x=.5,dir=1;for(let i=0;i<7200;i++){if(policy(e.time)){x+=dir*speed/120;if(x>.90){x=.90;dir=-1;}if(x<.1){x=.1;dir=1;}}e.step(1/120,x);}return e;}
 test('rest alone never farms points; unnecessary light subtracts earned points without going negative',()=>{
- const idle=play('easy',()=>false);assert.equal(idle.score,0);assert.equal(idle.judgments,300);
+ const idle=play('easy',()=>false);assert.equal(idle.score,0);assert.equal(idle.judgments,200);
  const e=new E.Engine('easy');e.points=10;for(let i=0;i<100;i++)e.step(1/120,i%40<20?.9:.1);assert.ok(e.points<10);assert.ok(e.penalties>0);
  const always=play('easy',()=>true);assert.ok(always.penalties>0);assert.ok(always.score>=0);
 });
@@ -65,7 +65,7 @@ test('hard bursts remain judgeable, get denser after ten seconds and reward corr
  for(const s of chart){
   assert.ok(s.end-s.start>=.29);
   if(!s.on){
-   const ticks=Array.from({length:300},(_,i)=>(i+1)/10-.001).filter(t=>t>=s.start&&t<s.end);
+   const ticks=Array.from({length:600},(_,i)=>(i+1)/10-.001).filter(t=>t>=s.start&&t<s.end);
    assert.ok(ticks.some(t=>E.judge('hard',t,true)==='penalty'));
   }
  }
@@ -80,12 +80,27 @@ test('hard bursts remain judgeable, get denser after ten seconds and reward corr
   assert.equal(e.points,20-(mode==='hard'?2:1));
  }
 });
-test('new hard records start separately while today easy and medium records migrate once',()=>{
- const mem=memory(),now=()=>new Date(2026,9,13,12);
- const old=R.createStore(memory(),now);old.add('easy',record);old.add('medium',record);old.add('hard',record);
- mem.setItem('light-signal-today-v1',JSON.stringify(old.read()));
- const fresh=R.createStore(mem,now);
- assert.equal(fresh.read().modes.easy.best,8000);assert.equal(fresh.read().modes.medium.best,8000);assert.equal(fresh.read().modes.hard.count,0);
- fresh.add('hard',{...record,score:5000});assert.equal(R.createStore(mem,now).read().modes.hard.best,5000);
- assert.equal(JSON.parse(mem.getItem('light-signal-today-v1')).modes.hard.best,8000);
+test('survival thresholds use unrounded earned / possible points after 20 seconds',()=>{
+ assert.equal(E.survivalState(19.99,0,100),'warmup');
+ assert.equal(E.survivalState(20,70,100),'safe');
+ assert.equal(E.survivalState(20,69.99,100),'warning');
+ assert.equal(E.survivalState(20,60,100),'warning');
+ assert.equal(E.survivalState(20,59.99,100),'failed');
+ const idle=play('easy',()=>false);assert.equal(idle.time,20);assert.equal(idle.failed,true);
+ const points=idle.points;idle.step(.2,.9);assert.equal(idle.time,20);assert.equal(idle.points,points);
+});
+test('five levels can be completed with correct input and advanced rests have real judgment windows',()=>{
+ for(const mode of Object.keys(E.DIFFICULTIES)){
+  const e=play(mode,t=>!!E.targetAt(mode,t));assert.equal(e.failed,false,mode);assert.equal(e.time,60);assert.ok(e.rate>=.7,mode);
+  const expected=Array.from({length:600},(_,i)=>(i+1)/10-.001).filter(t=>E.targetAt(mode,t)).length;
+  assert.equal(e.possible,expected);
+  if(['expert','master'].includes(mode))for(const s of E.charts[mode])if(!s.on){
+   assert.ok(Array.from({length:600},(_,i)=>(i+1)/10-.001).some(t=>t>=s.start&&t<s.end&&E.judge(mode,t,true)==='penalty'));
+  }
+ }
+});
+test('60 second records are separate from old rules and support all five levels',()=>{
+ const mem=memory();mem.setItem('light-signal-today-v2','old-records');const s=R.createStore(mem);
+ for(const mode of Object.keys(E.DIFFICULTIES)){assert.equal(s.read().modes[mode].count,0);s.add(mode,{...record,combo:500});assert.equal(s.read().modes[mode].bestCombo,500);}
+ assert.equal(mem.getItem('light-signal-today-v2'),'old-records');
 });

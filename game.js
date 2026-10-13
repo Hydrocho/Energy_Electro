@@ -1,7 +1,7 @@
 (function(){
   'use strict';
   const $=id=>document.getElementById(id);
-  const {Engine,DIFFICULTIES,targetAt,clamp,MAX_SPEED,SIGNALS}=window.LightRhythm;
+  const {Engine,DIFFICULTIES,targetAt,clamp,MAX_SPEED,SIGNALS,DURATION}=window.LightRhythm;
   let storage;try{storage=window.localStorage;}catch{storage=null;}
   const store=window.LightRecords.createStore(storage);
   let mode='easy', engine=new Engine(mode,true), state='ready';
@@ -11,6 +11,48 @@
   let cw=600,ch=218;
   const format=n=>n.toLocaleString('ko-KR');
   const difficultyButtons=[...document.querySelectorAll('.difficulty')];
+  let soundEnabled=true,audio=null,sounding=false;
+  function soundButton(){
+    $('sound-toggle').textContent=soundEnabled?'🔊 소리 켜짐':'🔇 소리 꺼짐';
+    $('sound-toggle').setAttribute('aria-pressed',String(soundEnabled));
+    $('sound-toggle').setAttribute('aria-label',soundEnabled?'소리 끄기':'소리 켜기');
+  }
+  function syncSound(){
+    const on=soundEnabled&&!document.hidden&&(state==='playing'||state==='practice')&&engine.lit;
+    if(!audio||on===sounding)return;
+    sounding=on;
+    audio.gain.gain.cancelScheduledValues(audio.context.currentTime);
+    audio.gain.gain.setTargetAtTime(on?.07:0,audio.context.currentTime,.005);
+  }
+  function audioUnavailable(){soundEnabled=false;syncSound();soundButton();$('sound-toggle').textContent='소리 사용 불가';}
+  // Initialize/resume only inside a user gesture, including Android touch input.
+  function unlockSound(){
+    if(!soundEnabled)return;
+    try{
+      if(!audio){
+        const Audio=window.AudioContext||window.webkitAudioContext;
+        if(!Audio){audioUnavailable();return;}
+        const context=new Audio(),gain=context.createGain(),osc=context.createOscillator();
+        gain.gain.value=0;osc.type='sine';osc.frequency.setTargetAtTime(660,context.currentTime,.005);
+        osc.connect(gain);gain.connect(context.destination);osc.start();audio={context,gain};
+      }
+      if(audio.context.state!=='running')audio.context.resume().catch(audioUnavailable);
+    }catch{audioUnavailable();}
+  }
+  $('sound-toggle').addEventListener('click',()=>{soundEnabled=!soundEnabled;soundButton();unlockSound();syncSound();});
+  soundButton();
+  $('enter-game').addEventListener('click',()=>{
+    $('intro-screen').hidden=true;$('game-screen').hidden=false;
+    ready();resize();$('game-screen').scrollIntoView({block:'start'});openPrepare();
+  });
+  $('back-intro').addEventListener('click',()=>{
+    ready();$('prepare-dialog').close();$('result-dialog').close();$('learn-dialog').close();
+    $('game-screen').hidden=true;$('intro-screen').hidden=false;
+    $('intro-screen').scrollIntoView({block:'start'});$('enter-game').focus();
+  });
+  function openPrepare(){releaseInput();$('prepare-dialog').showModal();$('prepare-start').focus();}
+  $('open-prepare').addEventListener('click',()=>{ready();openPrepare();});
+  $('prepare-start').addEventListener('click',()=>{$('prepare-dialog').close();start();});
 
   function resize(){
     const r=canvas.getBoundingClientRect(),dpr=Math.min(devicePixelRatio||1,2);
@@ -37,27 +79,31 @@
     document.body.classList.toggle('playing',busy);
     document.body.classList.toggle('focused-game',busy||state==='practice');
     difficultyButtons.forEach(b=>b.disabled=busy);
+    $('open-prepare').disabled=busy;
     $('practice').classList.toggle('hidden',busy||state==='practice');
     $('start').classList.toggle('hidden',busy);
     $('stop').classList.toggle('hidden',!busy&&state!=='practice');
     $('learn').disabled=busy;
     $('stage-label').textContent=state==='playing'?'LIVE · FEEL THE RHYTHM':state==='practice'?'PRACTICE · 자유롭게 움직여요':state==='countdown'?'GET READY':'READY TO GLOW';
   }
-  function releaseInput(){pointer=null;keyboard=0;aim=engine.x;engine.stopMotion();}
+  function releaseInput(){pointer=null;keyboard=0;aim=engine.x;engine.stopMotion();syncSound();}
   function ready(message='막대에서는 흔들기, 빈 구간에서는 멈추기!'){
     state='ready';engine=new Engine(mode,true);releaseInput();
     $('track-overlay').classList.remove('hidden');$('overlay-title').textContent='빛으로 신호를 보내요.';
     $('overlay-text').innerHTML='왼쪽 자석을 좌우로 움직여<br>막대가 오면 흔들고, 빈 곳에서는 멈춰요.';
     $('song-title').textContent=SIGNALS[mode].title;$('song-description').textContent=SIGNALS[mode].description;
+    $('prepare-selection').textContent=`${DIFFICULTIES[mode].label} · ${SIGNALS[mode].title} — ${SIGNALS[mode].description}`;
     $('track-overlay').querySelector('.overlay-kicker').textContent='움직임이 빛이 되는 순간';
     $('judge').textContent='';$('status').textContent=message;setControls();updateRecords();
   }
   function practice(){
+    unlockSound();
     state='practice';engine=new Engine(mode,true);releaseInput();lastBeat=-1;
     $('track-overlay').classList.add('hidden');$('judge').textContent='';
     $('status').textContent='연습은 감점과 기록이 없어요. 신호 막대에 맞춰 흔들고 멈춰 보세요.';setControls();document.querySelector('.game-card').scrollIntoView({block:'start'});
   }
   function start(){
+    unlockSound();
     updateRecords();state='countdown';engine=new Engine(mode);releaseInput();countdownAt=performance.now();lastBeat=-1;lastJudgment=0;
     $('track-overlay').classList.remove('hidden');$('track-overlay').querySelector('.overlay-kicker').textContent='손가락을 자석 위에 준비하세요';
     $('overlay-title').textContent='3';$('overlay-text').textContent='처음에는 멈춤. 다음 빛을 미리 살펴보세요.';
@@ -69,6 +115,8 @@
     state='result';releaseInput();
     const result=engine.result(),old=store.read().modes[mode],isBest=old.count===0||result.score>old.best;
     const data=store.add(mode,result);updateRecords();setControls();
+    $('result-title').textContent=engine.failed?'GAME OVER':'60초 도전 성공!';
+    $('result-reason').textContent=engine.failed?`누적 획득률 ${(engine.rate*100).toFixed(1)}% · 60% 미만으로 ${engine.time.toFixed(1)}초에 종료`:`누적 획득률 ${(engine.rate*100).toFixed(1)}% · 끝까지 신호를 보냈어요!`;
     $('result-mode').textContent=`난이도 ${DIFFICULTIES[mode].label} · ${DIFFICULTIES[mode].title}`;
     $('result-score').textContent=format(result.score);$('result-accuracy').textContent=`${result.accuracy}%`;
     $('result-combo').textContent=`${result.combo}×`;$('result-best').textContent=format(data.modes[mode].best);
@@ -85,12 +133,13 @@
   $('close-learn').addEventListener('click',()=>$('learn-dialog').close());
   difficultyButtons.forEach(button=>button.addEventListener('click',()=>{
     mode=button.dataset.mode;
-    difficultyButtons.forEach(b=>{const active=b===button;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active));});
+    difficultyButtons.forEach(b=>{const active=b.dataset.mode===mode;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active));});
     $('mode-badge').textContent=`${DIFFICULTIES[mode].label} · ${DIFFICULTIES[mode].title}`;ready();
   }));
   const zone=$('touch-zone');
   zone.addEventListener('pointerdown',e=>{
     if(pointer!==null||state==='result'||(e.pointerType==='mouse'&&e.button!==0))return;
+    unlockSound();
     if(state==='ready')practice();
     pointer=e.pointerId;anchorX=e.clientX;anchorAim=engine.x;aim=engine.x;zone.setPointerCapture(pointer);zone.focus({preventScroll:true});e.preventDefault();
   });
@@ -107,6 +156,7 @@
   zone.addEventListener('pointerup',endPointer);zone.addEventListener('pointercancel',endPointer);zone.addEventListener('lostpointercapture',endPointer);
   zone.addEventListener('keydown',e=>{
     if(!['ArrowLeft','ArrowRight'].includes(e.key)||state==='countdown'||state==='result')return;
+    unlockSound();
     e.preventDefault();if(state==='ready')practice();keyboard=e.key==='ArrowRight'?1:-1;
     keyboardSpeed=.8;
   });
@@ -121,13 +171,15 @@
   window.addEventListener('storage',e=>{if(e.key===window.LightRecords.KEY)updateRecords();});
   setInterval(()=>{if(!document.hidden)updateRecords();},15000);
 
-  function targetTime(){return state==='practice'?engine.time%30:engine.time;}
+  function targetTime(){return state==='practice'?engine.time%DURATION:engine.time;}
   function motionText(on){return on?['⇆','지금 흔들기','막대가 끝날 때까지 좌우로 왕복해요.','ON']:['Ⅱ','지금 멈추기','빈 구간에서 빛을 내면 감점이에요.','OFF'];}
   function renderValues(){
     const active=state==='playing'||state==='result';
+    $('track-wrap').classList.toggle('signal-warning',state==='playing'&&engine.survival==='warning');
+    $('survival-readout').textContent=active?`누적 획득률 ${(engine.rate*100).toFixed(1)}% · ${engine.time<20?'20초부터 판정':engine.failed?'GAME OVER':engine.survival==='warning'?'경고! 70% 이상으로 회복하세요':'70% 미만 경고 / 60% 미만 종료'}`:'20초부터 누적 획득률 70% 미만 경고 · 60% 미만 종료';
     $('score').textContent=String(active?engine.score:0).padStart(5,'0');$('combo').innerHTML=`${active?engine.combo:0}<span>×</span>`;
-    const left=active?Math.max(0,30-engine.time):30;$('time').innerHTML=`${left.toFixed(1)}<span>s</span>`;
-    $('time-fill').style.width=`${left/30*100}%`;
+    const left=active?Math.max(0,DURATION-engine.time):DURATION;$('time').innerHTML=`${left.toFixed(1)}<span>s</span>`;
+    $('time-fill').style.width=`${left/DURATION*100}%`;
     const target=state==='ready'||state==='countdown'?0:targetAt(mode,targetTime());
     $('target-bulb').style.setProperty('--light',target);$('actual-bulb').style.setProperty('--light',engine.brightness);
     $('actual-bulb').classList.toggle('unlit',engine.brightness===0);
@@ -175,7 +227,7 @@
         if(engine.done)finish();
       }
     }
-    renderValues();drawTrack();requestAnimationFrame(frame);
+    renderValues();syncSound();drawTrack();requestAnimationFrame(frame);
   }
   ready();resize();requestAnimationFrame(frame);
 })();

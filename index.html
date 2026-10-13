@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#10151b">
-  <meta name="description" content="자석을 움직여 빛의 신호를 맞추는 30초 전자기 유도 게임. 터치로 플레이하고 오늘의 기록에 도전하세요.">
-  <title>빛의 신호 · 30초 발전 챌린지</title>
+  <meta name="description" content="자석을 움직여 빛의 신호를 맞추는 60초 전자기 유도 게임. 터치로 플레이하고 오늘의 기록에 도전하세요.">
+  <title>빛의 신호 · 60초 발전 챌린지</title>
   <link rel="stylesheet" href="styles.css">
   <script defer src="engine.js"></script>
   <script defer src="records.js"></script>
@@ -19,18 +19,32 @@
     </header>
 
     <main>
-      <section class="intro">
+      <section id="intro-screen" class="welcome-screen" aria-label="빛의 신호 소개"><div class="intro">
         <div><p class="eyebrow">SCIENCE ARCADE <span>01 — 전자기 유도</span></p><h1>빛의 <em>신호</em><span class="title-star">✳</span></h1><p class="subtitle">흔들고, 멈추고. 짧고 긴 빛으로 보내는 나만의 신호.</p></div>
-        <div class="challenge-tag"><span>30</span><div>SECONDS<br><strong>오늘의 발전 챌린지</strong></div></div>
+        <div class="challenge-tag"><span>60</span><div>SECONDS<br><strong>오늘의 발전 챌린지</strong></div></div>
+      </div>
+        <div class="science-hero">
+          <div class="science-copy"><p class="eyebrow">움직임 → 전기 → 빛</p><h2>자석을 움직이면<br>빛을 만들 수 있어요.</h2><p>자석이 코일 속을 드나들면<br>코일을 통과하는 자기장이 변하고,<br><strong>유도 전류</strong>가 흘러 전구가 켜져요.</p><p class="science-rest">자석을 가만히 두면 전류가 생기지 않아요.</p></div>
+          <svg class="science-picture" viewBox="0 0 620 290" role="img" aria-label="자석을 코일 속으로 넣거나 빼면 유도 전류가 생겨 전구가 켜져요">
+            <path d="M325 195 V245 H530 V165 M385 195 V220 H550 V165" fill="none" stroke="#81d8c1" stroke-width="4"/>
+            <rect x="255" y="78" width="160" height="116" rx="15" fill="#243640"/>
+            <g fill="none" stroke="#dba576" stroke-width="8"><ellipse cx="280" cy="136" rx="20" ry="56"/><ellipse cx="305" cy="136" rx="20" ry="56"/><ellipse cx="330" cy="136" rx="20" ry="56"/><ellipse cx="355" cy="136" rx="20" ry="56"/><ellipse cx="380" cy="136" rx="20" ry="56"/></g>
+            <rect x="70" y="109" width="100" height="56" rx="8" fill="#6092cf"/><path d="M170 109 H255 V165 H170Z" fill="#e97878"/><g fill="white" font-size="24" font-family="Arial" text-anchor="middle"><text x="120" y="146">S</text><text x="211" y="146">N</text></g>
+            <path d="M83 66 H231 M83 66 L96 56 M83 66 L96 76 M231 66 L218 56 M231 66 L218 76" fill="none" stroke="#cefa76" stroke-width="3"/>
+            <circle cx="540" cy="108" r="58" fill="#cefa76" opacity=".08"/><path d="M518 142 C518 126 507 124 507 106 A33 33 0 1 1 573 106 C573 125 562 126 562 142Z" fill="#e9f7a4" stroke="#cefa76" stroke-width="3"/><path d="M526 149 H554 M529 159 H551 M533 168 H547" stroke="#a4bca9" stroke-width="5"/>
+            <g fill="#c4d5d8" font-size="15" font-family="Arial,Malgun Gothic" text-anchor="middle"><text x="163" y="205">자석을 좌우로 움직이기</text><text x="335" y="53">코일</text><text x="540" y="42">전구가 켜져요!</text><text x="429" y="278">유도 전류 →</text></g>
+          </svg>
+        </div>
+        <div class="welcome-action"><p>막대가 오면 흔들고, 빈 구간에서는 멈추세요.</p><button id="enter-game" class="primary-button">게임 시작 <span>→</span></button><small>터치로 플레이 · 1~5단계 · 60초 도전</small></div>
       </section>
 
-      <div class="layout">
+      <section id="game-screen" hidden aria-label="게임과 난이도 선택"><div class="layout">
         <section class="game-card" aria-label="전자기 유도 빛 신호 게임">
-          <div class="stage-top"><div class="stage-label"><i></i> <span id="stage-label">READY TO GLOW</span><span id="mode-badge" class="badge">하 · 첫 번째 신호</span></div><span class="round-label">30초 / 10,000점</span></div>
+          <div class="stage-top"><button id="open-prepare" class="back-intro" type="button">시작 · 단계 선택</button><button id="back-intro" class="back-intro" type="button">← 인트로</button><div class="stage-label"><i></i> <span id="stage-label">READY TO GLOW</span><span id="mode-badge" class="badge">1단계 · 첫 번째 신호</span></div><span class="round-label">60초 / 10,000점</span><button id="sound-toggle" class="sound-toggle" type="button" aria-pressed="true" aria-label="소리 끄기">🔊 소리 켜짐</button></div>
           <div class="scoreboard">
             <div><span class="metric-label">SCORE</span><strong id="score">00000</strong></div>
             <div class="combo-metric"><span class="metric-label">COMBO</span><strong id="combo">0<span>×</span></strong></div>
-            <div class="time-metric"><span class="metric-label">TIME LEFT</span><strong id="time">30.0<span>s</span></strong></div>
+            <div class="time-metric"><span class="metric-label">TIME LEFT</span><strong id="time">60.0<span>s</span></strong></div>
           </div>
           <div class="time-track"><div id="time-fill"></div></div>
 
@@ -55,30 +69,37 @@
           <div class="instruction-bar"><span id="motion-icon">↔</span><div><strong id="motion-label">손가락으로 자석을 좌우로 움직여 보세요</strong><span id="motion-detail">막대에서는 흔들기, 빈 구간에서는 멈추기!</span></div><span id="level-readout">READY</span></div>
 
 <div class="note-readout"><span>내 신호</span><strong id="played-note">OFF</strong><small>밝기를 정확하게 맞출 필요 없어요</small></div></section><section class="score-panel"><div class="song-heading"><span>오늘의 신호</span><strong id="song-title">첫 번째 신호</strong><small id="song-description">긴 신호와 넉넉한 쉼</small></div>          <div class="track-header"><span><i class="legend-line"></i> 빛 신호 <span class="muted">← 이쪽으로 흘러와요</span></span><span class="cursor-legend">● 내 전구</span></div>
-          <div class="track-wrap" id="track-wrap">
+          <div class="track-wrap" id="track-wrap" id="track-wrap">
             <canvas id="track" aria-label="한 줄의 신호 막대가 판정선으로 흐릅니다. 막대에서는 흔들고 빈 구간에서는 멈추세요."></canvas>
             <div id="track-overlay" class="track-overlay"><span class="overlay-kicker">움직임이 빛이 되는 순간</span><strong id="overlay-title">빛으로 신호를 보내요.</strong><p id="overlay-text">왼쪽 자석을 좌우로 움직여<br>막대가 오면 흔들고, 없으면 멈춰요.</p><span class="overlay-symbol">↔</span></div>
             <span class="judge-badge" id="judge" aria-hidden="true"></span>
           </div>
 
 </section></div>
-          <div class="play-controls"><button id="practice" class="secondary-button">먼저 연습하기 <span>↗</span></button><button id="start" class="primary-button">30초 도전 시작 <span>→</span></button><button id="stop" class="secondary-button hidden">그만하기</button></div>
+          <p id="survival-readout" class="survival-readout"></p><div class="play-controls"><button id="practice" class="secondary-button">먼저 연습하기 <span>↗</span></button><button id="start" class="primary-button">60초 도전 시작 <span>→</span></button><button id="stop" class="secondary-button hidden">그만하기</button></div>
           <p id="status" class="status" role="status" aria-live="polite">막대에서는 흔들기, 빈 구간에서는 멈추기!</p>
         </section>
 
         <aside class="sidebar">
-          <section class="side-card difficulty-card"><div class="section-heading"><h2>난이도 선택</h2><span>LEVEL</span></div><div class="difficulty-list" role="group" aria-label="난이도"><button class="difficulty active" data-mode="easy" aria-pressed="true"><span class="difficulty-icon">Ⅰ</span><span><strong>하 <small>첫 번째 신호</small></strong><em>● ━ 긴 신호 · 넉넉한 쉼</em></span><span class="selection-dot"></span></button><button class="difficulty" data-mode="medium" aria-pressed="false"><span class="difficulty-icon">Ⅱ</span><span><strong>중 <small>빛의 메시지</small></strong><em>● ━ 짧고 긴 신호</em></span><span class="selection-dot"></span></button><button class="difficulty" data-mode="hard" aria-pressed="false"><span class="difficulty-icon">Ⅲ</span><span><strong>상 <small>신호 마스터</small></strong><em>3단계 고속 전환 · 감점 2배</em></span><span class="selection-dot"></span></button></div></section>
+          <section class="side-card difficulty-card"><div class="section-heading"><h2>난이도 선택</h2><span>LEVEL</span></div><div class="difficulty-list" role="group" aria-label="난이도"><button class="difficulty active" data-mode="easy" aria-pressed="true"><span class="difficulty-icon">1</span><span><strong>1단계 <small>첫 번째 신호</small></strong><em>긴 신호 · 넉넉한 쉼</em></span><span class="selection-dot"></span></button><button class="difficulty" data-mode="medium" aria-pressed="false"><span class="difficulty-icon">2</span><span><strong>2단계 <small>빛의 메시지</small></strong><em>짧고 긴 신호</em></span><span class="selection-dot"></span></button><button class="difficulty" data-mode="hard" aria-pressed="false"><span class="difficulty-icon">3</span><span><strong>3단계 <small>신호 마스터</small></strong><em>고속 전환 · 감점 2배</em></span><span class="selection-dot"></span></button><button class="difficulty" data-mode="expert" aria-pressed="false"><span class="difficulty-icon">4</span><span><strong>4단계 <small>번개 신호</small></strong><em>불규칙 연속 신호 · 더 빠르게</em></span><span class="selection-dot"></span></button><button class="difficulty" data-mode="master" aria-pressed="false"><span class="difficulty-icon">5</span><span><strong>5단계 <small>극한 신호</small></strong><em>초고속 짧은 신호 · 최고 난도</em></span><span class="selection-dot"></span></button></div></section>
 
-          <section class="side-card records-card"><div class="section-heading"><h2>오늘의 나의 기록</h2><span id="today-date"></span></div><div class="best-label"><span>✦ 오늘 최고 · <b id="record-mode">하</b></span><span>BEST</span></div><div class="best-score"><strong id="best-score">—</strong><span>점</span></div><div class="record-stats"><span>도전 횟수 <b id="attempts">0회</b></span><span>최고 콤보 <b id="best-combo">—</b></span></div><div class="recent-heading">최근 도전 <span>점수 / 정확도</span></div><ol id="recent-records"><li class="empty-record">첫 번째 신호를 만들어 보세요.<br>오늘의 도전이 여기에 쌓여요.</li></ol><p class="record-note" id="storage-note">오늘 기록은 이 브라우저에만 남아요.<br>친구와 같은 난이도의 점수를 비교해 보세요.</p></section>
+          <section class="side-card records-card"><div class="section-heading"><h2>오늘의 나의 기록</h2><span id="today-date"></span></div><div class="best-label"><span>✦ 오늘 최고 · <b id="record-mode">1단계</b></span><span>BEST</span></div><div class="best-score"><strong id="best-score">—</strong><span>점</span></div><div class="record-stats"><span>도전 횟수 <b id="attempts">0회</b></span><span>최고 콤보 <b id="best-combo">—</b></span></div><div class="recent-heading">최근 도전 <span>점수 / 정확도</span></div><ol id="recent-records"><li class="empty-record">첫 번째 신호를 만들어 보세요.<br>오늘의 도전이 여기에 쌓여요.</li></ol><p class="record-note" id="storage-note">오늘 기록은 이 브라우저에만 남아요.<br>친구와 같은 난이도의 점수를 비교해 보세요.</p></section>
 
           <section class="science-note"><span class="note-icon">✧</span><div><h2>왜 전구가 밝아질까요?</h2><p>자석이 움직이면 코일을 통과하는 자기장이 변해 전류가 생겨요. 같은 구간에서 더 빠르게 움직이면 더 밝은 빛을 만들 수 있어요.</p><button id="learn" class="text-button">원리 더 알아보기 <span>↗</span></button></div></section>
         </aside>
       </div>
-      <footer><span>움직이는 자석, 전기가 되는 에너지.</span><span>LIGHT LAB <i>·</i> 전자기 유도 체험</span></footer>
+      </section><footer><span>움직이는 자석, 전기가 되는 에너지.</span><span>LIGHT LAB <i>·</i> 전자기 유도 체험</span></footer>
     </main>
   </div>
 
-  <dialog id="result-dialog" aria-labelledby="result-title"><div class="result-decoration">✳</div><p class="eyebrow">CHALLENGE COMPLETE</p><h2 id="result-title">오늘의 빛을 만들었어요!</h2><p id="result-mode" class="muted"></p><div class="result-score" id="result-score">0</div><span class="result-outof">/ 10,000점</span><p id="new-best" class="new-best"></p><div class="result-stats"><div><span>정확도</span><strong id="result-accuracy"></strong></div><div><span>최대 콤보</span><strong id="result-combo"></strong></div><div><span>오늘 최고</span><strong id="result-best"></strong></div></div><p class="result-tip">막대에서는 흔들고, 빈 구간에서는 멈추기.<br>불필요한 빛을 줄이는 것이 높은 점수의 비결이에요.</p><button id="retry" class="primary-button">한 번 더 도전 <span>↻</span></button><button id="close-result" class="text-button">기록 보고 돌아가기</button></dialog>
+  <dialog id="prepare-dialog" class="prepare-dialog" aria-labelledby="prepare-title">
+    <p class="eyebrow">READY TO GLOW</p><h2 id="prepare-title">빛의 신호, 시작할까요?</h2><p class="prepare-description">단계를 고르고 시작하세요.<br>막대에서는 흔들기, 빈 구간에서는 멈추기!</p>
+    <div class="prepare-levels" role="group" aria-label="시작 난이도 선택"><button class="difficulty active" data-mode="easy" aria-pressed="true"><span class="difficulty-icon">1</span><span><strong>1단계 <small>첫 번째 신호</small></strong><em>긴 신호 · 넉넉한 쉼</em></span><span class="selection-dot"></span></button><button class="difficulty" data-mode="medium" aria-pressed="false"><span class="difficulty-icon">2</span><span><strong>2단계 <small>빛의 메시지</small></strong><em>짧고 긴 신호</em></span><span class="selection-dot"></span></button><button class="difficulty" data-mode="hard" aria-pressed="false"><span class="difficulty-icon">3</span><span><strong>3단계 <small>신호 마스터</small></strong><em>고속 전환 · 감점 2배</em></span><span class="selection-dot"></span></button><button class="difficulty" data-mode="expert" aria-pressed="false"><span class="difficulty-icon">4</span><span><strong>4단계 <small>번개 신호</small></strong><em>불규칙 연속 신호 · 더 빠르게</em></span><span class="selection-dot"></span></button><button class="difficulty" data-mode="master" aria-pressed="false"><span class="difficulty-icon">5</span><span><strong>5단계 <small>극한 신호</small></strong><em>초고속 짧은 신호 · 최고 난도</em></span><span class="selection-dot"></span></button></div>
+    <p id="prepare-selection" class="prepare-selection">1단계 · 첫 번째 신호</p>
+    <button id="prepare-start" class="primary-button">60초 게임 시작 <span>→</span></button>
+    <p class="creator-credit">made by 조광근</p>
+  </dialog>
+  <dialog id="result-dialog" aria-labelledby="result-title"><div class="result-decoration">✳</div><p class="eyebrow">CHALLENGE COMPLETE</p><h2 id="result-title">오늘의 빛을 만들었어요!</h2><p id="result-reason" class="muted"></p><p id="result-mode" class="muted"></p><div class="result-score" id="result-score">0</div><span class="result-outof">/ 10,000점</span><p id="new-best" class="new-best"></p><div class="result-stats"><div><span>정확도</span><strong id="result-accuracy"></strong></div><div><span>최대 콤보</span><strong id="result-combo"></strong></div><div><span>오늘 최고</span><strong id="result-best"></strong></div></div><p class="result-tip">막대에서는 흔들고, 빈 구간에서는 멈추기.<br>불필요한 빛을 줄이는 것이 높은 점수의 비결이에요.</p><button id="retry" class="primary-button">한 번 더 도전 <span>↻</span></button><button id="close-result" class="text-button">기록 보고 돌아가기</button></dialog>
   <dialog id="learn-dialog" aria-labelledby="learn-title"><p class="eyebrow">A LITTLE SCIENCE</p><h2 id="learn-title">움직임이 전기가 되는 원리</h2><div class="lesson-row"><b>01</b><p><strong>움직일 때 전류가 생겨요.</strong>코일을 통과하는 자기장이 변하면 유도 전류가 생겨요. 자석을 넣어 두기만 하면 전류가 계속 흐르지 않아요.</p></div><div class="lesson-row"><b>02</b><p><strong>속도를 바꾸면 밝기도 달라져요.</strong>같은 장치, 같은 구간에서 빠르게 움직일수록 자기장이 빠르게 변해 더 큰 전류를 만들 수 있어요.</p></div><div class="lesson-row"><b>03</b><p><strong>방향을 바꾸면 전류 방향도 바뀌어요.</strong>전류계 바늘을 살펴보세요. 전류 방향이 달라도 전구는 켜질 수 있어요.</p></div><p class="model-note">이 게임은 자석이 코일에 부분적으로 들어가는 구간을 단순화한 학습 모형이에요. 실제 밝기는 위치·코일·자석·회로에 따라 달라져요. 발전소도 물이나 바람 등의 에너지로 발전기를 돌려 전기를 만들어요. 표시되는 밝기와 점수는 실제 측정 단위가 아니에요. 짧고 긴 빛 신호로 전자기 유도의 켜짐과 꺼짐을 체험해요.</p><button id="close-learn" class="primary-button">이제 빛을 만들어 볼까요? <span>→</span></button></dialog>
 </body>
 </html>
