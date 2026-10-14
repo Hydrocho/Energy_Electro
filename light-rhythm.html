@@ -36,6 +36,7 @@ body.focused-game .layout{max-width:1280px}body.focused-game .performance-grid .
 body:has(#intro-screen:not([hidden])) .topbar{height:64px}.welcome-screen .intro{padding:24px 0}.science-hero{padding:24px 30px}.science-copy h2{font-size:28px;margin-bottom:12px}.science-copy p:not(.eyebrow){font-size:14px;line-height:1.7;margin:10px 0}.welcome-action{padding-top:10px}.welcome-action p{margin:8px 0}.welcome-action .primary-button{margin-top:10px;min-height:66px}@media(max-width:600px){.welcome-screen .intro{padding:18px 0}.science-hero{padding:20px}.welcome-action{position:sticky;bottom:0;background:#10151bf5;padding:12px 0;z-index:2}}
 .prepare-dialog{width:min(600px,calc(100vw - 28px));max-height:calc(100dvh - 28px);margin:auto;padding:28px;border:1px solid #647e46;border-radius:22px;background:#182127;color:var(--text);text-align:center;box-shadow:0 24px 100px #0009}.prepare-dialog::backdrop{background:#081016bb;backdrop-filter:blur(5px)}.prepare-dialog h2{font-size:27px;margin:0 0 10px}.prepare-description{color:#aebfc8;line-height:1.7;font-size:13px}.prepare-levels{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;margin:22px 0 12px}.prepare-levels .difficulty{justify-content:center;flex-direction:column;padding:14px 4px;gap:8px;min-height:88px;text-align:center}.prepare-levels .difficulty-icon{font-size:25px}.prepare-levels .difficulty small,.prepare-levels .difficulty em,.prepare-levels .selection-dot{display:none}.prepare-selection{color:var(--lime);font-size:14px;margin:12px 0 20px}.prepare-dialog .primary-button{width:100%;font-size:23px;min-height:70px;border-radius:12px}.prepare-dialog .secondary-button{width:100%;margin-top:12px}.prepare-dialog .text-button{margin-top:14px;min-height:40px}#open-prepare{background:#304127;border-color:#94b45e;color:var(--lime)}@media(max-width:450px){.prepare-dialog{padding:22px 16px}.prepare-dialog h2{font-size:23px}.prepare-levels{gap:5px}.prepare-levels .difficulty strong{font-size:12px}.prepare-dialog .primary-button{font-size:21px}}
 .prepare-dialog .creator-credit{text-align:right;color:var(--muted);font-size:13px;line-height:1.5;margin:20px 2px 0}
+#result-dialog{max-height:calc(100dvh - 28px);overflow:auto}#result-dialog[data-outcome=success]{border:2px solid var(--lime);background:radial-gradient(ellipse at 50% 0,#344729,#181f27 65%);box-shadow:0 0 70px #cefa7625}#result-dialog[data-outcome=success] #result-title{color:var(--lime);font-size:34px}#result-dialog[data-outcome=success] .result-decoration{font-size:58px;line-height:1.2}#result-dialog[data-outcome=failure] #result-title{color:#ff989b}.result-celebration{font-size:15px;line-height:1.7;color:#e0eacb}#next-level{width:100%;margin:16px 0 10px}#result-dialog[data-outcome=success] #retry{width:100%;background:#29363b;color:#cbd9de;border:1px solid #53656c;min-height:44px}#result-dialog[data-outcome=success] .result-tip{display:none}
 
 </style>
 </head>
@@ -127,7 +128,7 @@ body:has(#intro-screen:not([hidden])) .topbar{height:64px}.welcome-screen .intro
     <button id="prepare-start" class="primary-button">60초 게임 시작 <span>→</span></button>
     <p class="creator-credit">made by 조광근</p>
   </dialog>
-  <dialog id="result-dialog" aria-labelledby="result-title"><div class="result-decoration">✳</div><p class="eyebrow">CHALLENGE COMPLETE</p><h2 id="result-title">오늘의 빛을 만들었어요!</h2><p id="result-reason" class="muted"></p><p id="result-mode" class="muted"></p><div class="result-score" id="result-score">0</div><span class="result-outof">/ 10,000점</span><p id="new-best" class="new-best"></p><div class="result-stats"><div><span>정확도</span><strong id="result-accuracy"></strong></div><div><span>최대 콤보</span><strong id="result-combo"></strong></div><div><span>오늘 최고</span><strong id="result-best"></strong></div></div><p class="result-tip">막대에서는 흔들고, 빈 구간에서는 멈추기.<br>불필요한 빛을 줄이는 것이 높은 점수의 비결이에요.</p><button id="retry" class="primary-button">한 번 더 도전 <span>↻</span></button><button id="close-result" class="text-button">기록 보고 돌아가기</button></dialog>
+  <dialog id="result-dialog" aria-labelledby="result-title"><div id="result-emblem" class="result-decoration" aria-hidden="true">🏆</div><p id="result-kicker" class="eyebrow">STAGE CLEAR</p><h2 id="result-title">오늘의 빛을 만들었어요!</h2><p id="result-celebration" class="result-celebration"></p><p id="result-reason" class="muted"></p><p id="result-mode" class="muted"></p><div class="result-score" id="result-score">0</div><span class="result-outof">/ 10,000점</span><p id="new-best" class="new-best"></p><div class="result-stats"><div><span>정확도</span><strong id="result-accuracy"></strong></div><div><span>최대 콤보</span><strong id="result-combo"></strong></div><div><span>오늘 최고</span><strong id="result-best"></strong></div></div><p class="result-tip">막대에서는 흔들고, 빈 구간에서는 멈추기.<br>불필요한 빛을 줄이는 것이 높은 점수의 비결이에요.</p><button id="next-level" class="primary-button" hidden>다음 단계 도전하기 →</button><button id="retry" class="primary-button">한 번 더 도전 <span>↻</span></button><button id="close-result" class="text-button">기록 보고 돌아가기</button></dialog>
   <dialog id="learn-dialog" aria-labelledby="learn-title"><p class="eyebrow">A LITTLE SCIENCE</p><h2 id="learn-title">움직임이 전기가 되는 원리</h2><div class="lesson-row"><b>01</b><p><strong>움직일 때 전류가 생겨요.</strong>코일을 통과하는 자기장이 변하면 유도 전류가 생겨요. 자석을 넣어 두기만 하면 전류가 계속 흐르지 않아요.</p></div><div class="lesson-row"><b>02</b><p><strong>속도를 바꾸면 밝기도 달라져요.</strong>같은 장치, 같은 구간에서 빠르게 움직일수록 자기장이 빠르게 변해 더 큰 전류를 만들 수 있어요.</p></div><div class="lesson-row"><b>03</b><p><strong>방향을 바꾸면 전류 방향도 바뀌어요.</strong>전류계 바늘을 살펴보세요. 전류 방향이 달라도 전구는 켜질 수 있어요.</p></div><p class="model-note">이 게임은 자석이 코일에 부분적으로 들어가는 구간을 단순화한 학습 모형이에요. 실제 밝기는 위치·코일·자석·회로에 따라 달라져요. 발전소도 물이나 바람 등의 에너지로 발전기를 돌려 전기를 만들어요. 표시되는 밝기와 점수는 실제 측정 단위가 아니에요. 짧고 긴 빛 신호로 전자기 유도의 켜짐과 꺼짐을 체험해요.</p><button id="close-learn" class="primary-button">이제 빛을 만들어 볼까요? <span>→</span></button></dialog>
 <script>
 (function(root){
@@ -416,7 +417,15 @@ if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.Ligh
     state='result';releaseInput();
     const result=engine.result(),old=store.read().modes[mode],isBest=old.count===0||result.score>old.best;
     const data=store.add(mode,result);updateRecords();setControls();
-    $('result-title').textContent=engine.failed?'GAME OVER':'60초 도전 성공!';
+    const cleared=!engine.failed&&engine.time>=DURATION;
+    const modes=Object.keys(DIFFICULTIES),next=modes[modes.indexOf(mode)+1];
+    $('result-dialog').dataset.outcome=cleared?'success':'failure';
+    $('result-emblem').textContent=cleared?'🏆':'↻';
+    $('result-kicker').textContent=cleared?'STAGE CLEAR':'TRY AGAIN';
+    $('result-title').textContent=cleared?`${DIFFICULTIES[mode].label} 통과!`:'GAME OVER';
+    $('result-celebration').textContent=cleared?(next?'60초 동안 빛의 신호를 끝까지 보냈어요!':'최고 난도 5단계도 성공! 빛의 신호 마스터예요.'):'다시 도전해서 빛의 신호를 이어 보세요.';
+    $('next-level').hidden=!cleared||!next;
+    $('next-level').textContent=next?`${DIFFICULTIES[next].label} 도전하기 →`:'';
     $('result-reason').textContent=engine.failed?`누적 획득률 ${(engine.rate*100).toFixed(1)}% · 60% 미만으로 ${engine.time.toFixed(1)}초에 종료`:`누적 획득률 ${(engine.rate*100).toFixed(1)}% · 끝까지 신호를 보냈어요!`;
     $('result-mode').textContent=`난이도 ${DIFFICULTIES[mode].label} · ${DIFFICULTIES[mode].title}`;
     $('result-score').textContent=format(result.score);$('result-accuracy').textContent=`${result.accuracy}%`;
@@ -428,15 +437,22 @@ if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.Ligh
   $('practice').addEventListener('click',practice);$('start').addEventListener('click',start);
   $('stop').addEventListener('click',()=>ready('도전을 중단했어요. 완료하지 않은 도전은 저장하지 않아요.'));
   $('retry').addEventListener('click',()=>{$('result-dialog').close();start();});
+  $('next-level').addEventListener('click',()=>{
+    if(state!=='result'||engine.failed||engine.time<DURATION)return;
+    const modes=Object.keys(DIFFICULTIES),next=modes[modes.indexOf(mode)+1];
+    if(!next)return;
+    $('result-dialog').close();selectMode(next);start();
+  });
   $('close-result').addEventListener('click',()=>{$('result-dialog').close();ready();});
   $('result-dialog').addEventListener('cancel',()=>ready());
   $('learn').addEventListener('click',()=>{$('learn-dialog').showModal();releaseInput();});
   $('close-learn').addEventListener('click',()=>$('learn-dialog').close());
-  difficultyButtons.forEach(button=>button.addEventListener('click',()=>{
-    mode=button.dataset.mode;
+  function selectMode(selected){
+    mode=selected;
     difficultyButtons.forEach(b=>{const active=b.dataset.mode===mode;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active));});
     $('mode-badge').textContent=`${DIFFICULTIES[mode].label} · ${DIFFICULTIES[mode].title}`;ready();
-  }));
+  }
+  difficultyButtons.forEach(button=>button.addEventListener('click',()=>selectMode(button.dataset.mode)));
   const zone=$('touch-zone');
   zone.addEventListener('pointerdown',e=>{
     if(pointer!==null||state==='result'||(e.pointerType==='mouse'&&e.button!==0))return;

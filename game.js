@@ -115,7 +115,15 @@
     state='result';releaseInput();
     const result=engine.result(),old=store.read().modes[mode],isBest=old.count===0||result.score>old.best;
     const data=store.add(mode,result);updateRecords();setControls();
-    $('result-title').textContent=engine.failed?'GAME OVER':'60초 도전 성공!';
+    const cleared=!engine.failed&&engine.time>=DURATION;
+    const modes=Object.keys(DIFFICULTIES),next=modes[modes.indexOf(mode)+1];
+    $('result-dialog').dataset.outcome=cleared?'success':'failure';
+    $('result-emblem').textContent=cleared?'🏆':'↻';
+    $('result-kicker').textContent=cleared?'STAGE CLEAR':'TRY AGAIN';
+    $('result-title').textContent=cleared?`${DIFFICULTIES[mode].label} 통과!`:'GAME OVER';
+    $('result-celebration').textContent=cleared?(next?'60초 동안 빛의 신호를 끝까지 보냈어요!':'최고 난도 5단계도 성공! 빛의 신호 마스터예요.'):'다시 도전해서 빛의 신호를 이어 보세요.';
+    $('next-level').hidden=!cleared||!next;
+    $('next-level').textContent=next?`${DIFFICULTIES[next].label} 도전하기 →`:'';
     $('result-reason').textContent=engine.failed?`누적 획득률 ${(engine.rate*100).toFixed(1)}% · 60% 미만으로 ${engine.time.toFixed(1)}초에 종료`:`누적 획득률 ${(engine.rate*100).toFixed(1)}% · 끝까지 신호를 보냈어요!`;
     $('result-mode').textContent=`난이도 ${DIFFICULTIES[mode].label} · ${DIFFICULTIES[mode].title}`;
     $('result-score').textContent=format(result.score);$('result-accuracy').textContent=`${result.accuracy}%`;
@@ -127,15 +135,22 @@
   $('practice').addEventListener('click',practice);$('start').addEventListener('click',start);
   $('stop').addEventListener('click',()=>ready('도전을 중단했어요. 완료하지 않은 도전은 저장하지 않아요.'));
   $('retry').addEventListener('click',()=>{$('result-dialog').close();start();});
+  $('next-level').addEventListener('click',()=>{
+    if(state!=='result'||engine.failed||engine.time<DURATION)return;
+    const modes=Object.keys(DIFFICULTIES),next=modes[modes.indexOf(mode)+1];
+    if(!next)return;
+    $('result-dialog').close();selectMode(next);start();
+  });
   $('close-result').addEventListener('click',()=>{$('result-dialog').close();ready();});
   $('result-dialog').addEventListener('cancel',()=>ready());
   $('learn').addEventListener('click',()=>{$('learn-dialog').showModal();releaseInput();});
   $('close-learn').addEventListener('click',()=>$('learn-dialog').close());
-  difficultyButtons.forEach(button=>button.addEventListener('click',()=>{
-    mode=button.dataset.mode;
+  function selectMode(selected){
+    mode=selected;
     difficultyButtons.forEach(b=>{const active=b.dataset.mode===mode;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active));});
     $('mode-badge').textContent=`${DIFFICULTIES[mode].label} · ${DIFFICULTIES[mode].title}`;ready();
-  }));
+  }
+  difficultyButtons.forEach(button=>button.addEventListener('click',()=>selectMode(button.dataset.mode)));
   const zone=$('touch-zone');
   zone.addEventListener('pointerdown',e=>{
     if(pointer!==null||state==='result'||(e.pointerType==='mouse'&&e.button!==0))return;

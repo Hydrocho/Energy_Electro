@@ -107,3 +107,21 @@ test('central preparation dialog selects a level and starts its countdown',()=>{
  ui.get('stop').emit('click');ui.get('open-prepare').emit('click');assert.equal(ui.get('prepare-dialog').open,true);
  ui.get('prepare-start').emit('click');assert.equal(ui.get('prepare-dialog').open,false);assert.equal(ui.get('overlay-title').textContent,'3');
 });
+
+test('every cleared stage shows success, advances correctly, and the final stage has no next button',()=>{
+ let current;
+ class Controlled extends Engine.Engine{constructor(...args){super(...args);current=this;}}
+ const ui=setup(true,{...Engine,Engine:Controlled});ui.get('start').emit('click');ui.tick(3100);
+ for(let i=0;i<5;i++){
+  current.time=60;current.done=true;current.failed=false;current.possible=current.maxHits;current.points=current.maxHits;
+  ui.tick(0);
+  assert.equal(ui.get('result-dialog').dataset.outcome,'success');assert.equal(ui.get('result-title').textContent,`${i+1}단계 통과!`);
+  assert.equal(ui.get('attempts').textContent,'1회');assert.equal(ui.get('next-level').hidden,i===4);
+  ui.tick(100);assert.equal(ui.get('attempts').textContent,'1회');
+  if(i<4){ui.get('next-level').emit('click');assert.equal(ui.get('result-dialog').open,false);assert.match(ui.get('mode-badge').textContent,new RegExp(`${i+2}단계`));ui.tick(3100);}
+ }
+ assert.match(ui.get('result-celebration').textContent,/최고 난도 5단계도 성공/);
+ ui.get('next-level').emit('click');assert.equal(ui.get('result-dialog').open,true);
+ ui.get('retry').emit('click');ui.tick(3100);current.done=true;current.failed=true;current.time=20;ui.tick(0);
+ assert.equal(ui.get('result-dialog').dataset.outcome,'failure');assert.equal(ui.get('result-title').textContent,'GAME OVER');assert.equal(ui.get('next-level').hidden,true);
+});
