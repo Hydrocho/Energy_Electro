@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="ko">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#0d1921"><title>정전 도시 복구 작전 · ENERGY DISPATCH</title><style>
+:root{color-scheme:dark;--bg:#0d1921;--panel:#142630;--line:#2a434f;--text:#edf2ed;--muted:#9cb0ba;--amber:#f6c574;--mint:#8ed6bd;--red:#ff9d92;font-family:'Malgun Gothic',Arial,sans-serif}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text)}button,select,input{font:inherit}button,select{cursor:pointer}button{color:inherit}button,a{-webkit-tap-highlight-color:transparent}button{touch-action:manipulation}button:disabled{opacity:.45;cursor:default}button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible{outline:3px solid var(--amber);outline-offset:4px}button{border:0}a{color:inherit;text-decoration:none}[hidden]{display:none!important}.svg-library{position:absolute;width:0;height:0;overflow:hidden}svg{display:block}.shell{max-width:1440px;margin:auto;padding:0 48px}.topbar{height:80px;display:flex;align-items:center;gap:20px;max-width:1440px;margin:auto;padding:0 48px;border-bottom:1px solid var(--line)}.brand{display:flex;gap:12px;align-items:center;font:14px Arial;letter-spacing:1.5px}.brand b{color:var(--amber)}.brand-mark{width:34px;height:38px;color:var(--amber)}.brand-mark svg{width:100%;height:100%}.top-note{font-size:10px;letter-spacing:1px;color:var(--muted);margin-left:auto}.quiet-button{min-height:44px;background:#1c303a;border:1px solid #3c5662;border-radius:9px;padding:10px 17px;font-size:12px}.quiet-button:hover{background:#2c434d}.primary{min-height:54px;display:flex;align-items:center;justify-content:space-between;gap:15px;background:var(--amber);color:#232d2c;border-radius:10px;padding:16px 22px;font-size:15px;font-weight:800}.primary:hover{background:#ffdaa0}.eyebrow{font:10px/1.5 Consolas,monospace;letter-spacing:2px;color:var(--amber);margin:0 0 16px}.small{font-size:11px!important;color:var(--muted);line-height:1.8}.intro{display:grid;grid-template-columns:1fr 1.15fr;align-items:center;gap:30px;min-height:calc(100dvh - 80px);padding-top:50px;padding-bottom:25px}.intro h1{font-size:clamp(36px,4.3vw,64px);letter-spacing:-3px;line-height:1.25;margin:0}.intro h1 em{font-style:normal;color:var(--amber)}.lead{font-size:17px;line-height:1.9;color:#b1c0c7;margin:24px 0}.topic-tags{display:flex;gap:10px;margin-bottom:26px}.topic-tags span{border:1px solid #38545c;border-radius:30px;padding:8px 14px;color:var(--mint);font-size:12px}.intro-controls{max-width:420px}.intro-controls label{font-size:12px;display:block;margin-bottom:9px;color:var(--muted)}select{width:100%;min-height:48px;border:1px solid #47616b;background:#182d37;color:var(--text);border-radius:8px;padding:10px 14px}.intro-controls .primary{width:100%;margin-top:13px;font-size:20px;min-height:64px}.intro-visual{border:1px solid #354b53;border-radius:23px;background:radial-gradient(ellipse at 55% 50%,#29434a,#14252f 72%);overflow:hidden;box-shadow:0 25px 65px #0003}.dispatch-label{font:10px Consolas,monospace;letter-spacing:2px;padding:23px;color:var(--muted)}.dispatch-label i,.status-dot{display:inline-block;width:6px;height:6px;background:var(--amber);border-radius:50%;margin-right:9px}.intro-visual>svg{width:100%;height:auto}.hero-current{animation:current 2s linear infinite}.visual-caption{text-align:center;font-size:11px;color:var(--amber);padding:14px}.intro-facts{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid #34505a;padding:10px 18px}.intro-facts p{text-align:center;font-size:12px}.intro-facts b{display:block;font-size:13px;margin-bottom:8px}.intro-facts span{color:var(--muted);font-size:10px}.intro-bottom{grid-column:1/-1;display:flex;justify-content:space-between;gap:12px;font-size:11px;color:var(--muted);border-top:1px solid var(--line);padding-top:20px;line-height:1.6}.game{padding-top:23px;padding-bottom:20px}.game-heading{display:flex;align-items:center;gap:20px;margin-bottom:20px}.game-heading h1{font-size:23px;letter-spacing:-1px;margin:0}.game-heading .eyebrow{margin-bottom:5px}.game-heading>#pause{margin-left:auto}.hud{display:flex;gap:32px;margin-left:12px}.hud span{display:block;color:var(--muted);font-size:10px;margin-bottom:6px}.hud strong{font:26px Consolas,monospace}.hud div:last-child strong{color:var(--amber)}.mission-banner{display:flex;align-items:center;gap:24px;padding:18px 22px;border:1px solid #687052;border-left:4px solid var(--amber);border-radius:12px;background:#29332c;margin-bottom:18px}.mission-tag{flex-shrink:0;font-size:11px;color:var(--amber)}.mission-banner h2{font-size:18px;margin:0 0 7px}.mission-banner p{font-size:13px;color:#c7d2cb;line-height:1.75;margin:0}.workspace{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(320px,1fr);gap:18px;align-items:start}.city-panel,.control-panel{border:1px solid var(--line);border-radius:16px;background:var(--panel);overflow:hidden}.panel-top{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:18px 20px;border-bottom:1px solid var(--line)}.panel-top h2{font-size:14px;margin:0}.panel-top>span{font-size:10px;color:var(--mint)}.map-help{font-size:11px;color:var(--muted);margin:16px 20px 0}.city-map{position:relative;aspect-ratio:1000/620;min-height:330px;margin:8px 12px 0}.map-roads{position:absolute;width:100%;height:100%;inset:0}.source,.facility{position:absolute;display:flex;align-items:center;flex-direction:column;background:transparent;transform:translate(-50%,-50%);padding:6px;border:1px solid transparent;border-radius:10px}.source{width:16%;min-width:78px;min-height:90px;background:#17313c;border:1px solid #4c7380}.source svg{width:32px;height:32px;color:var(--mint);margin-bottom:6px}.source b{font-size:11px}.source span{font-size:9px;color:var(--muted);margin-top:5px}.source.selected{border:2px solid var(--amber);background:#3c3c2b}.source.selected svg{color:var(--amber)}.source-grid{left:10%;top:30%}.source-battery{left:10%;top:72%}.source.offline{border-color:#784d4a}.source.offline svg{color:#d58982}.facility{width:24%;min-height:100px}.facility svg{width:100%;height:auto;max-height:135px}.facility b{font-size:12px;margin-top:-5px}.facility-state{font-size:9px;color:var(--muted);margin-top:4px}.hospital{left:37%;top:28%}.shelter{left:37%;top:73%}.school{left:79%;top:28%}.phone{left:58%;top:55%}.battery{left:80%;top:76%}.facility.requested{border:1px dashed #c69d58;background:#ffce6b08}.facility.requested .facility-state{color:var(--amber)}.facility .window{opacity:.15}.facility.restored .window{opacity:1}.facility.restored svg{filter:drop-shadow(0 0 9px #ffcf7625)}.facility.restored .facility-state{color:var(--mint)}.facility.active-effect{border:1px solid var(--mint);background:#8ed6bd0c}.facility-effect{position:absolute;top:18%;right:12%;color:var(--amber);font-size:22px;pointer-events:none}.facility.active-effect .facility-effect{animation:float 1.5s ease-in-out infinite}.facility.motion-effect svg{animation:vibrate .28s linear infinite}.facility.heat-effect .facility-effect{color:#ff9c79}.map-legend{border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;font-size:9px;color:var(--muted);padding:15px 20px}.map-legend i{display:inline-block;width:7px;height:7px;border:1px solid var(--mint);margin-right:4px}.map-roads #wire{stroke-dasharray:8 7;animation:current .75s linear infinite}.control-panel{padding-bottom:10px;min-height:440px}.connection-guide{text-align:center;padding:35px 18px;color:var(--muted)}.connection-guide>svg{width:56px;height:56px;color:var(--amber);margin:0 auto 22px}.connection-guide h3{color:var(--text);font-size:22px;line-height:1.5;margin:0 0 15px}.connection-guide p{line-height:1.9;font-size:12px}.hint{color:var(--amber)!important}.message{padding:0 20px;min-height:23px;font-size:12px;line-height:1.7;color:var(--mint)}.message.error{color:var(--red);border-left:3px solid var(--red);margin-left:20px;padding-left:10px}form{padding:20px}fieldset{border:0;padding:0;margin:0 0 20px;min-width:0}legend{font-size:12px;font-weight:700;margin-bottom:12px;line-height:1.6}.device-options{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}.choice{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:13px 5px;border:1px solid #3b5663;background:#1c333e;border-radius:9px;cursor:pointer;min-height:88px;font-size:11px;text-align:center;touch-action:manipulation}.choice input{position:absolute;top:7px;left:7px;accent-color:var(--amber);width:14px;height:14px}.choice svg{width:30px;height:30px;color:#a8c1c7}.choice:has(input:checked){background:#414332;border-color:var(--amber);color:var(--amber)}.choice:has(input:checked) svg{color:var(--amber)}.energy-options{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}.energy-options .choice{min-height:55px;padding:10px 4px 10px 18px;font-size:12px}.energy-options .choice input{top:50%;transform:translateY(-50%);left:6px}.energy-options .energy-symbol{font-size:18px;line-height:1}.control-panel form .primary{width:100%;font-size:13px;min-height:52px}#heat-question>label{display:flex;gap:9px;align-items:center;font-size:11px;line-height:1.6;padding:10px;border:1px solid #3b5663;border-radius:7px;margin-bottom:6px;cursor:pointer;min-height:44px}input{accent-color:var(--amber)}.feedback{text-align:center;padding:25px 22px}.feedback h3{font-size:21px;line-height:1.5;margin:12px 0 18px}.checkmark{display:grid;place-items:center;width:50px;height:50px;background:#254c40;color:var(--mint);border:1px solid #6fa88f;border-radius:50%;font-size:28px;margin:0 auto 15px}.feedback .eyebrow{color:var(--mint);font-size:9px}.energy-chain{padding:15px 10px;background:#254137;border-radius:10px;color:#c4efda;font-size:16px;font-weight:700;line-height:1.7}.feedback>p:not(.eyebrow):not(.small){font-size:13px;line-height:1.9;color:#b9cdc6;text-align:left}.feedback .primary{width:100%;margin-top:15px}.operation-footer{display:flex;justify-content:space-between;gap:15px;color:var(--muted);font-size:10px;line-height:1.6;margin-top:16px}.low-time{color:var(--red)!important}.result{max-width:1050px;padding-top:45px;padding-bottom:45px;text-align:center}.result h1{font-size:36px;margin:10px 0 15px;letter-spacing:-1px}.result-symbol{font-size:60px;color:var(--amber)}.result>p{color:var(--muted);line-height:1.8}.result .eyebrow{color:var(--amber)}.report-stats{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--line);border-radius:15px;margin:28px 0 15px;padding:24px;background:var(--panel)}.report-stats span{display:block;font-size:11px;color:var(--muted);margin-bottom:10px}.report-stats strong{font:32px Consolas,monospace;color:var(--amber)}.report-actions{display:flex;gap:12px;justify-content:center;margin:23px 0 40px}.learning-report{text-align:left;border-top:1px solid var(--line);padding-top:26px}.learning-report h2{font-size:22px;margin:0 0 10px}.learning-report>p{font-size:13px;color:var(--muted)}#conversion-map{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:22px 0}.conversion-card{padding:18px;border:1px solid #345146;background:#192f2b;border-radius:12px}.conversion-card.pending{background:#192932;border-color:#344650}.conversion-card .num{color:#8fad9b;font:10px Consolas}.conversion-card h3{font-size:13px;margin:10px 0}.conversion-card strong{font-size:13px;color:var(--mint);line-height:1.8;display:block}.conversion-card p{font-size:11px;line-height:1.8;color:var(--muted)}.review-note{border-left:3px solid var(--amber);padding:12px 18px;background:#2d322a;font-size:12px;line-height:1.8;margin-bottom:12px}.next-lesson{margin-top:28px;padding:25px;background:#263645;border-radius:12px}.next-lesson>span{font:10px Consolas;letter-spacing:2px;color:var(--amber)}.next-lesson h3{font-size:18px;line-height:1.7}.next-lesson p{color:var(--muted);font-size:12px;line-height:1.8}dialog{width:min(420px,calc(100% - 30px));border:1px solid #5b7469;border-radius:18px;padding:30px;background:#172c36;color:var(--text);text-align:center}dialog::backdrop{background:#071218bb;backdrop-filter:blur(4px)}dialog p{font-size:13px;line-height:1.8;color:var(--muted)}dialog button{width:100%;margin-top:12px}body:has(#game:not([hidden])) .topbar{height:62px}@keyframes current{to{stroke-dashoffset:-30}}@keyframes float{50%{transform:translateY(-7px);opacity:.6}}@keyframes vibrate{25%{transform:translateX(1px)}75%{transform:translateX(-1px)}}
+@media(min-width:1100px) and (max-height:850px){.game{padding-top:15px}.game-heading{margin-bottom:14px}.mission-banner{padding:12px 18px;margin-bottom:12px}.city-map{min-height:290px;max-height:390px}.facility svg{max-height:110px}.connection-guide{padding:25px 18px}.workspace{gap:14px}.panel-top{padding:14px 18px}.control-panel{min-height:400px}.intro{padding-top:28px}.intro h1{font-size:48px}.lead{margin:17px 0}.intro-visual>svg{max-height:345px}}
+@media(max-width:1050px){.shell{padding-left:24px;padding-right:24px}.topbar{padding:0 24px}.workspace{grid-template-columns:minmax(0,1.2fr) minmax(300px,1fr)}.hud{gap:18px}.city-map{min-height:330px}.facility svg{max-height:105px}.facility{width:26%}.source{min-width:64px}.source b{font-size:10px}.map-legend{font-size:8px}.intro{gap:20px}.intro h1{font-size:42px}.intro-facts{padding:10px 5px}.intro-facts b{font-size:11px}.intro-facts span{font-size:9px}}
+@media(max-width:760px){.top-note{display:none}.topbar{height:65px;gap:10px}.topbar #sound{margin-left:auto}.brand{font-size:11px;letter-spacing:1px}.shell{padding-left:16px;padding-right:16px}.intro{grid-template-columns:1fr;padding-top:28px;gap:28px}.intro-copy h1{font-size:42px}.intro-controls{max-width:none}.intro-visual{order:2}.intro-bottom{order:3}.lead{font-size:15px}.intro-visual>svg{max-height:300px}.intro-facts b{font-size:12px}.workspace{grid-template-columns:1fr}.city-map{min-height:300px;max-height:380px}.facility{width:23%}.facility svg{max-height:110px}.game-heading{flex-wrap:wrap;gap:14px}.game-heading h1{font-size:19px}.hud{width:100%;margin:0;justify-content:space-between;padding:12px 16px;background:#172c36;border-radius:10px}.hud strong{font-size:23px}.mission-banner{gap:12px;padding:14px;align-items:flex-start}.mission-tag{font-size:9px;max-width:40px;line-height:1.8}.mission-banner h2{font-size:16px}.mission-banner p{font-size:12px}.control-panel{min-height:0}.connection-guide{padding:22px}.connection-guide>svg{width:35px;height:35px;margin-bottom:12px}.connection-guide h3{font-size:18px}.operation-footer{flex-direction:column;gap:5px}.energy-options{grid-template-columns:repeat(5,1fr)}.energy-options .choice{font-size:10px;padding-left:18px}.result{padding-top:30px}.result h1{font-size:27px}.report-stats{padding:20px 10px}.report-stats strong{font-size:25px}.report-actions{flex-direction:column}.report-actions .primary{justify-content:center}#conversion-map{grid-template-columns:1fr 1fr}.result .next-lesson h3{font-size:16px}}
+@media(max-width:400px){.energy-options{grid-template-columns:repeat(3,1fr)}.city-map{min-height:310px;margin-left:5px;margin-right:5px}.source{min-width:58px;padding:5px}.facility b{font-size:10px}.facility-state{font-size:8px}.facility{width:26%}.source b{font-size:9px}#conversion-map{grid-template-columns:1fr}.intro-bottom{flex-direction:column}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;scroll-behavior:auto!important}}
+.facility:disabled,.source:disabled{opacity:1}.facility>svg{opacity:.48;transition:opacity .3s,filter .3s}.facility.restored>svg{opacity:1}.facility.active-effect>svg{filter:drop-shadow(0 0 13px #ffcf7660)}.source:disabled{cursor:default}
+.city-map{width:calc(100% - 24px);aspect-ratio:auto;height:clamp(330px,32vw,430px)}@media(max-width:400px){.city-map{width:calc(100% - 10px)}}
+.source{min-width:76px;padding:6px 4px}.source b{white-space:nowrap;font-size:10px}.source span{font-size:9px}@media(max-width:400px){.source{min-width:62px}.source b{font-size:9px}.source span{font-size:8px}}
+
+</style></head>
+<body>
+<svg class="svg-library" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs>
+ <symbol id="icon-bolt" viewBox="0 0 64 64"><path d="M36 5 12 36h18l-3 23 26-35H35Z" fill="currentColor"/></symbol>
+ <symbol id="icon-lamp" viewBox="0 0 64 64"><path d="M22 44C22 35 12 32 12 22a20 20 0 0 1 40 0c0 10-10 13-10 22Z" fill="currentColor" opacity=".8"/><path d="M24 50h16M26 57h12M32 44V25m-8-5 8 5 8-5" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/></symbol>
+ <symbol id="icon-speaker" viewBox="0 0 64 64"><path d="M8 24h13L36 12v40L21 40H8Z" fill="currentColor"/><path d="M43 23q10 9 0 18m7-26q17 17 0 34" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/></symbol>
+ <symbol id="icon-motor" viewBox="0 0 64 64"><path d="M20 11h24v42H20Z" fill="none" stroke="currentColor" stroke-width="4"/><path d="M22 35h20v15H22Z" fill="currentColor" opacity=".6"/><path d="M9 41V15l-5 6m5-6 5 6m41 2v26l-5-6m5 6 5-6M32 11v23" fill="none" stroke="currentColor" stroke-width="3"/></symbol>
+ <symbol id="icon-heater" viewBox="0 0 64 64"><rect x="7" y="21" width="50" height="34" rx="6" fill="none" stroke="currentColor" stroke-width="4"/><path d="M17 28v20m10-20v20m10-20v20m10-20v20M18 16q-6-5 0-10m14 10q-6-5 0-10m14 10q-6-5 0-10" fill="none" stroke="currentColor" stroke-width="3"/></symbol>
+ <symbol id="icon-phone" viewBox="0 0 64 64"><rect x="18" y="4" width="30" height="56" rx="6" fill="none" stroke="currentColor" stroke-width="4"/><rect x="24" y="15" width="18" height="32" rx="2" fill="currentColor" opacity=".5"/><path d="M29 10h8M29 53h8M10 22q-6 10 0 20m45-20q6 10 0 20" stroke="currentColor" stroke-width="3" fill="none"/></symbol>
+ <symbol id="icon-battery" viewBox="0 0 64 64"><rect x="5" y="17" width="48" height="30" rx="5" fill="none" stroke="currentColor" stroke-width="4"/><path d="M57 26v12M15 26v12m12-12v12m12-12v12" stroke="currentColor" stroke-width="6"/></symbol>
+ <symbol id="building-hospital" viewBox="0 0 160 130"><path d="M15 120V43l55-27 75 24v80Z" fill="#263f4b"/><path d="M70 16v104h75V40Z" fill="#1d333f"/><path d="M11 44 70 12l79 25-5 11-75-22-53 27Z" fill="#607982"/><rect x="27" y="59" width="27" height="21" rx="3" fill="#ffcf76" class="window"/><rect x="27" y="88" width="27" height="21" rx="3" fill="#ffcf76" class="window"/><path d="M84 58h12v-12h14v12h12v14h-12v12H96V72H84Z" fill="#fc9c85"/><path d="M88 120V95h33v25" fill="#60828b"/><path d="M103 95v25" stroke="#263f4b" stroke-width="3"/></symbol>
+ <symbol id="building-shelter" viewBox="0 0 160 130"><path d="M17 65 75 24l68 42v54H17Z" fill="#334956"/><path d="M8 66 75 14l78 47-10 13-68-40-57 42Z" fill="#687c85"/><path d="M65 120V80h28v40" fill="#1b303c"/><path d="M27 78h23v24H27Zm79 0h23v24h-23Z" fill="#ffcf76" class="window"/><path d="M121 38V13h12v33" fill="#59717b"/></symbol>
+ <symbol id="building-school" viewBox="0 0 160 130"><path d="M20 120V60h120v60Z" fill="#2b424d"/><path d="M14 54h132v13H14Z" fill="#6f8590"/><path d="M29 77h20v20H29Zm40 0h20v20H69Zm40 0h20v20h-20Z" fill="#ffcf76" class="window"/><path d="M80 53V9M70 39h20M66 22q14-13 28 0M59 13q21-20 42 0" fill="none" stroke="#8fb4bd" stroke-width="4"/><path d="M68 120v-17h24v17" fill="#152e37"/></symbol>
+ <symbol id="building-phone" viewBox="0 0 160 130"><path d="M29 119V44l51-19 52 19v75Z" fill="#354951"/><path d="M23 41 80 19l59 22-7 12-52-18-51 18Z" fill="#6b848c"/><rect x="59" y="47" width="45" height="66" rx="6" fill="#122831" stroke="#8ab7bb" stroke-width="3"/><rect x="66" y="57" width="31" height="43" rx="2" fill="#ffcf76" class="window"/><path d="M76 106h12" stroke="#88b4bc" stroke-width="3"/></symbol>
+ <symbol id="building-battery" viewBox="0 0 160 130"><path d="M20 120V61h120v59Z" fill="#2e454d"/><path d="M15 60 42 42h77l26 18Z" fill="#66848b"/><rect x="44" y="76" width="66" height="29" rx="5" fill="#17333b" stroke="#84b8a9" stroke-width="3"/><path d="M115 85v11M56 84v13m16-13v13m16-13v13" stroke="#ffcf76" stroke-width="6" class="window"/></symbol>
+</defs></svg>
+<header class="topbar"><a href="./energy-city.html" class="brand"><span class="brand-mark"><svg><use href="#icon-bolt"/></svg></span><span>ENERGY <b>DISPATCH</b></span></a><span class="top-note">SCIENCE LAB / 전기 에너지의 이용</span><button id="sound" class="quiet-button" aria-pressed="false">소리 꺼짐</button></header>
+<main>
+<section id="intro" class="intro shell">
+ <div class="intro-copy"><p class="eyebrow">MISSION 01 — BLACKOUT CITY</p><h1>불 꺼진 도시,<br><em>다시 움직이게.</em></h1><p class="lead">전기를 보내고, 필요한 에너지로 바꾸고,<br>다가올 정전에 대비하세요.</p><div class="topic-tags"><span>01 전달</span><span>02 전환</span><span>03 저장</span></div>
+ <div class="intro-controls"><label for="level">작전 난이도</label><select id="level"><option value="1">1단계 · 관제 훈련 / 210초 · 힌트 제공</option><option value="2" selected>2단계 · 도시 복구 / 180초</option><option value="3">3단계 · 긴급 대응 / 135초</option></select><button id="begin" class="primary">도시 복구 시작 <span>↗</span></button><p class="small">터치만으로 조작 · 읽는 시간은 잠깐 멈춤 · 오늘 기록 저장</p></div></div>
+ <div class="intro-visual"><div class="dispatch-label"><i></i> EMERGENCY OPERATIONS</div><svg viewBox="0 0 620 380" role="img" aria-label="전력망으로 연결된 병원, 대피소, 방송 센터와 배터리 저장소"><path d="M20 290 300 130 600 288 315 440Z" fill="#19323b"/><g stroke="#41616a" stroke-width="14" fill="none"><path d="M45 280 290 151 565 293M180 210l279 150M320 170 88 307"/></g><path class="hero-current" d="M70 285 190 220 325 290 475 213" fill="none" stroke="#f8c56b" stroke-width="3" stroke-dasharray="7 12"/><use href="#building-hospital" x="215" y="35" width="190" height="175"/><use href="#building-shelter" x="35" y="140" width="180" height="155"/><use href="#building-school" x="399" y="132" width="180" height="155"/><use href="#building-battery" x="220" y="226" width="180" height="150"/></svg><div class="visual-caption"><span class="status-dot"></span> 도시의 에너지 흐름을 되살려 주세요.</div><div class="intro-facts"><p><b>전선으로 전달</b><span>먼 곳의 시설까지</span></p><p><b>다양하게 전환</b><span>빛 · 열 · 소리 · 운동</span></p><p><b>충전해서 저장</b><span>배터리의 화학 에너지</span></p></div></div>
+ <div class="intro-bottom"><span id="today-record"></span><span>made by 조광근</span></div>
+</section>
+<section id="game" class="shell game" hidden>
+ <div class="game-heading"><div><p class="eyebrow" id="chapter-label"></p><h1>정전 도시 복구 작전</h1></div><button id="pause" class="quiet-button">Ⅱ 일시정지</button><div class="hud"><div><span>복구 임무</span><strong id="progress">1 / 9</strong></div><div><span>남은 시간</span><strong id="time">180</strong></div><div><span>획득 점수</span><strong id="score">0</strong></div></div></div>
+ <div class="mission-banner"><span class="mission-tag">수신된 요청</span><div><h2 id="mission-title"></h2><p id="mission-request"></p></div></div>
+ <div class="workspace">
+  <section class="city-panel" aria-label="전원과 시설 연결 지도"><div class="panel-top"><h2>도시 연결 지도</h2><span id="grid-status">● 주 전력망 공급 중</span></div><p class="map-help" id="map-help">전원 → 요청한 시설 순서로 터치하세요.</p>
+   <div class="city-map" id="city-map"><svg class="map-roads" viewBox="0 0 1000 620" preserveAspectRatio="none" aria-hidden="true"><defs><pattern id="grid-pattern" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#243e48" stroke-width="1"/></pattern></defs><rect width="1000" height="620" fill="url(#grid-pattern)"/><path d="M100 190H880M100 440H880M360 100V530M760 100V530M560 160V450" stroke="#2c4852" stroke-width="16" fill="none"/><path id="wire" d="" stroke="#f7c76e" stroke-width="5" fill="none"/><circle id="wire-end" r="7" fill="#ffe6aa" hidden/></svg>
+    <button class="source source-grid" data-source="grid" id="grid-source"><svg><use href="#icon-bolt"/></svg><b>주 전력망</b><span>발전소 → 전선</span></button>
+    <button class="source source-battery" data-source="battery" id="battery-source"><svg><use href="#icon-battery"/></svg><b>비상 배터리</b><span id="battery-state">미충전</span></button>
+    <button class="facility hospital" data-target="hospital"><svg><use href="#building-hospital"/></svg><b>병원</b><span class="facility-state">대기</span><span class="facility-effect" aria-hidden="true"></span></button>
+    <button class="facility shelter" data-target="shelter"><svg><use href="#building-shelter"/></svg><b>대피소</b><span class="facility-state">대기</span><span class="facility-effect" aria-hidden="true"></span></button>
+    <button class="facility school" data-target="school"><svg><use href="#building-school"/></svg><b>방송 센터</b><span class="facility-state">대기</span><span class="facility-effect" aria-hidden="true"></span></button>
+    <button class="facility phone" data-target="phone"><svg><use href="#building-phone"/></svg><b>통신소</b><span class="facility-state">대기</span><span class="facility-effect" aria-hidden="true"></span></button>
+    <button class="facility battery" data-target="battery"><svg><use href="#building-battery"/></svg><b>저장소</b><span class="facility-state">대기</span><span class="facility-effect" aria-hidden="true"></span></button>
+   </div><div class="map-legend"><span><i></i> 전원</span><span>점선 테두리 = 요청 시설</span><span id="reserve-note">배터리: 아직 저장된 에너지 없음</span></div>
+  </section>
+  <section class="control-panel" aria-labelledby="control-title"><div class="panel-top"><h2 id="control-title">복구 제어판</h2><span id="step-label">01 / 전원 연결</span></div>
+   <div id="connection-guide" class="connection-guide"><svg><use href="#icon-bolt"/></svg><h3>전기가 도착해야<br>도시가 움직여요.</h3><p>지도 왼쪽에서 전원을 고른 뒤<br>요청한 시설을 터치하세요.</p><p id="hint" class="hint"></p></div>
+   <form id="configuration" hidden><fieldset><legend>1. 어떤 장치를 작동시킬까요?</legend><div id="device-options" class="device-options"></div></fieldset><fieldset><legend id="energy-question">2. 주로 이용할 에너지를 모두 선택하세요.</legend><div id="energy-options" class="energy-options"></div></fieldset>
+    <fieldset id="heat-question" hidden><legend>3. 전등에서 함께 발생한 열은?</legend><label><input type="radio" name="heat" value="primary"> 복도를 밝히는 데 주로 이용한 에너지</label><label><input type="radio" name="heat" value="secondary"> 함께 발생했지만 주된 목적은 아닌 에너지</label><label><input type="radio" name="heat" value="lost"> 사라져 버린 에너지</label></fieldset>
+    <button class="primary" type="submit">장치 작동 · 전환 확인 <span>→</span></button></form>
+   <div id="feedback" class="feedback" hidden><span class="checkmark">✓</span><p class="eyebrow">MISSION RESTORED</p><h3>연결이 도시를 바꿨어요.</h3><div id="energy-chain" class="energy-chain"></div><p id="explanation"></p><p class="small">설명을 읽는 동안 시간은 멈춰요.</p><button id="next" class="primary">다음 요청 받기 →</button></div>
+   <p id="message" class="message" role="status" aria-live="polite"></p>
+  </section>
+ </div><div class="operation-footer"><span>전달 → 다양한 전환 → 저장과 재이용</span><span>배터리의 ‘사용 횟수’는 게임 규칙이며 실제 용량이 아닙니다.</span></div>
+</section>
+<section id="result" class="shell result" hidden tabindex="-1"><p class="eyebrow">OPERATION REPORT</p><div id="result-symbol" class="result-symbol">✦</div><h1 id="result-title"></h1><p id="result-summary"></p><div class="report-stats"><div><span>점수</span><strong id="result-score"></strong></div><div><span>해결 임무</span><strong id="result-count"></strong></div><div><span>해결 정확도</span><strong id="result-accuracy"></strong></div></div><p id="saved-note" class="small"></p><div class="report-actions"><button id="again" class="primary">같은 단계 다시 도전 ↻</button><button id="home" class="quiet-button">인트로 · 단계 선택</button></div><section class="learning-report"><h2>내가 만든 에너지 전환 지도</h2><p>이번 작전에서 연결한 에너지의 흐름을 살펴보세요.</p><div id="conversion-map"></div><div id="review-errors"></div><div class="next-lesson"><span>NEXT QUESTION</span><h3>같은 전기를 쓰는데, 왜 배터리가 닳는 빠르기는 다를까요?</h3><p>다음 시간에는 전력과 사용 시간이 전기 에너지 사용량에 어떤 영향을 주는지 알아봅니다.</p></div></section></section>
+</main>
+<dialog id="pause-dialog" aria-labelledby="pause-title"><p class="eyebrow">PAUSED</p><h2 id="pause-title">작전 일시정지</h2><p>돌아올 때까지 남은 시간을 유지합니다.</p><button id="resume" class="primary">계속하기 →</button><button id="quit" class="quiet-button">중단하고 인트로로</button><p class="small">중단한 작전은 기록하지 않아요.</p></dialog>
+<noscript>이 게임은 JavaScript가 켜진 브라우저에서 실행할 수 있습니다.</noscript>
+<script>
+(function(root){
+  'use strict';
+  const LEVELS={
+    1:{label:'1단계',title:'관제 훈련',seconds:210,hints:true},
+    2:{label:'2단계',title:'도시 복구',seconds:180,hints:false},
+    3:{label:'3단계',title:'긴급 대응',seconds:135,hints:false}
+  };
+  const ENERGY={light:'빛',heat:'열',sound:'소리',motion:'역학적',chemical:'화학'};
+  const FACILITIES={hospital:'병원',shelter:'대피소',school:'방송 센터',phone:'통신소',battery:'저장소'};
+  const DEVICES={
+    lamp:{name:'조명',icon:'lamp',hint:'주변을 밝히는 장치'},
+    speaker:{name:'스피커',icon:'speaker',hint:'안내를 소리로 전달'},
+    motor:{name:'승강기 모터',icon:'motor',hint:'승강기를 움직이는 장치'},
+    heater:{name:'보온 장치',icon:'heater',hint:'물체를 따뜻하게 유지'},
+    video:{name:'화면 + 스피커',icon:'phone',hint:'영상과 음성을 함께 전달'},
+    vibration:{name:'진동만 켜기',icon:'phone',hint:'화면과 소리는 끄고 진동 알림'},
+    screen:{name:'화면만 켜기',icon:'phone',hint:'소리와 진동 없이 화면만 사용'},
+    charging:{name:'충전 회로',icon:'battery',hint:'배터리에 에너지를 저장'}
+  };
+  const TASKS=[
+    {id:1,chapter:1,target:'hospital',source:'grid',title:'어두운 복도를 밝혀라',request:'병원 복도에 불이 꺼졌습니다. 환자가 안전하게 이동할 수 있도록 주변을 밝혀 주세요.',device:'lamp',choices:['lamp','heater','speaker'],energies:['light'],explain:'전선으로 전달된 전기 에너지가 조명에서 빛과 열로 전환됩니다. 복도를 밝힐 때 주로 이용하는 것은 빛입니다.'},
+    {id:2,chapter:1,target:'school',source:'grid',title:'멀리까지 대피 안내',request:'방송 센터에서 건물 밖 사람들에게 대피 장소를 알려야 합니다. 화면을 보지 않아도 안내가 전달되어야 합니다.',device:'speaker',choices:['lamp','speaker','motor'],energies:['sound'],explain:'스피커는 전기 에너지를 소리 에너지로 전환합니다. 전선을 통해 멀리 있는 시설에도 전기 에너지를 전달할 수 있습니다.'},
+    {id:3,chapter:1,target:'hospital',source:'grid',title:'환자 이동을 도와라',request:'병원 승강기가 멈췄습니다. 환자를 위층으로 이동시킬 수 있도록 승강기를 움직여 주세요.',device:'motor',choices:['speaker','motor','heater'],energies:['motion'],explain:'모터가 전기 에너지를 역학적 에너지로 전환하여 승강기를 움직입니다. 작동 중 열도 함께 발생합니다.'},
+    {id:4,chapter:2,target:'shelter',source:'grid',title:'온기를 지켜라',request:'대피소의 보온 장치로 담요를 따뜻하게 유지해야 합니다. 이 임무에서 필요한 에너지 전환을 찾아 주세요.',device:'heater',choices:['motor','lamp','heater'],energies:['heat'],explain:'보온 장치는 전기 에너지를 열에너지로 전환합니다. 이 임무에서는 발생한 열 자체가 필요한 결과입니다.'},
+    {id:5,chapter:2,target:'phone',source:'grid',title:'영상과 음성을 동시에',request:'통신소의 스마트폰으로 수어 영상과 음성 안내를 동시에 전달해야 합니다. 화면과 스피커를 함께 사용하는 경우를 생각해 보세요.',device:'video',choices:['screen','vibration','video'],energies:['light','sound'],explain:'스마트폰 화면에서는 빛, 스피커에서는 소리가 나옵니다. 하나의 기기에서도 여러 형태의 에너지 전환이 동시에 일어납니다.'},
+    {id:6,chapter:2,target:'hospital',source:'grid',title:'전등이 따뜻해졌다?',request:'병원 조명을 켠 뒤 전등 주변이 따뜻해졌습니다. 복도를 밝히는 데 주로 이용한 에너지와, 함께 발생한 열을 구분해 보세요.',device:'lamp',choices:['heater','lamp','speaker'],energies:['light'],heatQuestion:true,explain:'조명의 주된 목적은 빛을 이용하는 것입니다. 열도 함께 발생하지만 조명 임무에서 주로 이용하는 에너지는 아닙니다. 에너지가 사라진 것은 아닙니다.'},
+    {id:7,chapter:3,target:'battery',source:'grid',title:'정전 전에 에너지를 저장',request:'곧 주 전력망 점검으로 전기 공급이 끊깁니다. 아직 전기가 들어오는 지금, 저장소의 충전식 배터리를 충전해 주세요.',device:'charging',choices:['charging','motor','heater'],energies:['chemical'],explain:'충전할 때 전기 에너지가 배터리의 화학 에너지로 저장됩니다. 이후 필요할 때 다시 전기 에너지로 전환해 사용할 수 있습니다.'},
+    {id:8,chapter:3,target:'hospital',source:'battery',outage:true,title:'정전! 비상등을 켜라',request:'주 전력망이 끊겼습니다. 앞서 충전한 배터리로 병원의 비상등을 켜야 합니다. 지금 이용할 수 있는 전원을 선택하세요.',device:'lamp',choices:['lamp','speaker','heater'],energies:['light'],explain:'배터리에 저장된 화학 에너지가 전기 에너지로 전환되고, 비상등에서 빛과 열로 전환됩니다. 저장한 에너지를 정전 때 이용한 것입니다.'},
+    {id:9,chapter:3,target:'phone',source:'battery',outage:true,title:'소리 없이 구조 신호',request:'충전한 배터리로 통신소 스마트폰에 전기를 공급하세요. 화면과 소리는 끄고, 진동으로만 구조대에 알림을 전달해야 합니다.',device:'vibration',choices:['video','vibration','screen'],energies:['motion'],explain:'배터리의 화학 에너지가 전기 에너지로, 진동 장치에서 역학적 에너지로 전환됩니다. 진동도 물체의 운동입니다.'}
+  ];
+  function chain(task){return task.id===7?'전기 → 화학 에너지로 저장':`${task.source==='battery'?'화학 → ':''}전기 → ${task.energies.map(e=>ENERGY[e]).join(' + ')}`;}
+  class Game{
+    constructor(level=2){this.level=LEVELS[level]?Number(level):2;this.limit=LEVELS[this.level].seconds;this.remaining=this.limit;this.index=0;this.phase='connect';this.connection=null;this.selectedSource=null;this.errors=0;this.log=[];this.battery=0;this.done=false;this.paused=false;this.wrong=[];}
+    get task(){return TASKS[this.index];}
+    get complete(){return this.done&&this.index===TASKS.length;}
+    get score(){return Math.max(0,Math.round(this.log.length*1000-this.errors*150+(this.complete?1000*this.remaining/this.limit:0)));}
+    get accuracy(){return Math.round(this.log.length/(this.log.length+this.errors||1)*100);}
+    mistake(message){this.errors++;this.wrong.push({task:this.task.id,message});return {ok:false,message};}
+    connect(source,target){
+      if(this.done||this.paused||this.phase!=='connect')return {ok:false,message:'현재 연결을 바꿀 수 없습니다.'};
+      if(source==='grid'&&this.task.outage)return this.mistake('주 전력망이 끊겼어요. 충전해 둔 배터리를 전원으로 선택하세요.');
+      if(source==='battery'&&this.battery===0)return this.mistake('배터리에 저장된 에너지가 없어요. 먼저 전기가 공급될 때 충전해야 합니다.');
+      if(source!==this.task.source||target!==this.task.target)return this.mistake('요청한 시설과 현재 사용할 전원을 다시 확인하세요.');
+      this.connection={source,target};this.phase='configure';return {ok:true,message:'전선 연결 완료! 장치와 에너지 전환을 설정하세요.'};
+    }
+    submit(device,energies,heat){
+      if(this.done||this.paused||this.phase!=='configure')return {ok:false,message:'먼저 전원과 시설을 연결하세요.'};
+      const task=this.task;
+      if(device!==task.device)return this.mistake('이 장치로 요청을 해결할 수 있을까요? 장치의 기능을 살펴보세요.');
+      if(!Array.isArray(energies)||new Set(energies).size!==task.energies.length||task.energies.some(e=>!energies.includes(e)))return this.mistake(task.id===7?'충전할 때 에너지는 배터리에 어떤 형태로 저장될까요?':'이 임무에서 주로 이용하는 에너지를 모두 선택하세요. 모든 기기에 열이 생길 수 있지만, 지금 필요한 결과와 구분해야 해요.');
+      if(task.heatQuestion&&heat!=='secondary')return this.mistake('전등의 열도 전기 에너지가 전환된 결과입니다. 하지만 복도를 밝히는 주된 목적과는 구분해야 합니다.');
+      if(task.id===7)this.battery=2;
+      if(task.source==='battery')this.battery--;
+      this.log.push({id:task.id,chain:chain(task)});this.phase='feedback';return {ok:true,message:task.explain};
+    }
+    next(){if(this.done||this.phase!=='feedback')return;this.index++;this.connection=null;this.selectedSource=null;if(this.index===TASKS.length){this.done=true;this.phase='result';}else this.phase='connect';}
+    tick(seconds){if(this.done||this.paused||this.phase==='feedback'||!Number.isFinite(seconds)||seconds<=0)return;this.remaining=Math.max(0,this.remaining-seconds);if(this.remaining===0){this.done=true;this.phase='result';}}
+  }
+  const KEY='energy-city-today-v1';
+  const localDate=()=>{const d=new Date();return `${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}`;};
+  function records(storage,date=localDate()){
+    const blank=()=>({date,levels:{1:[],2:[],3:[]},best:{1:0,2:0,3:0},counts:{1:0,2:0,3:0}});
+    try{const d=JSON.parse(storage.getItem(KEY));if(!d||d.date!==date)return blank();
+      for(const k of [1,2,3])if(!Array.isArray(d.levels[k])||d.levels[k].length>10||!Number.isInteger(d.best[k])||d.best[k]<0||d.best[k]>10000||!Number.isInteger(d.counts[k])||d.counts[k]<0||d.levels[k].some(r=>!Number.isInteger(r.score)||r.score<0||r.score>10000))return blank();return d;
+    }catch{return blank();}
+  }
+  function save(storage,game,date=localDate()){
+    const data=records(storage,date),k=game.level;data.levels[k].unshift({score:game.score,cleared:game.complete,solved:game.log.length});data.levels[k]=data.levels[k].slice(0,10);data.best[k]=Math.max(data.best[k],game.score);data.counts[k]++;
+    try{storage.setItem(KEY,JSON.stringify(data));return {data,saved:true};}catch{return {data,saved:false};}
+  }
+  const api={LEVELS,ENERGY,FACILITIES,DEVICES,TASKS,Game,chain,records,save,KEY};
+  if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.CityRescue=api;
+})(typeof globalThis!=='undefined'?globalThis:this);
+
+</script><script>
+(function(){
+ 'use strict';
+ const C=window.CityRescue,$=id=>document.getElementById(id);
+ let game=null,screen='intro',selectedSource=null,finished=false,last=performance.now(),sound=false,audio=null;
+ let storage=null;try{storage=window.localStorage;}catch{}
+ const facilities=[...document.querySelectorAll('[data-target]')],sources=[...document.querySelectorAll('[data-source]')];
+ const coords={hospital:[370,174],school:[790,174],shelter:[370,453],phone:[580,341],battery:[800,471]};
+ const symbols={light:'☀',heat:'♨',sound:'♫',motion:'↕',chemical:'▰'};
+ function setScreen(name){screen=name;for(const id of ['intro','game','result'])$(id).hidden=id!==name;window.scrollTo({top:0,behavior:'instant'});}
+ function tell(text,error=false){$('message').textContent=text;$('message').classList.toggle('error',error);}
+ function initSound(){
+  if(!sound)return;
+  try{const Audio=window.AudioContext||window.webkitAudioContext;if(!Audio)throw Error();if(!audio)audio=new Audio();if(audio.state==='suspended')audio.resume().catch(()=>{sound=false;updateSound();});}catch{sound=false;updateSound();}
+ }
+ function updateSound(){$('sound').textContent=sound?'소리 켜짐':'소리 꺼짐';$('sound').setAttribute('aria-pressed',String(sound));}
+ function chime(ok){
+  if(!sound||!audio||audio.state!=='running')return;
+  const t=audio.currentTime,osc=audio.createOscillator(),gain=audio.createGain();osc.type='sine';osc.frequency.setValueAtTime(ok?660:220,t);if(ok)osc.frequency.setValueAtTime(880,t+.1);gain.gain.setValueAtTime(.045,t);gain.gain.exponentialRampToValueAtTime(.001,t+.23);osc.connect(gain);gain.connect(audio.destination);osc.start(t);osc.stop(t+.24);
+ }
+ $('sound').addEventListener('click',()=>{sound=!sound;updateSound();if(sound)initSound();else if(audio)audio.suspend().catch(()=>{});});
+ function showRecords(){const d=C.records(storage),level=$('level').value;$('today-record').textContent=d.counts[level]?`오늘 ${level}단계 · 최고 ${d.best[level].toLocaleString()}점 · ${d.counts[level]}회 도전`:`오늘 ${level}단계 · 아직 도전 기록이 없어요.`;}
+ $('level').addEventListener('change',showRecords);
+ function begin(level){
+  game=new C.Game(level);finished=false;selectedSource=null;last=performance.now();initSound();setScreen('game');renderTask();
+ }
+ $('begin').addEventListener('click',()=>begin($('level').value));
+ function hud(){
+  if(!game)return;
+  $('time').textContent=`${Math.ceil(game.remaining)}s`;$('time').classList.toggle('low-time',game.remaining<=25);
+  $('score').textContent=game.score.toLocaleString();$('progress').textContent=`${Math.min(game.index+1,9)} / 9`;
+  $('battery-state').textContent=game.battery?` 비상 사용 ${game.battery}회`:'미충전 / 소진';
+  $('reserve-note').textContent=game.battery?`비상 에너지 남음 · 사용 ${game.battery}회`:'배터리: 사용 가능한 에너지 없음';
+ }
+ function renderTask(){
+  if(game.done){finish();return;}
+  const task=game.task;selectedSource=null;
+  $('chapter-label').textContent=`CHAPTER 0${task.chapter} / ${['','전달과 에너지 전환','같은 기기, 여러 에너지','충전과 정전 대응'][task.chapter]}`;
+  $('mission-title').textContent=task.title;$('mission-request').textContent=task.request;
+  $('configuration').hidden=true;$('feedback').hidden=true;$('connection-guide').hidden=false;
+  $('step-label').textContent='01 / 전원 연결';$('map-help').textContent='전원 → 요청한 시설 순서로 터치하세요.';
+  $('hint').textContent=C.LEVELS[game.level].hints?`힌트: ${task.source==='grid'?'주 전력망':'비상 배터리'}에서 ${C.FACILITIES[task.target]}로 연결해 보세요.`:'';
+  $('grid-status').textContent=task.outage?'● 주 전력망 정전':'● 주 전력망 공급 중';$('grid-status').style.color=task.outage?'var(--red)':'var(--mint)';
+  $('grid-source').classList.toggle('offline',!!task.outage);
+  $('wire').setAttribute('d','');$('wire-end').setAttribute('visibility','hidden');
+  sources.forEach(b=>{b.disabled=false;b.classList.remove('selected');b.setAttribute('aria-pressed','false');});
+  facilities.forEach(b=>{
+   const requested=b.dataset.target===task.target,restored=!task.outage&&game.log.some(l=>C.TASKS.find(t=>t.id===l.id).target===b.dataset.target);
+   b.disabled=false;b.classList.toggle('requested',requested);b.classList.toggle('restored',restored);b.classList.remove('active-effect','motion-effect','heat-effect');
+   b.querySelector('.facility-state').textContent=requested?'요청 도착':restored?'복구 이력 있음':'대기';b.querySelector('.facility-effect').textContent='';
+   b.setAttribute('aria-label',`${C.FACILITIES[b.dataset.target]}${requested?' · 요청한 시설':''}`);
+  });
+  $('configuration').reset();buildOptions();tell(task.outage?'정전 발생! 충전해 둔 에너지를 활용하세요.':'전기를 보낼 전원과 시설을 연결하세요.');hud();
+ }
+ function buildOptions(){
+  const task=game.task;$('device-options').replaceChildren();
+  for(const key of task.choices){
+   const d=C.DEVICES[key],label=document.createElement('label');label.className='choice';
+   label.innerHTML=`<input type="radio" name="device" value="${key}" required><svg aria-hidden="true"><use href="#icon-${d.icon}"/></svg><span>${d.name}</span>`;
+   if(C.LEVELS[game.level].hints)label.title=d.hint;
+   $('device-options').append(label);
+  }
+  $('energy-options').replaceChildren();
+  for(const [key,name] of Object.entries(C.ENERGY)){
+   const label=document.createElement('label');label.className='choice';label.innerHTML=`<input type="checkbox" name="energy" value="${key}"><span class="energy-symbol" aria-hidden="true">${symbols[key]}</span><span>${name}</span>`;$('energy-options').append(label);
+  }
+  $('energy-question').textContent=task.id===7?'2. 배터리에 어떤 에너지로 저장될까요?':'2. 이 임무에서 주로 이용할 에너지를 모두 선택하세요.';
+  $('heat-question').hidden=!task.heatQuestion;
+  document.querySelectorAll('input[name="heat"]').forEach(e=>{e.required=!!task.heatQuestion;e.disabled=!task.heatQuestion;});
+ }
+ for(const button of sources)button.addEventListener('click',()=>{
+  if(!game||game.done||game.paused||game.phase!=='connect')return;
+  selectedSource=button.dataset.source;sources.forEach(b=>{const yes=b===button;b.classList.toggle('selected',yes);b.setAttribute('aria-pressed',String(yes));});
+  tell(`${selectedSource==='grid'?'주 전력망':'비상 배터리'} 선택. 요청한 시설을 터치하세요.`);
+ });
+ for(const button of facilities)button.addEventListener('click',()=>{
+  if(!game||game.done||game.paused||game.phase!=='connect')return;
+  if(!selectedSource){tell('먼저 지도 왼쪽에서 전원을 선택하세요.',true);return;}
+  const response=game.connect(selectedSource,button.dataset.target);tell(response.message,!response.ok);hud();
+  if(!response.ok){chime(false);return;}
+  const [x,y]=coords[button.dataset.target],sy=selectedSource==='grid'?186:446;
+  $('wire').setAttribute('d',`M100 ${sy} H${x-60} V${y} H${x}`);$('wire-end').removeAttribute('hidden');$('wire-end').setAttribute('visibility','visible');$('wire-end').setAttribute('cx',x);$('wire-end').setAttribute('cy',y);
+  sources.forEach(b=>b.disabled=true);facilities.forEach(b=>b.disabled=true);
+  $('connection-guide').hidden=true;$('configuration').hidden=false;$('step-label').textContent='02 / 장치와 전환 선택';$('map-help').textContent='전선 연결 완료 · 제어판에서 장치와 에너지를 선택하세요.';
+  if(window.innerWidth<=760)$('control-title').scrollIntoView({block:'start',behavior:'smooth'});
+ });
+ $('configuration').addEventListener('submit',e=>{
+  e.preventDefault();if(!game||game.done||game.paused)return;
+  const data=new FormData(e.currentTarget),energies=data.getAll('energy');
+  if(!energies.length){tell('이용할 에너지를 하나 이상 선택하세요.',true);return;}
+  const response=game.submit(data.get('device'),energies,data.get('heat'));tell(response.message,!response.ok);hud();chime(response.ok);
+  if(!response.ok)return;
+  $('configuration').hidden=true;$('feedback').hidden=false;$('energy-chain').textContent=C.chain(game.task);$('explanation').textContent=game.task.explain;
+  $('step-label').textContent='03 / 복구 성공';$('next').textContent=game.index===8?'작전 결과 확인 →':game.index===5?'정전에 대비하기 →':'다음 요청 받기 →';tell('임무 해결 +1,000점 · 설명을 읽고 다음 요청으로 이동하세요.');
+  const facility=facilities.find(b=>b.dataset.target===game.task.target);facility.classList.add('restored','active-effect');facility.classList.remove('requested');facility.querySelector('.facility-state').textContent=game.task.id===7?'충전 완료':'작동 성공';
+  facility.querySelector('.facility-effect').textContent=game.task.energies.map(x=>symbols[x]).join(' ');
+  facility.classList.toggle('motion-effect',game.task.energies.includes('motion'));facility.classList.toggle('heat-effect',game.task.energies.includes('heat'));
+ });
+ $('next').addEventListener('click',()=>{if(!game||game.paused)return;game.next();last=performance.now();renderTask();});
+ function pause(){if(screen!=='game'||!game||game.done)return;game.paused=true;if(!$('pause-dialog').open)$('pause-dialog').showModal();}
+ $('pause').addEventListener('click',pause);
+ function resume(){if(!game)return;game.paused=false;last=performance.now();$('pause-dialog').close();initSound();}
+ $('resume').addEventListener('click',resume);$('pause-dialog').addEventListener('cancel',e=>{e.preventDefault();resume();});
+ document.addEventListener('visibilitychange',()=>{if(document.hidden)pause();else last=performance.now();});
+ $('quit').addEventListener('click',()=>{$('pause-dialog').close();game=null;setScreen('intro');showRecords();});
+ function finish(){
+  if(finished||!game?.done)return;finished=true;const result=C.save(storage,game);setScreen('result');
+  $('result-symbol').textContent=game.complete?'✦':'◷';$('result-title').textContent=game.complete?'도시가 다시 움직입니다.':'이번 작전은 여기까지.';
+  $('result-summary').textContent=game.complete?'전달 · 전환 · 저장, 아홉 개의 연결을 모두 복구했어요.':`${game.log.length}개의 임무를 해결했어요. 에너지 전환 지도를 보고 다시 도전해 보세요.`;
+  $('result-score').textContent=game.score.toLocaleString();$('result-count').textContent=`${game.log.length} / 9`;$('result-accuracy').textContent=`${game.accuracy}%`;
+  $('saved-note').textContent=result.saved?`오늘 ${game.level}단계 최고 ${result.data.best[game.level].toLocaleString()}점 · 이 브라우저에 기록했어요. 정확도는 해결 수 ÷ (해결 수 + 오답 수)입니다.`:'기록 저장을 사용할 수 없어요. 현재 결과 화면에서 점수를 확인하세요.';
+  const map=$('conversion-map');map.replaceChildren();
+  for(const task of C.TASKS){const solved=game.log.some(l=>l.id===task.id),card=document.createElement('article');card.className=`conversion-card${solved?'':' pending'}`;
+   const label=document.createElement('span');label.className='num';label.textContent=`0${task.id} / ${solved?'복구 완료':'다음 도전에서 복구'}`;
+   const title=document.createElement('h3');title.textContent=`${C.FACILITIES[task.target]} · ${C.DEVICES[task.device].name}`;const chain=document.createElement('strong');chain.textContent=C.chain(task);const explanation=document.createElement('p');explanation.textContent=task.explain;card.append(label,title,chain,explanation);map.append(card);
+  }
+  const review=$('review-errors');review.replaceChildren();
+  for(const id of [...new Set(game.wrong.map(w=>w.task))].slice(0,3)){const p=document.createElement('p');p.className='review-note';p.textContent=`다시 생각하기 · ${C.TASKS[id-1].title}: ${C.TASKS[id-1].explain}`;review.append(p);}
+  $('result').focus();
+ }
+ $('again').addEventListener('click',()=>begin(game?.level||2));$('home').addEventListener('click',()=>{game=null;setScreen('intro');showRecords();});
+ function frame(now){const elapsed=(now-last)/1000;last=now;if(screen==='game'&&game&&!game.done&&!game.paused){game.tick(elapsed);hud();if(game.done)finish();}requestAnimationFrame(frame);}
+ showRecords();requestAnimationFrame(frame);
+})();
+
+</script></body></html>
