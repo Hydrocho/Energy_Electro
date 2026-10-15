@@ -1,7 +1,7 @@
 (function(root){
   'use strict';
   const KEY = 'light-signal-60s-v1';
-  const MODES = ['easy','medium','hard','expert','master'];
+  const MODES = ['easy','medium','hard','expert','master','lightning','ultimate'];
   function localDate(d) { return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; }
   function blank(date) { return {version:1,date,modes:Object.fromEntries(MODES.map(k=>[k,{count:0,best:0,bestCombo:0,recent:[]}]))}; }
   const integer = (n,max) => Number.isInteger(n) && n>=0 && n<=max;
@@ -20,6 +20,10 @@
       if (available) {
         try {
           const saved=storage.getItem(KEY),raw=JSON.parse(saved);
+          // Extend existing daily records; never discard levels 1–5 for missing new keys.
+          if(raw&&raw.version===1&&raw.date===date&&raw.modes){
+            for(const k of ['lightning','ultimate'])if(!Object.prototype.hasOwnProperty.call(raw.modes,k))raw.modes[k]={count:0,best:0,bestCombo:0,recent:[]};
+          }
           if(validData(raw,date))data=raw;
           else {
             data=blank(date);

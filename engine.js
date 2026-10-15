@@ -6,7 +6,9 @@ const DIFFICULTIES={
  medium:{label:'2단계',title:'빛의 메시지',grace:.16,preview:6,penalty:1},
  hard:{label:'3단계',title:'신호 마스터',grace:.10,preview:2.8,penalty:2},
  expert:{label:'4단계',title:'번개 신호',grace:.07,preview:2.2,penalty:2},
- master:{label:'5단계',title:'극한 신호',grace:.08,preview:1.7,penalty:2}
+ master:{label:'5단계',title:'극한 신호',grace:.08,preview:1.7,penalty:2},
+ lightning:{label:'6단계',title:'섬광 연타',grace:.08,preview:1.4,penalty:2},
+ ultimate:{label:'7단계',title:'한계 돌파',grace:.08,preview:1.1,penalty:2}
 };
 const SIGNALS={
  easy:{title:'첫 번째 신호',description:'긴 빛, 넉넉한 쉼',sequence:[2,2,1,2,1,2,2],gap:1.5},
@@ -38,11 +40,13 @@ for(const mode of ['easy','medium','hard']){
  const first=charts[mode];charts[mode]=first.concat(first.map(s=>({...s,start:s.start+30,end:s.end+30})));
 }
 const advanced={
+ lightning:[[.26,.26],[.28,.26],[.26,.3],[.4,.26],[.26,.26],[.3,.28],[.26,.26],[.32,.26],[.26,.28],[.38,.26],[.28,.26],[.26,.3]],
+ ultimate:[[.24,.26],[.26,.26],[.24,.28],[.3,.26],[.24,.26],[.24,.26],[.28,.26],[.24,.3],[.26,.26],[.24,.26],[.32,.26],[.24,.26],[.26,.28]],
  expert:[[.28,.3],[.4,.25],[.28,.25],[.8,.3],[.25,.25],[.32,.4],[.25,.3],[.6,.25]],
  master:[[.26,.26],[.3,.26],[.26,.28],[.7,.26],[.26,.26],[.26,.3],[.4,.26],[.26,.26],[.5,.28],[.26,.35]]
 };
 for(const [mode,pairs] of Object.entries(advanced)){
- SIGNALS[mode]={title:DIFFICULTIES[mode].title,description:mode==='expert'?'불규칙 연속 신호 · 2.2초 미리 보기':'초고속 짧은 신호 · 1.7초 미리 보기'};
+ SIGNALS[mode]={title:DIFFICULTIES[mode].title,description:({expert:'불규칙 연속 신호 · 2.2초 미리 보기',master:'초고속 짧은 신호 · 1.7초 미리 보기',lightning:'쉼 없는 연속 전환 · 1.4초 미리 보기',ultimate:'최단 신호와 불규칙 쉼 · 1.1초 미리 보기'})[mode]};
  const rows=[{start:0,end:1.5,on:false}];let t=1.5,i=0;
  while(t<59){
   const [on,off]=pairs[i++%pairs.length];

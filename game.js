@@ -11,6 +11,19 @@
   let cw=600,ch=218;
   const format=n=>n.toLocaleString('ko-KR');
   const difficultyButtons=[...document.querySelectorAll('.difficulty')];
+  const reducedMotion=window.matchMedia?window.matchMedia('(prefers-reduced-motion: reduce)'):null;
+  let sparks=[],burstAt=-10;
+  const effectsLevel=()=>mode==='ultimate'?2:mode==='lightning'?1:0;
+  function hitBurst(){
+    if(!effectsLevel()||reducedMotion?.matches)return;
+    burstAt=engine.time;
+    const count=effectsLevel()===2?12:7;
+    for(let i=0;i<count;i++){
+      const angle=Math.PI*2*i/count+engine.time*2;
+      sparks.push({born:engine.time,vx:Math.cos(angle)*(50+i*8),vy:Math.sin(angle)*(65+i*7),color:i%3===0?'#ffe99b':effectsLevel()===2?'#e6a9ff':'#88f6ff'});
+    }
+    sparks=sparks.slice(-90);
+  }
   let soundEnabled=true,audio=null,sounding=false;
   function soundButton(){
     $('sound-toggle').textContent=soundEnabled?'🔊 소리 켜짐':'🔇 소리 꺼짐';
@@ -88,6 +101,7 @@
   }
   function releaseInput(){pointer=null;keyboard=0;aim=engine.x;engine.stopMotion();syncSound();}
   function ready(message='막대에서는 흔들기, 빈 구간에서는 멈추기!'){
+    sparks=[];burstAt=-10;$('game-screen').dataset.fx=effectsLevel()===2?'ultimate':effectsLevel()===1?'lightning':'none';
     state='ready';engine=new Engine(mode,true);releaseInput();
     $('track-overlay').classList.remove('hidden');$('overlay-title').textContent='빛으로 신호를 보내요.';
     $('overlay-text').innerHTML='왼쪽 자석을 좌우로 움직여<br>막대가 오면 흔들고, 빈 곳에서는 멈춰요.';
@@ -103,6 +117,7 @@
     $('status').textContent='연습은 감점과 기록이 없어요. 신호 막대에 맞춰 흔들고 멈춰 보세요.';setControls();document.querySelector('.game-card').scrollIntoView({block:'start'});
   }
   function start(){
+    sparks=[];burstAt=-10;
     unlockSound();
     updateRecords();state='countdown';engine=new Engine(mode);releaseInput();countdownAt=performance.now();lastBeat=-1;lastJudgment=0;
     $('track-overlay').classList.remove('hidden');$('track-overlay').querySelector('.overlay-kicker').textContent='손가락을 자석 위에 준비하세요';
@@ -121,7 +136,7 @@
     $('result-emblem').textContent=cleared?'🏆':'↻';
     $('result-kicker').textContent=cleared?'STAGE CLEAR':'TRY AGAIN';
     $('result-title').textContent=cleared?`${DIFFICULTIES[mode].label} 통과!`:'GAME OVER';
-    $('result-celebration').textContent=cleared?(next?'60초 동안 빛의 신호를 끝까지 보냈어요!':'최고 난도 5단계도 성공! 빛의 신호 마스터예요.'):'다시 도전해서 빛의 신호를 이어 보세요.';
+    $('result-celebration').textContent=cleared?(next?'60초 동안 빛의 신호를 끝까지 보냈어요!':'최고 난도 7단계도 성공! 빛의 신호 마스터예요.'):'다시 도전해서 빛의 신호를 이어 보세요.';
     $('next-level').hidden=!cleared||!next;
     $('next-level').textContent=next?`${DIFFICULTIES[next].label} 도전하기 →`:'';
     $('result-reason').textContent=engine.failed?`누적 획득률 ${(engine.rate*100).toFixed(1)}% · 60% 미만으로 ${engine.time.toFixed(1)}초에 종료`:`누적 획득률 ${(engine.rate*100).toFixed(1)}% · 끝까지 신호를 보냈어요!`;
@@ -212,6 +227,19 @@
   function drawTrack(){
     ctx.clearRect(0,0,cw,ch);
     const lineX=cw*.19,pps=(cw-lineX)/DIFFICULTIES[mode].preview,y=ch*.48,t=targetTime();
+    const fx=effectsLevel(),motion=!reducedMotion?.matches;
+    if(fx){
+      ctx.save();
+      // Subtle background trails stay outside the playable lane.
+      for(let i=0;i<(fx===2?24:14);i++){
+        const px=((i*113+(motion?t*18:0))%(cw+60))-30;
+        const py=(i*71)%Math.max(1,ch);
+        if(Math.abs(py-y)<65)continue;
+        ctx.strokeStyle=fx===2?'#b78cff35':'#65eaff30';ctx.lineWidth=1;
+        ctx.beginPath();ctx.moveTo(px,py);ctx.lineTo(px+18+fx*9,py-8);ctx.stroke();
+      }
+      ctx.restore();
+    }
     ctx.fillStyle='#1b2a33';ctx.fillRect(0,y-44,cw,88);
     ctx.strokeStyle='#405562';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(cw,y);ctx.stroke();
     for(const s of window.LightRhythm.charts[mode]){
@@ -226,6 +254,28 @@
     ctx.beginPath();ctx.arc(lineX,y,12,0,Math.PI*2);ctx.fillStyle=engine.lit?'#ffef98':'#253846';ctx.fill();ctx.stroke();
     ctx.font='13px Arial';ctx.fillStyle='#d0ddd8';ctx.fillText('판정선',lineX-18,ch-25);
     ctx.font='14px Arial';ctx.fillStyle='#a5b6bf';ctx.fillText('막대 = 흔들기',20,ch-86);ctx.fillText('빈 구간 = 멈추기',20,ch-62);
+    if(fx&&state==='playing'){
+      ctx.save();
+      if(engine.lastJudge==='hit'){
+        ctx.shadowColor=fx===2?'#d690ff':'#6cf3ff';ctx.shadowBlur=motion?24:8;
+        ctx.strokeStyle=fx===2?'#edc4ff':'#b0ffff';ctx.lineWidth=4;
+        ctx.beginPath();ctx.arc(lineX,y,18,0,Math.PI*2);ctx.stroke();
+      }
+      if(motion){
+        const age=engine.time-burstAt;
+        if(age>=0&&age<.45){
+          ctx.globalAlpha=(1-age/.45)*.6;ctx.shadowBlur=12;ctx.strokeStyle=fx===2?'#ebadff':'#84f4ff';ctx.lineWidth=2;
+          ctx.beginPath();ctx.arc(lineX,y,20+age*(fx===2?170:110),0,Math.PI*2);ctx.stroke();
+        }
+        sparks=sparks.filter(p=>engine.time-p.born<.55);
+        for(const p of sparks){
+          const age=engine.time-p.born;ctx.globalAlpha=(1-age/.55)*.85;ctx.fillStyle=p.color;ctx.shadowColor=p.color;ctx.shadowBlur=8;
+          const px=lineX+p.vx*age,py=y+p.vy*age+40*age*age;
+          ctx.fillRect(px,py,fx===2?4:3,fx===2?4:3);
+        }
+      }
+      ctx.restore();
+    }
   }
   function frame(now){
     const dt=Math.min((now-previousFrame)/1000,.25);previousFrame=now;
@@ -238,7 +288,7 @@
       if(keyboard)aim=clamp(engine.x+keyboard*dt*keyboardSpeed,.08,.92);
       engine.step(dt,aim);
       if(state==='playing'){
-        if(engine.judgments!==lastJudgment){lastJudgment=engine.judgments;$('judge').textContent=({hit:'빛 전달 성공!',rest:'멈춤 성공',grace:'전환 준비',miss:'흔들어 주세요',penalty:'불필요한 빛 − 감점'})[engine.lastJudge];$('judge').dataset.grade=engine.lastJudge;}
+        if(engine.judgments!==lastJudgment){lastJudgment=engine.judgments;if(engine.lastJudge==='hit')hitBurst();$('judge').textContent=({hit:'빛 전달 성공!',rest:'멈춤 성공',grace:'전환 준비',miss:'흔들어 주세요',penalty:'불필요한 빛 − 감점'})[engine.lastJudge];$('judge').dataset.grade=engine.lastJudge;}
         if(engine.done)finish();
       }
     }

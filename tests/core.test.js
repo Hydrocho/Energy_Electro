@@ -34,7 +34,7 @@ test('today max combo survives truncation and another open store reads fresh rec
   other.add('easy',record);assert.equal(s.read().modes.easy.count,14);
 });
 
-test('five binary charts fit 60 seconds and get progressively denser',()=>{
+test('seven binary charts fit 60 seconds and get progressively denser',()=>{
  let prior=0;for(const mode of Object.keys(E.DIFFICULTIES)){const chart=E.charts[mode];assert.equal(chart[0].start,0);assert.equal(chart.at(-1).end,60);assert.equal(E.targetAt(mode,0),0);const count=chart.filter(s=>s.on).length;assert.ok(count>prior);prior=count;for(let i=0;i<chart.length;i++){assert.ok(chart[i].end>chart[i].start);if(i)assert.ok(Math.abs(chart[i].start-chart[i-1].end)<1e-8);}}
 });
 test('signal hit, dark rest, missing light, extra light and boundary forgiveness are distinct',()=>{
@@ -89,18 +89,27 @@ test('survival thresholds use unrounded earned / possible points after 20 second
  const idle=play('easy',()=>false);assert.equal(idle.time,20);assert.equal(idle.failed,true);
  const points=idle.points;idle.step(.2,.9);assert.equal(idle.time,20);assert.equal(idle.points,points);
 });
-test('five levels can be completed with correct input and advanced rests have real judgment windows',()=>{
+test('seven levels can be completed with correct input and advanced rests have real judgment windows',()=>{
  for(const mode of Object.keys(E.DIFFICULTIES)){
   const e=play(mode,t=>!!E.targetAt(mode,t));assert.equal(e.failed,false,mode);assert.equal(e.time,60);assert.ok(e.rate>=.7,mode);
   const expected=Array.from({length:600},(_,i)=>(i+1)/10-.001).filter(t=>E.targetAt(mode,t)).length;
   assert.equal(e.possible,expected);
-  if(['expert','master'].includes(mode))for(const s of E.charts[mode])if(!s.on){
+  if(['expert','master','lightning','ultimate'].includes(mode))for(const s of E.charts[mode])if(!s.on){
    assert.ok(Array.from({length:600},(_,i)=>(i+1)/10-.001).some(t=>t>=s.start&&t<s.end&&E.judge(mode,t,true)==='penalty'));
   }
  }
 });
-test('60 second records are separate from old rules and support all five levels',()=>{
+test('60 second records are separate from old rules and support all seven levels',()=>{
  const mem=memory();mem.setItem('light-signal-today-v2','old-records');const s=R.createStore(mem);
  for(const mode of Object.keys(E.DIFFICULTIES)){assert.equal(s.read().modes[mode].count,0);s.add(mode,{...record,combo:500});assert.equal(s.read().modes[mode].bestCombo,500);}
  assert.equal(mem.getItem('light-signal-today-v2'),'old-records');
+});
+
+test('levels 1 through 5 retain their exact charts and settings',()=>{
+ const old=require('./legacy-charts.json');for(const mode of Object.keys(old.charts)){assert.deepEqual(E.charts[mode],old.charts[mode]);assert.deepEqual(E.DIFFICULTIES[mode],old.difficulties[mode]);}
+});
+test('existing five-level daily records survive addition of levels 6 and 7',()=>{
+ const mem=memory(),s=R.createStore(mem);s.add('master',record);const old=s.read();delete old.modes.lightning;delete old.modes.ultimate;mem.setItem(R.KEY,JSON.stringify(old));
+ const updated=R.createStore(mem);assert.equal(updated.read().modes.master.best,8000);assert.equal(updated.read().modes.master.count,1);
+ updated.add('lightning',record);updated.add('ultimate',record);assert.equal(updated.read().modes.master.best,8000);assert.equal(updated.read().modes.ultimate.count,1);
 });

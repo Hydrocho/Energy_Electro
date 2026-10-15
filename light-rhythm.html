@@ -37,6 +37,8 @@ body:has(#intro-screen:not([hidden])) .topbar{height:64px}.welcome-screen .intro
 .prepare-dialog{width:min(600px,calc(100vw - 28px));max-height:calc(100dvh - 28px);margin:auto;padding:28px;border:1px solid #647e46;border-radius:22px;background:#182127;color:var(--text);text-align:center;box-shadow:0 24px 100px #0009}.prepare-dialog::backdrop{background:#081016bb;backdrop-filter:blur(5px)}.prepare-dialog h2{font-size:27px;margin:0 0 10px}.prepare-description{color:#aebfc8;line-height:1.7;font-size:13px}.prepare-levels{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;margin:22px 0 12px}.prepare-levels .difficulty{justify-content:center;flex-direction:column;padding:14px 4px;gap:8px;min-height:88px;text-align:center}.prepare-levels .difficulty-icon{font-size:25px}.prepare-levels .difficulty small,.prepare-levels .difficulty em,.prepare-levels .selection-dot{display:none}.prepare-selection{color:var(--lime);font-size:14px;margin:12px 0 20px}.prepare-dialog .primary-button{width:100%;font-size:23px;min-height:70px;border-radius:12px}.prepare-dialog .secondary-button{width:100%;margin-top:12px}.prepare-dialog .text-button{margin-top:14px;min-height:40px}#open-prepare{background:#304127;border-color:#94b45e;color:var(--lime)}@media(max-width:450px){.prepare-dialog{padding:22px 16px}.prepare-dialog h2{font-size:23px}.prepare-levels{gap:5px}.prepare-levels .difficulty strong{font-size:12px}.prepare-dialog .primary-button{font-size:21px}}
 .prepare-dialog .creator-credit{text-align:right;color:var(--muted);font-size:13px;line-height:1.5;margin:20px 2px 0}
 #result-dialog{max-height:calc(100dvh - 28px);overflow:auto}#result-dialog[data-outcome=success]{border:2px solid var(--lime);background:radial-gradient(ellipse at 50% 0,#344729,#181f27 65%);box-shadow:0 0 70px #cefa7625}#result-dialog[data-outcome=success] #result-title{color:var(--lime);font-size:34px}#result-dialog[data-outcome=success] .result-decoration{font-size:58px;line-height:1.2}#result-dialog[data-outcome=failure] #result-title{color:#ff989b}.result-celebration{font-size:15px;line-height:1.7;color:#e0eacb}#next-level{width:100%;margin:16px 0 10px}#result-dialog[data-outcome=success] #retry{width:100%;background:#29363b;color:#cbd9de;border:1px solid #53656c;min-height:44px}#result-dialog[data-outcome=success] .result-tip{display:none}
+.prepare-levels{grid-template-columns:repeat(7,minmax(0,1fr))}@media(max-width:600px){.prepare-levels{grid-template-columns:repeat(4,minmax(0,1fr))}.prepare-levels .difficulty{min-height:65px;padding:9px 4px;gap:4px}.prepare-levels .difficulty-icon{font-size:20px}}
+#game-screen[data-fx=lightning] .score-panel{background:linear-gradient(135deg,#142c3d,#10212c 50%,#13392f);background-size:200% 200%;animation:aurora-drift 9s ease-in-out infinite alternate}#game-screen[data-fx=ultimate] .score-panel{background:linear-gradient(125deg,#342249,#15263d 40%,#30244c 70%,#3b2b24);background-size:250% 250%;animation:aurora-drift 6s ease-in-out infinite alternate}#game-screen[data-fx=lightning] .game-card{border-color:#43969e;box-shadow:0 0 26px #57deeb18}#game-screen[data-fx=ultimate] .game-card{border-color:#a779cb;box-shadow:0 0 35px #c28bff22}#game-screen[data-fx=lightning] .track-wrap,#game-screen[data-fx=ultimate] .track-wrap{background:linear-gradient(180deg,#10202b22,#10192388)}#game-screen[data-fx=lightning] .judge-badge[data-grade=hit]{color:#acffff;text-shadow:0 0 10px #45e6ff,0 0 24px #45e6ff}#game-screen[data-fx=ultimate] .judge-badge[data-grade=hit]{color:#ffe8a3;text-shadow:0 0 12px #de96ff,0 0 24px #de96ff}@keyframes aurora-drift{from{background-position:0% 25%}to{background-position:100% 75%}}@media(prefers-reduced-motion:reduce){#game-screen[data-fx] .score-panel{animation:none}}
 
 </style>
 </head>
@@ -64,7 +66,7 @@ body:has(#intro-screen:not([hidden])) .topbar{height:64px}.welcome-screen .intro
             <g fill="#c4d5d8" font-size="15" font-family="Arial,Malgun Gothic" text-anchor="middle"><text x="163" y="205">자석을 좌우로 움직이기</text><text x="335" y="53">코일</text><text x="540" y="42">전구가 켜져요!</text><text x="429" y="278">유도 전류 →</text></g>
           </svg>
         </div>
-        <div class="welcome-action"><p>막대가 오면 흔들고, 빈 구간에서는 멈추세요.</p><button id="enter-game" class="primary-button">게임 시작 <span>→</span></button><small>터치로 플레이 · 1~5단계 · 60초 도전</small></div>
+        <div class="welcome-action"><p>막대가 오면 흔들고, 빈 구간에서는 멈추세요.</p><button id="enter-game" class="primary-button">게임 시작 <span>→</span></button><small>터치로 플레이 · 1~7단계 · 60초 도전</small></div>
       </section>
 
       <section id="game-screen" hidden aria-label="게임과 난이도 선택"><div class="layout">
@@ -110,7 +112,7 @@ body:has(#intro-screen:not([hidden])) .topbar{height:64px}.welcome-screen .intro
         </section>
 
         <aside class="sidebar">
-          <section class="side-card difficulty-card"><div class="section-heading"><h2>난이도 선택</h2><span>LEVEL</span></div><div class="difficulty-list" role="group" aria-label="난이도"><button class="difficulty active" data-mode="easy" aria-pressed="true"><span class="difficulty-icon">1</span><span><strong>1단계 <small>첫 번째 신호</small></strong><em>긴 신호 · 넉넉한 쉼</em></span><span class="selection-dot"></span></button><button class="difficulty" data-mode="medium" aria-pressed="false"><span class="difficulty-icon">2</span><span><strong>2단계 <small>빛의 메시지</small></strong><em>짧고 긴 신호</em></span><span class="selection-dot"></span></button><button class="difficulty" data-mode="hard" aria-pressed="false"><span class="difficulty-icon">3</span><span><strong>3단계 <small>신호 마스터</small></strong><em>고속 전환 · 감점 2배</em></span><span class="selection-dot"></span></button><button class="difficulty" data-mode="expert" aria-pressed="false"><span class="difficulty-icon">4</span><span><strong>4단계 <small>번개 신호</small></strong><em>불규칙 연속 신호 · 더 빠르게</em></span><span class="selection-dot"></span></button><button class="difficulty" data-mode="master" aria-pressed="false"><span class="difficulty-icon">5</span><span><strong>5단계 <small>극한 신호</small></strong><em>초고속 짧은 신호 · 최고 난도</em></span><span class="selection-dot"></span></button></div></section>
+          <section class="side-card difficulty-card"><div class="section-heading"><h2>난이도 선택</h2><span>LEVEL</span></div><div class="difficulty-list" role="group" aria-label="난이도"><button class="difficulty active" data-mode="easy" aria-pressed="true"><span class="difficulty-icon">1</span><span><strong>1단계 <small>첫 번째 신호</small></strong><em>긴 신호 · 넉넉한 쉼</em></span><span class="selection-dot"></span></button><button class="difficulty" data-mode="medium" aria-pressed="false"><span class="difficulty-icon">2</span><span><strong>2단계 <small>빛의 메시지</small></strong><em>짧고 긴 신호</em></span><span class="selection-dot"></span></button><button class="difficulty" data-mode="hard" aria-pressed="false"><span class="difficulty-icon">3</span><span><strong>3단계 <small>신호 마스터</small></strong><em>고속 전환 · 감점 2배</em></span><span class="selection-dot"></span></button><button class="difficulty" data-mode="expert" aria-pressed="false"><span class="difficulty-icon">4</span><span><strong>4단계 <small>번개 신호</small></strong><em>불규칙 연속 신호 · 더 빠르게</em></span><span class="selection-dot"></span></button><button class="difficulty" data-mode="master" aria-pressed="false"><span class="difficulty-icon">5</span><span><strong>5단계 <small>극한 신호</small></strong><em>초고속 짧은 신호</em></span><span class="selection-dot"></span></button><button class="difficulty" data-mode="lightning" aria-pressed="false"><span class="difficulty-icon">6</span><span><strong>6단계 <small>섬광 연타</small></strong><em>연속 전환 · 1.4초 미리 보기</em></span><span class="selection-dot"></span></button><button class="difficulty" data-mode="ultimate" aria-pressed="false"><span class="difficulty-icon">7</span><span><strong>7단계 <small>한계 돌파</small></strong><em>최고 난도 · 1.1초 미리 보기</em></span><span class="selection-dot"></span></button></div></section>
 
           <section class="side-card records-card"><div class="section-heading"><h2>오늘의 나의 기록</h2><span id="today-date"></span></div><div class="best-label"><span>✦ 오늘 최고 · <b id="record-mode">1단계</b></span><span>BEST</span></div><div class="best-score"><strong id="best-score">—</strong><span>점</span></div><div class="record-stats"><span>도전 횟수 <b id="attempts">0회</b></span><span>최고 콤보 <b id="best-combo">—</b></span></div><div class="recent-heading">최근 도전 <span>점수 / 정확도</span></div><ol id="recent-records"><li class="empty-record">첫 번째 신호를 만들어 보세요.<br>오늘의 도전이 여기에 쌓여요.</li></ol><p class="record-note" id="storage-note">오늘 기록은 이 브라우저에만 남아요.<br>친구와 같은 난이도의 점수를 비교해 보세요.</p></section>
 
@@ -123,7 +125,7 @@ body:has(#intro-screen:not([hidden])) .topbar{height:64px}.welcome-screen .intro
 
   <dialog id="prepare-dialog" class="prepare-dialog" aria-labelledby="prepare-title">
     <p class="eyebrow">READY TO GLOW</p><h2 id="prepare-title">빛의 신호, 시작할까요?</h2><p class="prepare-description">단계를 고르고 시작하세요.<br>막대에서는 흔들기, 빈 구간에서는 멈추기!</p>
-    <div class="prepare-levels" role="group" aria-label="시작 난이도 선택"><button class="difficulty active" data-mode="easy" aria-pressed="true"><span class="difficulty-icon">1</span><span><strong>1단계 <small>첫 번째 신호</small></strong><em>긴 신호 · 넉넉한 쉼</em></span><span class="selection-dot"></span></button><button class="difficulty" data-mode="medium" aria-pressed="false"><span class="difficulty-icon">2</span><span><strong>2단계 <small>빛의 메시지</small></strong><em>짧고 긴 신호</em></span><span class="selection-dot"></span></button><button class="difficulty" data-mode="hard" aria-pressed="false"><span class="difficulty-icon">3</span><span><strong>3단계 <small>신호 마스터</small></strong><em>고속 전환 · 감점 2배</em></span><span class="selection-dot"></span></button><button class="difficulty" data-mode="expert" aria-pressed="false"><span class="difficulty-icon">4</span><span><strong>4단계 <small>번개 신호</small></strong><em>불규칙 연속 신호 · 더 빠르게</em></span><span class="selection-dot"></span></button><button class="difficulty" data-mode="master" aria-pressed="false"><span class="difficulty-icon">5</span><span><strong>5단계 <small>극한 신호</small></strong><em>초고속 짧은 신호 · 최고 난도</em></span><span class="selection-dot"></span></button></div>
+    <div class="prepare-levels" role="group" aria-label="시작 난이도 선택"><button class="difficulty active" data-mode="easy" aria-pressed="true"><span class="difficulty-icon">1</span><span><strong>1단계 <small>첫 번째 신호</small></strong><em>긴 신호 · 넉넉한 쉼</em></span><span class="selection-dot"></span></button><button class="difficulty" data-mode="medium" aria-pressed="false"><span class="difficulty-icon">2</span><span><strong>2단계 <small>빛의 메시지</small></strong><em>짧고 긴 신호</em></span><span class="selection-dot"></span></button><button class="difficulty" data-mode="hard" aria-pressed="false"><span class="difficulty-icon">3</span><span><strong>3단계 <small>신호 마스터</small></strong><em>고속 전환 · 감점 2배</em></span><span class="selection-dot"></span></button><button class="difficulty" data-mode="expert" aria-pressed="false"><span class="difficulty-icon">4</span><span><strong>4단계 <small>번개 신호</small></strong><em>불규칙 연속 신호 · 더 빠르게</em></span><span class="selection-dot"></span></button><button class="difficulty" data-mode="master" aria-pressed="false"><span class="difficulty-icon">5</span><span><strong>5단계 <small>극한 신호</small></strong><em>초고속 짧은 신호</em></span><span class="selection-dot"></span></button><button class="difficulty" data-mode="lightning" aria-pressed="false"><span class="difficulty-icon">6</span><span><strong>6단계 <small>섬광 연타</small></strong><em>연속 전환 · 1.4초 미리 보기</em></span><span class="selection-dot"></span></button><button class="difficulty" data-mode="ultimate" aria-pressed="false"><span class="difficulty-icon">7</span><span><strong>7단계 <small>한계 돌파</small></strong><em>최고 난도 · 1.1초 미리 보기</em></span><span class="selection-dot"></span></button></div>
     <p id="prepare-selection" class="prepare-selection">1단계 · 첫 번째 신호</p>
     <button id="prepare-start" class="primary-button">60초 게임 시작 <span>→</span></button>
     <p class="creator-credit">made by 조광근</p>
@@ -139,7 +141,9 @@ const DIFFICULTIES={
  medium:{label:'2단계',title:'빛의 메시지',grace:.16,preview:6,penalty:1},
  hard:{label:'3단계',title:'신호 마스터',grace:.10,preview:2.8,penalty:2},
  expert:{label:'4단계',title:'번개 신호',grace:.07,preview:2.2,penalty:2},
- master:{label:'5단계',title:'극한 신호',grace:.08,preview:1.7,penalty:2}
+ master:{label:'5단계',title:'극한 신호',grace:.08,preview:1.7,penalty:2},
+ lightning:{label:'6단계',title:'섬광 연타',grace:.08,preview:1.4,penalty:2},
+ ultimate:{label:'7단계',title:'한계 돌파',grace:.08,preview:1.1,penalty:2}
 };
 const SIGNALS={
  easy:{title:'첫 번째 신호',description:'긴 빛, 넉넉한 쉼',sequence:[2,2,1,2,1,2,2],gap:1.5},
@@ -171,11 +175,13 @@ for(const mode of ['easy','medium','hard']){
  const first=charts[mode];charts[mode]=first.concat(first.map(s=>({...s,start:s.start+30,end:s.end+30})));
 }
 const advanced={
+ lightning:[[.26,.26],[.28,.26],[.26,.3],[.4,.26],[.26,.26],[.3,.28],[.26,.26],[.32,.26],[.26,.28],[.38,.26],[.28,.26],[.26,.3]],
+ ultimate:[[.24,.26],[.26,.26],[.24,.28],[.3,.26],[.24,.26],[.24,.26],[.28,.26],[.24,.3],[.26,.26],[.24,.26],[.32,.26],[.24,.26],[.26,.28]],
  expert:[[.28,.3],[.4,.25],[.28,.25],[.8,.3],[.25,.25],[.32,.4],[.25,.3],[.6,.25]],
  master:[[.26,.26],[.3,.26],[.26,.28],[.7,.26],[.26,.26],[.26,.3],[.4,.26],[.26,.26],[.5,.28],[.26,.35]]
 };
 for(const [mode,pairs] of Object.entries(advanced)){
- SIGNALS[mode]={title:DIFFICULTIES[mode].title,description:mode==='expert'?'불규칙 연속 신호 · 2.2초 미리 보기':'초고속 짧은 신호 · 1.7초 미리 보기'};
+ SIGNALS[mode]={title:DIFFICULTIES[mode].title,description:({expert:'불규칙 연속 신호 · 2.2초 미리 보기',master:'초고속 짧은 신호 · 1.7초 미리 보기',lightning:'쉼 없는 연속 전환 · 1.4초 미리 보기',ultimate:'최단 신호와 불규칙 쉼 · 1.1초 미리 보기'})[mode]};
  const rows=[{start:0,end:1.5,on:false}];let t=1.5,i=0;
  while(t<59){
   const [on,off]=pairs[i++%pairs.length];
@@ -254,7 +260,7 @@ if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.Ligh
 (function(root){
   'use strict';
   const KEY = 'light-signal-60s-v1';
-  const MODES = ['easy','medium','hard','expert','master'];
+  const MODES = ['easy','medium','hard','expert','master','lightning','ultimate'];
   function localDate(d) { return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; }
   function blank(date) { return {version:1,date,modes:Object.fromEntries(MODES.map(k=>[k,{count:0,best:0,bestCombo:0,recent:[]}]))}; }
   const integer = (n,max) => Number.isInteger(n) && n>=0 && n<=max;
@@ -273,6 +279,10 @@ if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.Ligh
       if (available) {
         try {
           const saved=storage.getItem(KEY),raw=JSON.parse(saved);
+          // Extend existing daily records; never discard levels 1–5 for missing new keys.
+          if(raw&&raw.version===1&&raw.date===date&&raw.modes){
+            for(const k of ['lightning','ultimate'])if(!Object.prototype.hasOwnProperty.call(raw.modes,k))raw.modes[k]={count:0,best:0,bestCombo:0,recent:[]};
+          }
           if(validData(raw,date))data=raw;
           else {
             data=blank(date);
@@ -313,6 +323,19 @@ if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.Ligh
   let cw=600,ch=218;
   const format=n=>n.toLocaleString('ko-KR');
   const difficultyButtons=[...document.querySelectorAll('.difficulty')];
+  const reducedMotion=window.matchMedia?window.matchMedia('(prefers-reduced-motion: reduce)'):null;
+  let sparks=[],burstAt=-10;
+  const effectsLevel=()=>mode==='ultimate'?2:mode==='lightning'?1:0;
+  function hitBurst(){
+    if(!effectsLevel()||reducedMotion?.matches)return;
+    burstAt=engine.time;
+    const count=effectsLevel()===2?12:7;
+    for(let i=0;i<count;i++){
+      const angle=Math.PI*2*i/count+engine.time*2;
+      sparks.push({born:engine.time,vx:Math.cos(angle)*(50+i*8),vy:Math.sin(angle)*(65+i*7),color:i%3===0?'#ffe99b':effectsLevel()===2?'#e6a9ff':'#88f6ff'});
+    }
+    sparks=sparks.slice(-90);
+  }
   let soundEnabled=true,audio=null,sounding=false;
   function soundButton(){
     $('sound-toggle').textContent=soundEnabled?'🔊 소리 켜짐':'🔇 소리 꺼짐';
@@ -390,6 +413,7 @@ if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.Ligh
   }
   function releaseInput(){pointer=null;keyboard=0;aim=engine.x;engine.stopMotion();syncSound();}
   function ready(message='막대에서는 흔들기, 빈 구간에서는 멈추기!'){
+    sparks=[];burstAt=-10;$('game-screen').dataset.fx=effectsLevel()===2?'ultimate':effectsLevel()===1?'lightning':'none';
     state='ready';engine=new Engine(mode,true);releaseInput();
     $('track-overlay').classList.remove('hidden');$('overlay-title').textContent='빛으로 신호를 보내요.';
     $('overlay-text').innerHTML='왼쪽 자석을 좌우로 움직여<br>막대가 오면 흔들고, 빈 곳에서는 멈춰요.';
@@ -405,6 +429,7 @@ if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.Ligh
     $('status').textContent='연습은 감점과 기록이 없어요. 신호 막대에 맞춰 흔들고 멈춰 보세요.';setControls();document.querySelector('.game-card').scrollIntoView({block:'start'});
   }
   function start(){
+    sparks=[];burstAt=-10;
     unlockSound();
     updateRecords();state='countdown';engine=new Engine(mode);releaseInput();countdownAt=performance.now();lastBeat=-1;lastJudgment=0;
     $('track-overlay').classList.remove('hidden');$('track-overlay').querySelector('.overlay-kicker').textContent='손가락을 자석 위에 준비하세요';
@@ -423,7 +448,7 @@ if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.Ligh
     $('result-emblem').textContent=cleared?'🏆':'↻';
     $('result-kicker').textContent=cleared?'STAGE CLEAR':'TRY AGAIN';
     $('result-title').textContent=cleared?`${DIFFICULTIES[mode].label} 통과!`:'GAME OVER';
-    $('result-celebration').textContent=cleared?(next?'60초 동안 빛의 신호를 끝까지 보냈어요!':'최고 난도 5단계도 성공! 빛의 신호 마스터예요.'):'다시 도전해서 빛의 신호를 이어 보세요.';
+    $('result-celebration').textContent=cleared?(next?'60초 동안 빛의 신호를 끝까지 보냈어요!':'최고 난도 7단계도 성공! 빛의 신호 마스터예요.'):'다시 도전해서 빛의 신호를 이어 보세요.';
     $('next-level').hidden=!cleared||!next;
     $('next-level').textContent=next?`${DIFFICULTIES[next].label} 도전하기 →`:'';
     $('result-reason').textContent=engine.failed?`누적 획득률 ${(engine.rate*100).toFixed(1)}% · 60% 미만으로 ${engine.time.toFixed(1)}초에 종료`:`누적 획득률 ${(engine.rate*100).toFixed(1)}% · 끝까지 신호를 보냈어요!`;
@@ -514,6 +539,19 @@ if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.Ligh
   function drawTrack(){
     ctx.clearRect(0,0,cw,ch);
     const lineX=cw*.19,pps=(cw-lineX)/DIFFICULTIES[mode].preview,y=ch*.48,t=targetTime();
+    const fx=effectsLevel(),motion=!reducedMotion?.matches;
+    if(fx){
+      ctx.save();
+      // Subtle background trails stay outside the playable lane.
+      for(let i=0;i<(fx===2?24:14);i++){
+        const px=((i*113+(motion?t*18:0))%(cw+60))-30;
+        const py=(i*71)%Math.max(1,ch);
+        if(Math.abs(py-y)<65)continue;
+        ctx.strokeStyle=fx===2?'#b78cff35':'#65eaff30';ctx.lineWidth=1;
+        ctx.beginPath();ctx.moveTo(px,py);ctx.lineTo(px+18+fx*9,py-8);ctx.stroke();
+      }
+      ctx.restore();
+    }
     ctx.fillStyle='#1b2a33';ctx.fillRect(0,y-44,cw,88);
     ctx.strokeStyle='#405562';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(cw,y);ctx.stroke();
     for(const s of window.LightRhythm.charts[mode]){
@@ -528,6 +566,28 @@ if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.Ligh
     ctx.beginPath();ctx.arc(lineX,y,12,0,Math.PI*2);ctx.fillStyle=engine.lit?'#ffef98':'#253846';ctx.fill();ctx.stroke();
     ctx.font='13px Arial';ctx.fillStyle='#d0ddd8';ctx.fillText('판정선',lineX-18,ch-25);
     ctx.font='14px Arial';ctx.fillStyle='#a5b6bf';ctx.fillText('막대 = 흔들기',20,ch-86);ctx.fillText('빈 구간 = 멈추기',20,ch-62);
+    if(fx&&state==='playing'){
+      ctx.save();
+      if(engine.lastJudge==='hit'){
+        ctx.shadowColor=fx===2?'#d690ff':'#6cf3ff';ctx.shadowBlur=motion?24:8;
+        ctx.strokeStyle=fx===2?'#edc4ff':'#b0ffff';ctx.lineWidth=4;
+        ctx.beginPath();ctx.arc(lineX,y,18,0,Math.PI*2);ctx.stroke();
+      }
+      if(motion){
+        const age=engine.time-burstAt;
+        if(age>=0&&age<.45){
+          ctx.globalAlpha=(1-age/.45)*.6;ctx.shadowBlur=12;ctx.strokeStyle=fx===2?'#ebadff':'#84f4ff';ctx.lineWidth=2;
+          ctx.beginPath();ctx.arc(lineX,y,20+age*(fx===2?170:110),0,Math.PI*2);ctx.stroke();
+        }
+        sparks=sparks.filter(p=>engine.time-p.born<.55);
+        for(const p of sparks){
+          const age=engine.time-p.born;ctx.globalAlpha=(1-age/.55)*.85;ctx.fillStyle=p.color;ctx.shadowColor=p.color;ctx.shadowBlur=8;
+          const px=lineX+p.vx*age,py=y+p.vy*age+40*age*age;
+          ctx.fillRect(px,py,fx===2?4:3,fx===2?4:3);
+        }
+      }
+      ctx.restore();
+    }
   }
   function frame(now){
     const dt=Math.min((now-previousFrame)/1000,.25);previousFrame=now;
@@ -540,7 +600,7 @@ if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.Ligh
       if(keyboard)aim=clamp(engine.x+keyboard*dt*keyboardSpeed,.08,.92);
       engine.step(dt,aim);
       if(state==='playing'){
-        if(engine.judgments!==lastJudgment){lastJudgment=engine.judgments;$('judge').textContent=({hit:'빛 전달 성공!',rest:'멈춤 성공',grace:'전환 준비',miss:'흔들어 주세요',penalty:'불필요한 빛 − 감점'})[engine.lastJudge];$('judge').dataset.grade=engine.lastJudge;}
+        if(engine.judgments!==lastJudgment){lastJudgment=engine.judgments;if(engine.lastJudge==='hit')hitBurst();$('judge').textContent=({hit:'빛 전달 성공!',rest:'멈춤 성공',grace:'전환 준비',miss:'흔들어 주세요',penalty:'불필요한 빛 − 감점'})[engine.lastJudge];$('judge').dataset.grade=engine.lastJudge;}
         if(engine.done)finish();
       }
     }
